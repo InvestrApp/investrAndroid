@@ -1,0 +1,39 @@
+package com.investrapp.investr;
+
+import android.app.Application;
+import android.content.Context;
+
+import com.investrapp.investr.models.Player;
+import com.parse.Parse;
+import com.parse.ParseObject;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+
+public class InvestrApplication extends Application {
+
+    public static Context context;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        InvestrApplication.context = this;
+
+        Parse.setLogLevel(Parse.LOG_LEVEL_DEBUG);
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        builder.networkInterceptors().add(httpLoggingInterceptor);
+
+        ParseObject.registerSubclass(Player.class);
+
+        Parse.initialize(new Parse.Configuration.Builder(this)
+                .applicationId(getResources().getString(R.string.parse_app_id))
+                .clientKey(getResources().getString(R.string.parse_master_key))
+                .clientBuilder(builder)
+                .server(getResources().getString(R.string.parse_server_url))
+                .build());
+    }
+
+}
