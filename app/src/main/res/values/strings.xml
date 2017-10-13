@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Investr</string>
+    <string name="facebook_app_id">838597502973620</string>
+    <string name="fb_login_protocol_scheme">fb838597502973620</string>
+    <string name="parse_app_id">investrAndroid</string>
+    <string name="parse_master_key">codepath2017</string>
+    <string name="parse_server_url">https://investr-android.herokuapp.com/parse</string>
 </resources>
