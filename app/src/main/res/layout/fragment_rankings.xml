@@ -5,6 +5,7 @@
     tools:context="com.investrapp.investr.fragments.RankingsFragment">
 
     <TextView
+        android:id="@+id/tvPlaceholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="NEW FRAGMENT" />

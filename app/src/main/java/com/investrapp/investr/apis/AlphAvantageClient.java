@@ -2,7 +2,6 @@ package com.investrapp.investr.apis;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 
 import com.investrapp.investr.R;
 import com.investrapp.investr.databaseSetup.DatabaseSetupUtils;
@@ -11,10 +10,7 @@ import com.investrapp.investr.models.Cryptocurrency;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import okhttp3.Call;
@@ -23,8 +19,6 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import static com.investrapp.investr.models.Cryptocurrency.getCrytocurrencyList;
 
 /**
  * Created by michaelsignorotti on 10/13/17.
@@ -56,8 +50,6 @@ public class AlphAvantageClient {
 
     public static void queryCurrentStockPrice(Context context, String symbol) {
         OkHttpClient client = new OkHttpClient();
-
-
         HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_AVANTAGE_URL).newBuilder();
         urlBuilder.addQueryParameter(API_KEY, context.getResources().getString(R.string.ALPHA_AVANTAGE_API_KEY));
         urlBuilder.addQueryParameter(FUNCTION, TIME_SERIES_INTRADAY);
@@ -91,19 +83,13 @@ public class AlphAvantageClient {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
         });
     }
 
     public static void queryAllCrypotocurrencies() {
-
         OkHttpClient client = new OkHttpClient();
-
-
         HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_AVANTAGE_CRYPTOCURRENCY_LIST_URL).newBuilder();
-
         String url = urlBuilder.build().toString();
 
         Request request = new Request.Builder()
@@ -123,14 +109,9 @@ public class AlphAvantageClient {
                     Log.e("AlphaAvantageClient", response.toString());
                     throw new IOException("Unexpected code " + response);
                 }
-
                 List<Cryptocurrency> cryptocurrencyList = Cryptocurrency.getCrytocurrencyList(response);
                 DatabaseSetupUtils.addAllCryptocurrencies(cryptocurrencyList);
-
-
-
                 }
         });
-
     }
 }
