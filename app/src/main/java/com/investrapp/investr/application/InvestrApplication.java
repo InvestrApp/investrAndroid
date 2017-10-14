@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.investrapp.investr.R;
+import com.investrapp.investr.models.Competition;
+import com.investrapp.investr.models.CompetitionPlayer;
 import com.investrapp.investr.models.Player;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -28,6 +30,8 @@ public class InvestrApplication extends Application {
         builder.networkInterceptors().add(httpLoggingInterceptor);
 
         ParseObject.registerSubclass(Player.class);
+        ParseObject.registerSubclass(Competition.class);
+        ParseObject.registerSubclass(CompetitionPlayer.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(getResources().getString(R.string.parse_app_id))
