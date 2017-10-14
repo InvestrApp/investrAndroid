@@ -9,12 +9,6 @@ import org.json.JSONObject;
 @ParseClassName("Player")
 public class Player extends ParseObject {
 
-    private String mId;
-    private String mName;
-    private String mEmail;
-    private String mGender;
-    private String mProfileImageUrl;
-
     public Player() {
         super();
     }
@@ -29,55 +23,58 @@ public class Player extends ParseObject {
     }
 
     public void setId(String id) {
-        mId = id;
         put("id", id);
     }
 
     public void setName(String name) {
-        mName = name;
         put("name", name);
     }
 
     public void setEmail(String email) {
-        mEmail = email;
         put("email", email);
     }
 
     public void setGender(String gender) {
-        mGender = gender;
         put("gender", gender);
     }
 
     public void setProfileImageUrl(String profileImageUrl) {
-        mProfileImageUrl = profileImageUrl;
         put("profileImageUrl", profileImageUrl);
     }
 
     public String getId() {
-        return mId;
+        return getString("id");
     }
 
     public String getName() {
-        return mName;
+        return getString("name");
     }
 
     public String getEmail() {
-        return mEmail;
+        return getString("email");
     }
 
     public String getGender() {
-        return mGender;
+        return getString("gender");
     }
 
     public String getProfileImageUrl() {
-        return mProfileImageUrl;
+        return getString("profileImageUrl");
     }
 
-    public static Player getPlayer(JSONObject object) throws JSONException {
-        String id = object.getString("id");
-        String name = object.getString("name");
-        String email = object.getString("email");
-        String gender = object.getString("gender");
+    public static Player getPlayerFromFB(JSONObject object) {
+        String id = null;
+        String name = null;
+        String email = null;
+        String gender = null;
+        try {
+            id = object.getString("id");
+            name = object.getString("name");
+            email = object.getString("email");
+            gender = object.getString("gender");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return new Player(id, name, email, gender);
     }
 

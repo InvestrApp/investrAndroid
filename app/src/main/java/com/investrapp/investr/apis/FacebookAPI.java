@@ -12,7 +12,7 @@ public class FacebookAPI {
                 AccessToken.getCurrentAccessToken(),
                 handler);
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,email,gender");
+        parameters.putString("fields", "id,name,email,gender,location,age_range");
         request.setParameters(parameters);
         request.executeAsync();
     }
