@@ -21,7 +21,9 @@ import com.investrapp.investr.R;
 import com.investrapp.investr.apis.FacebookAPI;
 import com.investrapp.investr.apis.ParseAPI;
 import com.investrapp.investr.fragments.RankingsFragment;
+import com.investrapp.investr.interfaces.AlphaAvantageClientListener;
 import com.investrapp.investr.models.Player;
+import com.investrapp.investr.models.Stock;
 
 import org.json.JSONException;
 import org.json.JSONObject;

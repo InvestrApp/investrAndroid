@@ -31,9 +31,10 @@ public class InvestrApplication extends Application {
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(getResources().getString(R.string.parse_app_id))
-                .clientKey(getResources().getString(R.string.parse_master_key))
+                .clientKey(getResources().getString(R.string.PARSE_MASTER_KEY))
                 .clientBuilder(builder)
                 .server(getResources().getString(R.string.parse_server_url))
                 .build());
     }
+
 }
