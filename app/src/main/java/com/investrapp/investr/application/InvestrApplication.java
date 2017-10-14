@@ -1,8 +1,9 @@
-package com.investrapp.investr;
+package com.investrapp.investr.application;
 
 import android.app.Application;
 import android.content.Context;
 
+import com.investrapp.investr.R;
 import com.investrapp.investr.models.Player;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -30,7 +31,7 @@ public class InvestrApplication extends Application {
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(getResources().getString(R.string.parse_app_id))
-                .clientKey(getResources().getString(R.string.parse_master_key))
+                .clientKey(getResources().getString(R.string.PARSE_MASTER_KEY))
                 .clientBuilder(builder)
                 .server(getResources().getString(R.string.parse_server_url))
                 .build());

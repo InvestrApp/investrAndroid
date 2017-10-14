@@ -1,6 +1,6 @@
 # Investr
 
-Investr is an android app that allows the gamification of buying and selling assets with play money. Assets include stocks, cryptocurrency, commodities, bonds and more! The app creates competitions for users to participate in with simple rules (ie, a 4 week competition with $5k) as well provides guides and information on how best to beat the market!
+Investr is an app that allows individuals and groups to compete in the virtual investment and trading of stocks, cryptocurrency, commodities, and foreign currency. Users can build portfolios and track the performance of their investments in comparison to other users and the greater Investr community. Users have the option to read news targeted to their portfolios, chat regarding their selections, review investment best practices, and even transfer investment allocations to popular real-world trading platforms. With integrated push notifications, investors can be notified of market movements in real time in order to make informed trading decisions.
 
 ## User Stories
 
@@ -43,6 +43,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Open-source libraries used
 
 ## License
+
 
     Copyright 2017 Sahil Agarwal and Michael Signorotti
 
