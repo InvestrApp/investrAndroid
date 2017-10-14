@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,16 +18,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.investrapp.investr.R;
 import com.investrapp.investr.apis.FacebookAPI;
 import com.investrapp.investr.apis.ParseAPI;
 import com.investrapp.investr.fragments.RankingsFragment;
-import com.investrapp.investr.interfaces.AlphaAvantageClientListener;
 import com.investrapp.investr.models.Player;
-import com.investrapp.investr.models.Stock;
+import com.investrapp.investr.models.Competition;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class CompetitionActivity extends AppCompatActivity {
 
@@ -83,19 +87,42 @@ public class CompetitionActivity extends AppCompatActivity {
     }
 
     private void getCurrentUser() {
-        FacebookAPI.getCurrentUser(new GraphRequest.GraphJSONObjectCallback() {
+        ParseAPI.getPlayer(Profile.getCurrentProfile().getId(), new FindCallback<Player>() {
             @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-                try {
-                    mCurrentPlayer = Player.getPlayer(object);
-                    ParseAPI.savePlayer(mCurrentPlayer);
+            public void done(List<Player> objects, ParseException e) {
+                if (objects.size() == 0) {
+                    FacebookAPI.getCurrentUser(new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject object, GraphResponse response) {
+                            Log.d("fb_response", object.toString());
+                            mCurrentPlayer = Player.getPlayerFromFB(object);
+                            ParseAPI.savePlayer(mCurrentPlayer);
+                            loadHeaderWithPlayerInfo();
+                            getAllCompetitionsForUser();
+                        }
+                    });
+                } else {
+                    mCurrentPlayer = objects.get(0);
+                    loadHeaderWithPlayerInfo();
+                    getAllCompetitionsForUser();
+                }
+            }
+        });
+    }
 
-                    tvHeaderName.setText(mCurrentPlayer.getName());
-                    Glide.with(getApplicationContext())
-                            .load(mCurrentPlayer.getProfileImageUrl())
-                            .into(ivHeaderPhoto);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+    private void loadHeaderWithPlayerInfo() {
+        tvHeaderName.setText(mCurrentPlayer.getName());
+        Glide.with(getApplicationContext())
+                .load(mCurrentPlayer.getProfileImageUrl())
+                .into(ivHeaderPhoto);
+    }
+
+    private void getAllCompetitionsForUser() {
+        ParseAPI.getAllCompetitionsForPlayer(mCurrentPlayer, new FindCallback<Competition>() {
+            @Override
+            public void done(List<Competition> objects, ParseException e) {
+                for (Competition competition : objects) {
+                    System.out.println(competition.getName());
                 }
             }
         });
