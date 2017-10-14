@@ -23,6 +23,7 @@ import com.investrapp.investr.R;
 import com.investrapp.investr.apis.AlphAvantageClient;
 import com.investrapp.investr.apis.FacebookAPI;
 import com.investrapp.investr.apis.ParseAPI;
+import com.investrapp.investr.apis.SharadarClient;
 import com.investrapp.investr.fragments.RankingsFragment;
 import com.investrapp.investr.models.Player;
 import com.investrapp.investr.models.Competition;
@@ -56,8 +57,7 @@ public class CompetitionActivity extends AppCompatActivity {
         setupNavigationViewHeader();
         getCurrentUser();
         setupInitialFragment();
-
-        AlphAvantageClient.queryAllCrypotocurrencies();
+        
     }
 
     private void setupToolbar() {

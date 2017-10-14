@@ -4,6 +4,7 @@ import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
 import com.investrapp.investr.models.Cryptocurrency;
 import com.investrapp.investr.models.Player;
+import com.investrapp.investr.models.Stock;
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
 
@@ -55,6 +56,10 @@ public class ParseAPI {
 
     public static void addCryptocurrency(Cryptocurrency cryptocurrency) {
         cryptocurrency.saveInBackground();
+    }
+
+    public static void addStock(Stock stock) {
+        stock.saveInBackground();
     }
 
 }

@@ -61,4 +61,12 @@ public static void addAllCryptocurrencies(List<Cryptocurrency> cryptocurrencyLis
         ParseAPI.addCryptocurrency(cryptocurrency);
     }
 }
+
+public static void addAllStocks(List<Stock> stockList) {
+
+    for (Stock stock : stockList) {
+        ParseAPI.addStock(stock);
+    }
+
+}
 }
