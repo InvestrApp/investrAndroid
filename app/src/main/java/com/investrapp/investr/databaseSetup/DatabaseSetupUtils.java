@@ -1,9 +1,12 @@
 package com.investrapp.investr.databaseSetup;
 
 import com.investrapp.investr.apis.ParseAPI;
+import com.investrapp.investr.interfaces.AlphaAvantageClientListener;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
+import com.investrapp.investr.models.Cryptocurrency;
 import com.investrapp.investr.models.Player;
+import com.investrapp.investr.models.Stock;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
@@ -52,4 +55,10 @@ public class DatabaseSetupUtils {
         });
     }
 
+public static void addAllCryptocurrencies(List<Cryptocurrency> cryptocurrencyList) {
+
+    for (Cryptocurrency cryptocurrency : cryptocurrencyList) {
+        ParseAPI.addCryptocurrency(cryptocurrency);
+    }
+}
 }
