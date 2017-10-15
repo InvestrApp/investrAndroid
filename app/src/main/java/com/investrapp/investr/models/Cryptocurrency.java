@@ -66,10 +66,14 @@ public class Cryptocurrency extends ParseObject {
         try {
             while ((line = reader.readLine()) != null) {
                 String[] row = line.split(",");
-                String ticker = row[0];
-                String name = row[1];
-                Log.d("Cryptocurrency", ticker + " " + name);
-                cryptocurrencyList.add(new Cryptocurrency(ticker, name));
+
+                String ticker = row[0].toUpperCase();
+                
+                if (!ticker.equals("CURRENCY CODE")) {
+                    String name = row[1].toUpperCase();
+                    Log.d("Cryptocurrency", ticker + " " + name);
+                    cryptocurrencyList.add(new Cryptocurrency(ticker, name));
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

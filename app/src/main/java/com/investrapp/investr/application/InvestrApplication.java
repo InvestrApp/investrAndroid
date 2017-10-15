@@ -45,4 +45,5 @@ public class InvestrApplication extends Application {
                 .server(getResources().getString(R.string.parse_server_url))
                 .build());
     }
+
 }
