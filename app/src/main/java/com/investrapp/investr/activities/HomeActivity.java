@@ -46,6 +46,7 @@ public class HomeActivity extends AppCompatActivity {
     private void setupToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Competitions");
     }
 
     private void setupRecyclerView() {

@@ -62,17 +62,32 @@ public class ParseAPI {
         stock.saveInBackground();
     }
 
-    public static void getMatchingStocks(String query, FindCallback<Stock> handler) {
+    public static void getMatchingStocksByName(String query, FindCallback<Stock> handler) {
         ParseQuery<Stock> stockQuery = ParseQuery.getQuery(Stock.class);
         stockQuery.whereContains("name", query.toUpperCase());
         stockQuery.setLimit(300);
         stockQuery.findInBackground(handler);
     }
 
-    public static void getMatchingCryptocurrencies(String query, FindCallback<Cryptocurrency> handler) {
+    public static void getMatchingCryptocurrenciesByName(String query, FindCallback<Cryptocurrency> handler) {
         ParseQuery<Cryptocurrency> cryptocurrencyQuery = ParseQuery.getQuery(Cryptocurrency.class);
         cryptocurrencyQuery.whereContains("name", query.toUpperCase());
         cryptocurrencyQuery.setLimit(300);
         cryptocurrencyQuery.findInBackground(handler);
     }
+
+    public static void getStockByTicker(String query, FindCallback<Stock> handler) {
+        ParseQuery<Stock> stockQuery = ParseQuery.getQuery(Stock.class);
+        stockQuery.whereEqualTo("ticker", query.toUpperCase());
+        stockQuery.setLimit(300);
+        stockQuery.findInBackground(handler);
+    }
+
+    public static void getCryptocurrencyByTicker(String query, FindCallback<Cryptocurrency> handler) {
+        ParseQuery<Cryptocurrency> cryptocurrencyQuery = ParseQuery.getQuery(Cryptocurrency.class);
+        cryptocurrencyQuery.whereEqualTo("ticker", query.toUpperCase());
+        cryptocurrencyQuery.setLimit(300);
+        cryptocurrencyQuery.findInBackground(handler);
+    }
+
 }
