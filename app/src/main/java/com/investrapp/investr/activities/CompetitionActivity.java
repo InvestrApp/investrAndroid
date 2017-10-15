@@ -15,20 +15,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.investrapp.investr.R;
-import com.investrapp.investr.apis.FacebookAPI;
-import com.investrapp.investr.apis.ParseAPI;
 import com.investrapp.investr.fragments.RankingsFragment;
+import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.Player;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class CompetitionActivity extends AppCompatActivity {
 
     private Player mCurrentPlayer;
+    private Competition mCompetition;
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView navigationView;
@@ -47,7 +42,7 @@ public class CompetitionActivity extends AppCompatActivity {
         setupDrawerLayout();
         setupDrawerContent();
         setupNavigationViewHeader();
-        getCurrentUser();
+        getDataFromIntent();
         setupInitialFragment();
     }
 
@@ -80,46 +75,34 @@ public class CompetitionActivity extends AppCompatActivity {
         tvHeaderName = headerLayout.findViewById(R.id.tv_player_name);
     }
 
-    private void getCurrentUser() {
-        FacebookAPI.getCurrentUser(new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-                try {
-                    mCurrentPlayer = Player.getPlayer(object);
-                    ParseAPI.savePlayer(mCurrentPlayer);
+    private void getDataFromIntent() {
+        mCurrentPlayer = getIntent().getParcelableExtra("player");
+        mCompetition = getIntent().getParcelableExtra("competition");
+        System.out.println(mCompetition.getName());
+        loadHeaderWithPlayerInfo();
+    }
 
-                    tvHeaderName.setText(mCurrentPlayer.getName());
-                    Glide.with(getApplicationContext())
-                            .load(mCurrentPlayer.getProfileImageUrl())
-                            .into(ivHeaderPhoto);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    private void loadHeaderWithPlayerInfo() {
+        tvHeaderName.setText(mCurrentPlayer.getName());
+        Glide.with(getApplicationContext())
+                .load(mCurrentPlayer.getProfileImageUrl())
+                .into(ivHeaderPhoto);
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        Fragment fragment = null;
-        Class fragmentClass;
+        Fragment fragment;
         switch(menuItem.getItemId()) {
             case R.id.nav_rankings_fragment:
-                fragmentClass = RankingsFragment.class;
+                fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
                 break;
             case R.id.nav_portfolio_fragment:
-                fragmentClass = RankingsFragment.class;
+                fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
                 break;
             case R.id.nav_marketplace_fragment:
-                fragmentClass = RankingsFragment.class;
+                fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
                 break;
             default:
-                fragmentClass = RankingsFragment.class;
-        }
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
+                fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
         }
 
         // Insert the fragment by replacing any existing fragment
@@ -134,7 +117,7 @@ public class CompetitionActivity extends AppCompatActivity {
     private void setupInitialFragment() {
         navigationView.getMenu().getItem(0).setChecked(true);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, new RankingsFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContent, RankingsFragment.newInstance(mCompetition)).commit();
         setTitle(R.string.rankings);
     }
 
