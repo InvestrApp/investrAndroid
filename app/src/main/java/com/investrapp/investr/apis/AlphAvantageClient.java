@@ -7,11 +7,7 @@ import com.investrapp.investr.R;
 import com.investrapp.investr.databaseSetup.DatabaseSetupUtils;
 import com.investrapp.investr.models.Cryptocurrency;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-
 import java.util.List;
 
 import okhttp3.Call;
@@ -20,8 +16,6 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import static com.investrapp.investr.models.Cryptocurrency.getCrytocurrencyList;
 
 /**
  * Created by michaelsignorotti on 10/13/17.
@@ -34,13 +28,20 @@ public class AlphAvantageClient {
     public static final String SYMBOL = "symbol";
     public static final String INTERVAL = "interval";
     public static final String API_KEY = "apikey";
-
+    public static final String MARKET = "market";
 
     //Alpha Avantage API Parameter Values
+    public static final String USD = "USD";
     public static final String TIME_SERIES_INTRADAY = "TIME_SERIES_INTRADAY";
+    public static final String DIGITAL_CURRENCY_INTRADAY = "DIGITAL_CURRENCY_INTRADAY";
     public static final String PRICE_INTERVAL_ONE_MIN = "1min";
     public static final String ALPHA_AVANTAGE_URL = "https://www.alphavantage.co/query";
     public static final String ALPHA_AVANTAGE_CRYPTOCURRENCY_LIST_URL = "https://www.alphavantage.co/digital_currency_list/";
+    public static String ALPHA_AVANTAGE_API_KEY;
+
+    public AlphAvantageClient(Context context) {
+        ALPHA_AVANTAGE_API_KEY = context.getResources().getString(R.string.ALPHA_AVANTAGE_API_KEY);
+    }
 
     /**
      * This method retrieves the current stock price from the Alpha Advantage API. Specifying the
@@ -51,43 +52,35 @@ public class AlphAvantageClient {
      * @param symbol: The ticker symbol of a particular stock.
      */
 
-    public static void queryCurrentStockPrice(Context context, String symbol) {
+    public static void getCurrentStockPrice(String symbol, AlphAvantageStockCallHandler handler) {
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_AVANTAGE_URL).newBuilder();
-        urlBuilder.addQueryParameter(API_KEY, context.getResources().getString(R.string.ALPHA_AVANTAGE_API_KEY));
+        urlBuilder.addQueryParameter(API_KEY, ALPHA_AVANTAGE_API_KEY);
         urlBuilder.addQueryParameter(FUNCTION, TIME_SERIES_INTRADAY);
         urlBuilder.addQueryParameter(INTERVAL, PRICE_INTERVAL_ONE_MIN);
         urlBuilder.addQueryParameter(SYMBOL, symbol);
 
         String url = urlBuilder.build().toString();
-
         Request request = new Request.Builder()
                 .url(url)
                 .build();
+        client.newCall(request).enqueue(handler);
+    }
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e("AlphaAvantageClient", e.toString());
-                e.printStackTrace();
-            }
+    public static void getCurrentDiginalCurrencyPrice(String symbol, AlphAvantageDigitalCurrencyCallHandler handler) {
+        OkHttpClient client = new OkHttpClient();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_AVANTAGE_URL).newBuilder();
+        urlBuilder.addQueryParameter(API_KEY, ALPHA_AVANTAGE_API_KEY);
+        urlBuilder.addQueryParameter(FUNCTION, DIGITAL_CURRENCY_INTRADAY);
+        urlBuilder.addQueryParameter(MARKET, USD);
+        urlBuilder.addQueryParameter(INTERVAL, PRICE_INTERVAL_ONE_MIN);
+        urlBuilder.addQueryParameter(SYMBOL, symbol);
 
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                if (!response.isSuccessful()) {
-                    Log.e("AlphaAvantageClient", response.toString());
-                    throw new IOException("Unexpected code " + response);
-                }
-                String responseData = response.body().string();
-
-                try {
-                    JSONObject jsonObject = new JSONObject(responseData);
-                    JSONObject timeSeries = jsonObject.getJSONObject("Time Series (1min)");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        String url = urlBuilder.build().toString();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        client.newCall(request).enqueue(handler);
     }
 
     public static void queryAllCrypotocurrencies() {
@@ -114,7 +107,8 @@ public class AlphAvantageClient {
                 }
                 List<Cryptocurrency> cryptocurrencyList = Cryptocurrency.getCrytocurrencyList(response);
                 DatabaseSetupUtils.addAllCryptocurrencies(cryptocurrencyList);
-                }
+            }
         });
     }
+
 }

@@ -25,7 +25,6 @@ public class SharadarClient {
     public static final String SHARADAR_API_ALL_STOCKS = "http://www.sharadar.com/meta/tickers.json";
 
     public static void queryAllStocks() {
-
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(SHARADAR_API_ALL_STOCKS).newBuilder();
         String url = urlBuilder.build().toString();
@@ -60,6 +59,5 @@ public class SharadarClient {
                 }
             }
         });
-
     }
 }

@@ -26,8 +26,6 @@ import com.parse.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.investrapp.investr.R.string.stock;
-
 public class MarketplaceFragment extends Fragment {
 
     AssetAdapter assetAdapter;
@@ -117,7 +115,7 @@ public class MarketplaceFragment extends Fragment {
     }
 
     private void getMatchingStocks(String query) {
-        ParseAPI.getMatchingStocks(query, new FindCallback<Stock>() {
+        ParseAPI.getMatchingStocksByName(query, new FindCallback<Stock>() {
             @Override
             public void done(List<Stock> stocks, ParseException e) {
                 Log.d("CompetitionActivity", "size:  " + stocks.size());
@@ -129,7 +127,7 @@ public class MarketplaceFragment extends Fragment {
     }
 
     private void getMatchingCryptocurrency(String query) {
-        ParseAPI.getMatchingCryptocurrencies(query, new FindCallback<Cryptocurrency>() {
+        ParseAPI.getMatchingCryptocurrenciesByName(query, new FindCallback<Cryptocurrency>() {
             @Override
             public void done(List<Cryptocurrency> cryptocurrencies, ParseException e) {
                 Log.d("CompetitionActivity", "size:  " + cryptocurrencies.size());
