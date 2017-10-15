@@ -21,7 +21,7 @@ import static java.lang.System.in;
  */
 
 @ParseClassName("Cryptocurrency")
-public class Cryptocurrency extends ParseObject {
+public class Cryptocurrency extends ParseObject implements Asset {
 
     private String ticker;
     private String name;

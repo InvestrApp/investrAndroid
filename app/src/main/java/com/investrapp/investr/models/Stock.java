@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 @ParseClassName("Stock")
-public class Stock extends ParseObject {
+public class Stock extends ParseObject implements Asset{
 
     private String ticker;
     private String name;

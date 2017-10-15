@@ -64,14 +64,14 @@ public class ParseAPI {
 
     public static void getMatchingStocks(String query, FindCallback<Stock> handler) {
         ParseQuery<Stock> stockQuery = ParseQuery.getQuery(Stock.class);
-        stockQuery.whereContains("name", query);
+        stockQuery.whereContains("name", query.toUpperCase());
         stockQuery.setLimit(300);
         stockQuery.findInBackground(handler);
     }
 
     public static void getMatchingCryptocurrencies(String query, FindCallback<Cryptocurrency> handler) {
         ParseQuery<Cryptocurrency> cryptocurrencyQuery = ParseQuery.getQuery(Cryptocurrency.class);
-        cryptocurrencyQuery.whereContains("name", query);
+        cryptocurrencyQuery.whereContains("name", query.toUpperCase());
         cryptocurrencyQuery.setLimit(300);
         cryptocurrencyQuery.findInBackground(handler);
     }
