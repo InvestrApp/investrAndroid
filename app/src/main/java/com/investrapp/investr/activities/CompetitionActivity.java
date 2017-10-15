@@ -1,5 +1,6 @@
 package com.investrapp.investr.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,8 @@ import com.investrapp.investr.R;
 
 import com.investrapp.investr.fragments.MarketplaceFragment;
 import com.investrapp.investr.fragments.RankingsFragment;
+import com.investrapp.investr.interfaces.OnAssetSelectedListener;
+import com.investrapp.investr.models.Asset;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.Player;
 
@@ -30,9 +33,11 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
-public class CompetitionActivity extends AppCompatActivity {
+public class CompetitionActivity extends AppCompatActivity implements OnAssetSelectedListener {
 
     private Player mCurrentPlayer;
     private Competition mCompetition;
@@ -145,5 +150,15 @@ public class CompetitionActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onAssetSelected(Asset asset) {
+
+        // first parameter is the context, second is the class of the activity to launch
+        Intent i = new Intent(CompetitionActivity.this, AssetActivity.class);
+        i.putExtra("ticker", asset.getTicker());
+        //i.putExtra("asset", Parcels.wrap(asset));
+        startActivity(i);
     }
 }

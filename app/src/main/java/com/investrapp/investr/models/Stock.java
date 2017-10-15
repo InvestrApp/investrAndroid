@@ -6,6 +6,7 @@ import com.parse.ParseObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +16,15 @@ import java.util.List;
 /**
  * Created by michaelsignorotti on 10/14/17.
  */
-
 @ParseClassName("Stock")
 public class Stock extends ParseObject implements Asset{
 
-    private String ticker;
-    private String name;
-    private String sector;
-    private String exchange;
-    private String industry;
-    private boolean isForeign;
+    public String ticker;
+    public String name;
+    public String sector;
+    public String exchange;
+    public String industry;
+    public boolean isForeign;
 
     public Stock() {
         super();

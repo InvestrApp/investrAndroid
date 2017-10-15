@@ -17,6 +17,8 @@ import android.widget.EditText;
 import com.investrapp.investr.R;
 import com.investrapp.investr.adapters.AssetAdapter;
 import com.investrapp.investr.apis.ParseAPI;
+import com.investrapp.investr.interfaces.AssetAdapterListener;
+import com.investrapp.investr.interfaces.OnAssetSelectedListener;
 import com.investrapp.investr.models.Asset;
 import com.investrapp.investr.models.Cryptocurrency;
 import com.investrapp.investr.models.Stock;
@@ -28,7 +30,7 @@ import java.util.List;
 
 import static com.investrapp.investr.R.string.stock;
 
-public class MarketplaceFragment extends Fragment {
+public class MarketplaceFragment extends Fragment implements AssetAdapterListener {
 
     AssetAdapter assetAdapter;
     ArrayList<Asset> assets;
@@ -70,7 +72,7 @@ public class MarketplaceFragment extends Fragment {
 
         assets = new ArrayList<Asset>();
 
-        assetAdapter = new AssetAdapter(assets);
+        assetAdapter = new AssetAdapter(assets, this);
         linearLayoutManager = new LinearLayoutManager(getContext());
         rvAssets.setLayoutManager(linearLayoutManager);
 
@@ -140,4 +142,9 @@ public class MarketplaceFragment extends Fragment {
         });
     }
 
+    @Override
+    public void assetSelected(int position) {
+        Asset asset = assets.get(position);
+        ((OnAssetSelectedListener) getContext()).onAssetSelected(asset);
+    }
 }

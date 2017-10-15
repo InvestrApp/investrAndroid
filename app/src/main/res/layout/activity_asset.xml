@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.investrapp.investr.activities.AssetActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/AssetToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:title="@string/app_name"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_alignParentStart="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:id="@+id/rlAssetHeader"
+        android:layout_below="@+id/AssetToolbar">
+
+
+        <TextView
+            android:id="@+id/tvAssetName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
+            android:text="name"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:id="@+id/tvAssetTicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ticker"
+            android:layout_below="@+id/tvAssetName"
+            android:layout_alignStart="@+id/tvAssetName"
+            android:layout_marginTop="10dp" />
+
+
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/flContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rlAssetHeader">
+
+    </FrameLayout>
+
+</RelativeLayout>

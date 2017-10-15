@@ -5,6 +5,8 @@ import android.util.Log;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import org.parceler.Parcel;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,11 +22,12 @@ import static java.lang.System.in;
  * Created by michaelsignorotti on 10/14/17.
  */
 
+
 @ParseClassName("Cryptocurrency")
 public class Cryptocurrency extends ParseObject implements Asset {
 
-    private String ticker;
-    private String name;
+    public String ticker;
+    public String name;
 
     public Cryptocurrency() {
         super();

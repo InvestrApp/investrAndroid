@@ -28,7 +28,6 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,8 +35,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.HomeActivity"/>
+        <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.CompetitionActivity" />
+        <activity android:name=".activities.AssetActivity"></activity>
     </application>
 
 </manifest>
