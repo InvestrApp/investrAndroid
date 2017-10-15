@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
                         protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                             mProfileTracker.stopTracking();
                         }
+
                     };
                 }
                 else {
@@ -71,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                         "Error",
                         Toast.LENGTH_LONG).show();
             }
+
         });
     }
 
