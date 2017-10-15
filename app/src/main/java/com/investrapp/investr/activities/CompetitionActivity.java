@@ -9,34 +9,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.investrapp.investr.R;
-import com.investrapp.investr.apis.AlphAvantageClient;
-import com.investrapp.investr.apis.FacebookAPI;
-import com.investrapp.investr.apis.ParseAPI;
-import com.investrapp.investr.apis.SharadarClient;
 import com.investrapp.investr.fragments.RankingsFragment;
-import com.investrapp.investr.models.Player;
 import com.investrapp.investr.models.Competition;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-
-import org.json.JSONObject;
-
-import java.util.List;
+import com.investrapp.investr.models.Player;
 
 public class CompetitionActivity extends AppCompatActivity {
 
     private Player mCurrentPlayer;
+    private Competition mCompetition;
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView navigationView;
@@ -55,9 +42,8 @@ public class CompetitionActivity extends AppCompatActivity {
         setupDrawerLayout();
         setupDrawerContent();
         setupNavigationViewHeader();
-        getCurrentUser();
+        getDataFromIntent();
         setupInitialFragment();
-        
     }
 
     private void setupToolbar() {
@@ -89,28 +75,11 @@ public class CompetitionActivity extends AppCompatActivity {
         tvHeaderName = headerLayout.findViewById(R.id.tv_player_name);
     }
 
-    private void getCurrentUser() {
-        ParseAPI.getPlayer(Profile.getCurrentProfile().getId(), new FindCallback<Player>() {
-            @Override
-            public void done(List<Player> objects, ParseException e) {
-                if (objects.size() == 0) {
-                    FacebookAPI.getCurrentUser(new GraphRequest.GraphJSONObjectCallback() {
-                        @Override
-                        public void onCompleted(JSONObject object, GraphResponse response) {
-                            Log.d("fb_response", object.toString());
-                            mCurrentPlayer = Player.getPlayerFromFB(object);
-                            ParseAPI.savePlayer(mCurrentPlayer);
-                            loadHeaderWithPlayerInfo();
-                            getAllCompetitionsForUser();
-                        }
-                    });
-                } else {
-                    mCurrentPlayer = objects.get(0);
-                    loadHeaderWithPlayerInfo();
-                    getAllCompetitionsForUser();
-                }
-            }
-        });
+    private void getDataFromIntent() {
+        mCurrentPlayer = getIntent().getParcelableExtra("player");
+        mCompetition = getIntent().getParcelableExtra("competition");
+        System.out.println(mCompetition.getName());
+        loadHeaderWithPlayerInfo();
     }
 
     private void loadHeaderWithPlayerInfo() {
@@ -120,38 +89,20 @@ public class CompetitionActivity extends AppCompatActivity {
                 .into(ivHeaderPhoto);
     }
 
-    private void getAllCompetitionsForUser() {
-        ParseAPI.getAllCompetitionsForPlayer(mCurrentPlayer, new FindCallback<Competition>() {
-            @Override
-            public void done(List<Competition> objects, ParseException e) {
-                for (Competition competition : objects) {
-                    System.out.println(competition.getName());
-                }
-            }
-        });
-    }
-
     public void selectDrawerItem(MenuItem menuItem) {
-        Fragment fragment = null;
-        Class fragmentClass;
+        Fragment fragment;
         switch(menuItem.getItemId()) {
             case R.id.nav_rankings_fragment:
-                fragmentClass = RankingsFragment.class;
+                fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
                 break;
             case R.id.nav_portfolio_fragment:
-                fragmentClass = RankingsFragment.class;
+                fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
                 break;
             case R.id.nav_marketplace_fragment:
-                fragmentClass = RankingsFragment.class;
+                fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
                 break;
             default:
-                fragmentClass = RankingsFragment.class;
-        }
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
+                fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
         }
 
         // Insert the fragment by replacing any existing fragment
@@ -166,7 +117,7 @@ public class CompetitionActivity extends AppCompatActivity {
     private void setupInitialFragment() {
         navigationView.getMenu().getItem(0).setChecked(true);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, new RankingsFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContent, RankingsFragment.newInstance(mCompetition)).commit();
         setTitle(R.string.rankings);
     }
 

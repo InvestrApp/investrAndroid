@@ -34,11 +34,11 @@ public class Competition extends ParseObject {
         return getString("name");
     }
 
-    public Date getmStartDate() {
+    public Date getStartDate() {
         return getDate("start_date");
     }
 
-    public Date getmEndDate() {
+    public Date getEndDate() {
         return getDate("end_date");
     }
 
