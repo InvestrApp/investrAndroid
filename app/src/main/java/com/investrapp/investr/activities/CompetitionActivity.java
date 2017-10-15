@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,9 +17,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.investrapp.investr.R;
+
+import com.investrapp.investr.fragments.MarketplaceFragment;
 import com.investrapp.investr.fragments.RankingsFragment;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.Player;
+
+import com.investrapp.investr.apis.ParseAPI;
+import com.investrapp.investr.models.Cryptocurrency;
+import com.investrapp.investr.models.Stock;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+
+
+import java.util.List;
 
 public class CompetitionActivity extends AppCompatActivity {
 
@@ -44,6 +56,8 @@ public class CompetitionActivity extends AppCompatActivity {
         setupNavigationViewHeader();
         getDataFromIntent();
         setupInitialFragment();
+        
+
     }
 
     private void setupToolbar() {
@@ -99,7 +113,7 @@ public class CompetitionActivity extends AppCompatActivity {
                 fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
                 break;
             case R.id.nav_marketplace_fragment:
-                fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
+                fragment = (MarketplaceFragment) MarketplaceFragment.newInstance();
                 break;
             default:
                 fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
@@ -132,5 +146,4 @@ public class CompetitionActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

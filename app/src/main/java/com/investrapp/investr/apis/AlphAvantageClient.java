@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+
 import java.util.List;
 
 import okhttp3.Call;
@@ -19,6 +20,8 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.investrapp.investr.models.Cryptocurrency.getCrytocurrencyList;
 
 /**
  * Created by michaelsignorotti on 10/13/17.

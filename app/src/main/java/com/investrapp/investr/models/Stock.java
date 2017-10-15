@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 @ParseClassName("Stock")
-public class Stock extends ParseObject {
+public class Stock extends ParseObject implements Asset{
 
     private String ticker;
     private String name;
@@ -105,8 +105,10 @@ public class Stock extends ParseObject {
 
                 String exchangeTemp = jsonObject.getString("Exchange");
                 if (!exchangeTemp.equals("DELISTED")) {
-                    String tickerTemp = jsonObject.getString("Ticker");
-                    String nameTemp = jsonObject.getString("Name");
+
+                    String tickerTemp = jsonObject.getString("Ticker").toUpperCase();
+                    String nameTemp = jsonObject.getString("Name").toUpperCase();
+
                     String sectorTemp = jsonObject.getString("Sector");
                     String industryTemp = jsonObject.getString("Industry");
                     String foreignTemp = jsonObject.getString("Is Foreign");
