@@ -12,9 +12,12 @@ import android.view.ViewGroup;
 
 import com.investrapp.investr.R;
 import com.investrapp.investr.adapters.PriceAdapter;
+import com.investrapp.investr.apis.AlphaVantageClient;
+import com.investrapp.investr.apis.AlphaVantageDigitalCurrencyPricesCallHandler;
 import com.investrapp.investr.models.Price;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class AssetPriceFragment extends Fragment  {
@@ -58,11 +61,30 @@ public class AssetPriceFragment extends Fragment  {
         rvPrices.setAdapter(priceAdapter);
 
 
-        this.ticker = getArguments().getParcelable("ticker");
+        this.ticker = getArguments().getString("ticker");
+        loadPrices(ticker);
 
         return v;
     }
 
+    public void loadPrices(String assetTicker) {
+        AlphaVantageClient.getCurrentDigitalCurrencyPricesMonthly(assetTicker, new AlphaVantageDigitalCurrencyPricesCallHandler() {
+            @Override
+            public void onPricesResponse(List<Price> prices) {
+                updatePrices(prices);
+            }
+        });
+    }
 
+    public void updatePrices(final List<Price> pricesList) {
+
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                prices.addAll(pricesList);
+                priceAdapter.notifyDataSetChanged();
+            }
+        });
+
+    }
 }
 

@@ -1,7 +1,5 @@
 package com.investrapp.investr.models;
 
-import org.parceler.Parcel;
-
 /**
  * Created by michaelsignorotti on 10/14/17.
  */

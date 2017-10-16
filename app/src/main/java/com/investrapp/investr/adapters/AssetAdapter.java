@@ -6,27 +6,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.investrapp.investr.R;
 import com.investrapp.investr.interfaces.AssetAdapterListener;
 import com.investrapp.investr.models.Asset;
-import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.Cryptocurrency;
 import com.investrapp.investr.models.Stock;
 
 import java.util.List;
 
-import static com.investrapp.investr.application.InvestrApplication.context;
 
 
 public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.ViewHolder> {
 
     private List<Asset> mAssets;
     private Context mContext;
+
     private AssetAdapterListener assetAdapterListener;
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         public TextView tvName;
         public TextView tvTicker;
 
@@ -34,6 +33,7 @@ public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.ViewHolder> 
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             tvTicker = (TextView) itemView.findViewById(R.id.tvTicker);
+
 
             // Attach a click listener to the entire row view
             itemView.setOnClickListener(this);
@@ -58,7 +58,6 @@ public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.ViewHolder> 
     public AssetAdapter(List<Asset> assets, AssetAdapterListener assetAdapterListener) {
         this.mAssets = assets;
         this.assetAdapterListener = assetAdapterListener;
-
     }
 
     public Context getContext() {
@@ -67,9 +66,9 @@ public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         this.mContext = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
-
         View vAsset = inflater.inflate(R.layout.item_asset, parent, false);
         ViewHolder vhAsset = new ViewHolder(vAsset);
         return vhAsset;

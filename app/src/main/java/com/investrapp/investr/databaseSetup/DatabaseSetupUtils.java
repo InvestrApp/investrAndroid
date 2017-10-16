@@ -1,7 +1,8 @@
 package com.investrapp.investr.databaseSetup;
 
+import com.investrapp.investr.apis.AlphaVantageClient;
+import com.investrapp.investr.apis.AlphaVantageDigitalCurrencyCurrentPriceCallHandler;
 import com.investrapp.investr.apis.ParseAPI;
-import com.investrapp.investr.interfaces.AlphaAvantageClientListener;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
 import com.investrapp.investr.models.Cryptocurrency;
@@ -55,18 +56,35 @@ public class DatabaseSetupUtils {
         });
     }
 
-public static void addAllCryptocurrencies(List<Cryptocurrency> cryptocurrencyList) {
-
-    for (Cryptocurrency cryptocurrency : cryptocurrencyList) {
-        ParseAPI.addCryptocurrency(cryptocurrency);
-    }
-}
-
-public static void addAllStocks(List<Stock> stockList) {
-
-    for (Stock stock : stockList) {
-        ParseAPI.addStock(stock);
+    public static void addAllCryptocurrencies(List<Cryptocurrency> cryptocurrencyList) {
+        for (Cryptocurrency cryptocurrency : cryptocurrencyList) {
+            ParseAPI.addCryptocurrency(cryptocurrency);
+        }
     }
 
-}
+    public static void addAllStocks(List<Stock> stockList) {
+        for (Stock stock : stockList) {
+            ParseAPI.addStock(stock);
+        }
+    }
+
+    public static void addSomeTransactions(Player player, Competition competition) {
+        Calendar calendar = new GregorianCalendar();
+        Date currentDate = calendar.getTime();
+        ParseAPI.getCryptocurrencyByTicker("ETH", new FindCallback<Cryptocurrency>() {
+            @Override
+            public void done(List<Cryptocurrency> objects, ParseException e) {
+                AlphaVantageClient.getCurrentDigitalCurrencyPrice(objects.get(0).getTicker(), new AlphaVantageDigitalCurrencyCurrentPriceCallHandler() {
+                    @Override
+                    public void onPriceResponse(Double price) {
+                        System.out.println(price);
+                    }
+                });
+
+
+            }
+        });
+        //Transaction transaction = new Transaction(player, competition, asset, currentDate, Transaction.TransactionAction.BUY)
+    }
+
 }

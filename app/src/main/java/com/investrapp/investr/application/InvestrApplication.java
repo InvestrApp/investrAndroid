@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.investrapp.investr.R;
+import com.investrapp.investr.apis.AlphaVantageClient;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
 import com.investrapp.investr.models.Cryptocurrency;
@@ -44,6 +45,8 @@ public class InvestrApplication extends Application {
                 .clientBuilder(builder)
                 .server(getResources().getString(R.string.parse_server_url))
                 .build());
+
+        new AlphaVantageClient(this);
     }
 
 }
