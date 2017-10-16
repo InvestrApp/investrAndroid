@@ -8,9 +8,9 @@ Investr is an app that allows individuals and groups to compete in the virtual i
 
 Core:
 
-* [] Users can login via Facebook.
+* [x] Users can login via Facebook.
 * [] Users can receive push notifications concerning market movements.
-* [] Users can access a marketplace where they can perform the following actions.
+* [x] Users can access a marketplace where they can perform the following actions.
 * [] Users can buy and sell assets.
 * [] Users can view an asset's current price and historical performance.
 * [] User can create custom competitions.
@@ -34,7 +34,7 @@ Stretch:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://www.smallcapasia.com/wp-content/uploads/2017/08/5-stocks-under-1-ringgit.jpg' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/nUGpN2q.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

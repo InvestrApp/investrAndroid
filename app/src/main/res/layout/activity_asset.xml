@@ -29,14 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
-            android:text="name"
+            android:text="Bitcoin"
             android:layout_alignParentTop="true" />
 
         <TextView
             android:id="@+id/tvAssetTicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ticker"
+            android:text="BTC"
             android:layout_below="@+id/tvAssetName"
             android:layout_alignStart="@+id/tvAssetName"
             android:layout_marginTop="10dp" />
