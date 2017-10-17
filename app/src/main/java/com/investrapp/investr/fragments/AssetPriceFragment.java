@@ -77,14 +77,13 @@ public class AssetPriceFragment extends Fragment  {
     }
 
     public void updatePrices(final List<Price> pricesList) {
-
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 prices.addAll(pricesList);
                 priceAdapter.notifyDataSetChanged();
             }
         });
-
     }
+
 }
 
