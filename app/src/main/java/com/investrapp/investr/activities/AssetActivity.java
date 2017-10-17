@@ -1,13 +1,16 @@
 package com.investrapp.investr.activities;
 
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.investrapp.investr.R;
 import com.investrapp.investr.fragments.AssetPriceFragment;
+import com.investrapp.investr.fragments.PricesPagerAdapter;
 import com.investrapp.investr.models.Asset;
 
 import org.parceler.Parcels;
@@ -17,7 +20,10 @@ public class AssetActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
-    Asset asset;
+    ViewPager vpPager;
+    TabLayout tabLayout;
+
+    PricesPagerAdapter pricesPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +41,13 @@ public class AssetActivity extends AppCompatActivity {
         //Asset asset = (Asset) Parcels.unwrap(getIntent().getParcelableExtra("asset"));
 
 
+        vpPager = (ViewPager) findViewById(R.id.viewpager);
 
-        //create the user fragment
-        AssetPriceFragment userTimelineFragment = AssetPriceFragment.newInstance(ticker);
+        pricesPagerAdapter = new PricesPagerAdapter(getSupportFragmentManager(), this);
+        vpPager.setAdapter(pricesPagerAdapter);
 
-        //display the user timeline fragment inside the container dynamically
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-
-        //make changes
-        ft.replace(R.id.flContainer, userTimelineFragment);
-        //commit
-        ft.commit();
+        tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(vpPager);
 
     }
-
 }
