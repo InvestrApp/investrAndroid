@@ -6,6 +6,7 @@ package com.investrapp.investr.models;
 
 public interface Asset {
 
+    String assetType();
     String getName();
     String getTicker();
     void setName(String name);

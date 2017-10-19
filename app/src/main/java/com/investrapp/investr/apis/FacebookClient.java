@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 
-public class FacebookAPI {
+public class FacebookClient {
 
     public static void getCurrentUser(GraphRequest.GraphJSONObjectCallback handler) {
         GraphRequest request = GraphRequest.newMeRequest(

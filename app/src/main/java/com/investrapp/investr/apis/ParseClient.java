@@ -1,29 +1,30 @@
 package com.investrapp.investr.apis;
 
+import com.investrapp.investr.apis.handlers.ParseGetAllCompetitionsForPlayerHandler;
+import com.investrapp.investr.models.Cash;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
 import com.investrapp.investr.models.Cryptocurrency;
 import com.investrapp.investr.models.Player;
 import com.investrapp.investr.models.Stock;
+import com.investrapp.investr.models.Transaction;
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
 
-public class ParseAPI {
+public class ParseClient {
 
-    public static void getAllCompetitionsForPlayer(Player player, FindCallback<Competition> handler) {
+    public static void getAllCompetitionsForPlayer(Player player, ParseGetAllCompetitionsForPlayerHandler handler) {
         ParseQuery<CompetitionPlayer> competitionPlayerParseQuery = ParseQuery.getQuery(CompetitionPlayer.class);
+        competitionPlayerParseQuery.include("competition");
         competitionPlayerParseQuery.whereEqualTo("player", player);
-        ParseQuery<Competition> competitionParseQuery = ParseQuery.getQuery(Competition.class);
-        competitionParseQuery.whereDoesNotMatchQuery("objectId", competitionPlayerParseQuery);
-        competitionParseQuery.findInBackground(handler);
+        competitionPlayerParseQuery.findInBackground(handler);
     }
 
-    public static void getAllPlayersInCompetition(Competition competition, FindCallback<Player> handler) {
+    public static void getAllPlayersInCompetition(Competition competition, FindCallback<CompetitionPlayer> handler) {
         ParseQuery<CompetitionPlayer> competitionPlayerParseQuery = ParseQuery.getQuery(CompetitionPlayer.class);
+        competitionPlayerParseQuery.include("player");
         competitionPlayerParseQuery.whereEqualTo("competition", competition);
-        ParseQuery<Player> playerParseQuery = ParseQuery.getQuery(Player.class);
-        playerParseQuery.whereMatchesQuery("objectId", competitionPlayerParseQuery);
-        playerParseQuery.findInBackground(handler);
+        competitionPlayerParseQuery.findInBackground(handler);
     }
 
     public static void addCompetition(final Competition competition) {
@@ -62,7 +63,6 @@ public class ParseAPI {
         stock.saveInBackground();
     }
 
-
     public static void getMatchingStocksByName(String query, FindCallback<Stock> handler) {
         ParseQuery<Stock> stockQuery = ParseQuery.getQuery(Stock.class);
         stockQuery.whereContains("name", query.toUpperCase());
@@ -80,14 +80,46 @@ public class ParseAPI {
     public static void getStockByTicker(String query, FindCallback<Stock> handler) {
         ParseQuery<Stock> stockQuery = ParseQuery.getQuery(Stock.class);
         stockQuery.whereEqualTo("ticker", query.toUpperCase());
-        stockQuery.setLimit(300);
+        stockQuery.setLimit(1);
         stockQuery.findInBackground(handler);
     }
 
     public static void getCryptocurrencyByTicker(String query, FindCallback<Cryptocurrency> handler) {
         ParseQuery<Cryptocurrency> cryptocurrencyQuery = ParseQuery.getQuery(Cryptocurrency.class);
         cryptocurrencyQuery.whereEqualTo("ticker", query.toUpperCase());
-        cryptocurrencyQuery.setLimit(300);
+        cryptocurrencyQuery.setLimit(1);
         cryptocurrencyQuery.findInBackground(handler);
     }
+
+    public static void addCash(Cash cash) {
+        cash.saveInBackground();
+    }
+
+    public static void getCashObject(FindCallback<Cash> handler) {
+        ParseQuery<Cash> query = ParseQuery.getQuery(Cash.class);
+        query.whereEqualTo("ticker", "CASH");
+        query.findInBackground(handler);
+    }
+
+    public static void addTransaction(Transaction transaction) {
+        transaction.saveInBackground();
+    }
+
+    public static void getCashForPlayerInCompetition(Player player, Competition competition, FindCallback<Transaction> handler) {
+        ParseQuery<Transaction> transactionParseQuery = ParseQuery.getQuery(Transaction.class);
+        transactionParseQuery.whereEqualTo("player", player);
+        transactionParseQuery.whereEqualTo("competition", competition);
+        transactionParseQuery.whereEqualTo("asset_type", Cash.ASSET_TYPE);
+        transactionParseQuery.setLimit(1);
+        transactionParseQuery.findInBackground(handler);
+    }
+
+    public static void getTransactionsForPlayerInCompetition(Player player, Competition competition, FindCallback<Transaction> handler) {
+        ParseQuery<Transaction> transactionParseQuery = ParseQuery.getQuery(Transaction.class);
+        transactionParseQuery.whereEqualTo("player", player);
+        transactionParseQuery.whereEqualTo("competition", competition);
+        transactionParseQuery.setLimit(999);
+        transactionParseQuery.findInBackground(handler);
+    }
+
 }

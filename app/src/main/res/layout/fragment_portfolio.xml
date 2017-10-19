@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.investrapp.investr.fragments.PortfolioFragment">
+
+    <RelativeLayout
+        android:id="@+id/rlHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivPlayerProfile"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_toEndOf="@id/ivPlayerProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
+            tools:text="Name" />
+
+        <TextView
+            android:id="@+id/tvPortfolioValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvName"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/ivPlayerProfile"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            tools:text="portfolio value" />
+
+        <TextView
+            android:id="@+id/tvCashValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvPortfolioValue"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/ivPlayerProfile"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            tools:text="available cash" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvTransactions"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlHeader" />
+
+</RelativeLayout>

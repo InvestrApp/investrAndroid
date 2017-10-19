@@ -6,25 +6,18 @@ import com.parse.ParseObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 /**
  * Created by michaelsignorotti on 10/14/17.
  */
-@ParseClassName("Stock")
-public class Stock extends ParseObject implements Asset{
 
-    public String ticker;
-    public String name;
-    public String sector;
-    public String exchange;
-    public String industry;
-    public boolean isForeign;
+@ParseClassName("Stock")
+public class Stock extends ParseObject implements Asset {
+
+    public static String ASSET_TYPE = "stock";
 
     public Stock() {
         super();
@@ -38,14 +31,7 @@ public class Stock extends ParseObject implements Asset{
         setExchange(exchange);
         setIndustry(industry);
         setForeign(isForeign);
-        this.ticker = ticker;
-        this.name = name;
-        this.sector = sector;
-        this.exchange = exchange;
-        this.industry = industry;
-        this.isForeign = isForeign;
     }
-
 
     public String getTicker() {
         return getString("ticker");
@@ -95,10 +81,12 @@ public class Stock extends ParseObject implements Asset{
         put("is_foreign", foreign);
     }
 
+    public String assetType() {
+        return ASSET_TYPE;
+    }
+
     public static List<Stock> getStockList(JSONArray jsonArray) {
-
         ArrayList<Stock> stockList = new ArrayList<Stock>();
-
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
@@ -124,4 +112,5 @@ public class Stock extends ParseObject implements Asset{
         }
         return stockList;
     }
+
 }

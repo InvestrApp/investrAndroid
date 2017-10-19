@@ -25,8 +25,7 @@ public class RankingsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_rankings, container, false);
         TextView textView = (TextView) view.findViewById(R.id.tvPlaceholder);
         mCompetition = getArguments().getParcelable("competiton");

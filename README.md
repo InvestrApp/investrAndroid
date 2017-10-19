@@ -9,26 +9,26 @@ Investr is an app that allows individuals and groups to compete in the virtual i
 Core:
 
 * [x] Users can login via Facebook.
-* [] Users can receive push notifications concerning market movements.
+* [ ] Users can receive push notifications concerning market movements.
 * [x] Users can access a marketplace where they can perform the following actions.
-* [] Users can buy and sell assets.
-* [] Users can view an asset's current price and historical performance.
-* [] User can create custom competitions.
-* [] Competitions can have a custom starting and ending date.
-* [] Competitions can only include users added by the creator of the competition.
-* [] The initial investment amount is variable but uniform across all participants.
-* [] The competition can be limited to particular classes of investments.
-* [] Users can review their portfolios for each of their competitions.
-* [] Users can add themselves to location based competitions.
-* [] Users can review rankings within each competition.
+* [ ] Users can buy and sell assets.
+* [ ] Users can view an asset's current price and historical performance.
+* [ ] User can create custom competitions.
+* [ ] Competitions can have a custom starting and ending date.
+* [ ] Competitions can only include users added by the creator of the competition.
+* [ ] The initial investment amount is variable but uniform across all participants.
+* [ ] The competition can be limited to particular classes of investments.
+* [ ] Users can review their portfolios for each of their competitions.
+* [ ] Users can add themselves to location based competitions.
+* [ ] Users can review rankings within each competition.
 
 Stretch: 
-* [] Users can receive news targeted to their investment portfolios.
-* [] Users can chat amongst competition participants.
-* [] Users can participate in a basic investment best practices tutorial.
-* [] Users can transfer their portfolios to real world trading platforms.
-* [] Users are alerted upon login with an image/gif representing their performance in the market.
-* [] Users can view a portfolio's historical performance.
+* [ ] Users can receive news targeted to their investment portfolios.
+* [ ] Users can chat amongst competition participants.
+* [ ] Users can participate in a basic investment best practices tutorial.
+* [ ] Users can transfer their portfolios to real world trading platforms.
+* [ ] Users are alerted upon login with an image/gif representing their performance in the market.
+* [ ] Users can view a portfolio's historical performance.
 
 ## Video Walkthrough
 
@@ -40,10 +40,16 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-## Open-source libraries used
+## Open-source and other libraries used
+
+* Parse: http://parseplatform.org
+* Facebook Android SDK: https://developers.facebook.com/docs/android/
+* OkHttp: https://github.com/square/okhttp
+* Glide: https://github.com/bumptech/glide
+* Alpha Vantage: https://www.alphavantage.co
+* Sharadar: http://www.sharadar.com/
 
 ## License
-
 
     Copyright 2017 Sahil Agarwal and Michael Signorotti
 
