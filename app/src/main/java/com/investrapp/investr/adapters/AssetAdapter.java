@@ -55,7 +55,8 @@ public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.ViewHolder> 
         }
     }
 
-    public AssetAdapter(List<Asset> assets, AssetAdapterListener assetAdapterListener) {
+    public AssetAdapter(Context context, List<Asset> assets, AssetAdapterListener assetAdapterListener) {
+        this.mContext = context;
         this.mAssets = assets;
         this.assetAdapterListener = assetAdapterListener;
     }
@@ -67,8 +68,8 @@ public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        this.mContext = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
         View vAsset = inflater.inflate(R.layout.item_asset, parent, false);
         ViewHolder vhAsset = new ViewHolder(vAsset);
         return vhAsset;

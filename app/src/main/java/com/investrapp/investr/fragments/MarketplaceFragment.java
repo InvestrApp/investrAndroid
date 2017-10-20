@@ -71,7 +71,7 @@ public class MarketplaceFragment extends Fragment implements AssetAdapterListene
 
         assets = new ArrayList<Asset>();
 
-        assetAdapter = new AssetAdapter(assets, this);
+        assetAdapter = new AssetAdapter(getContext(), assets, this);
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         rvAssets.setLayoutManager(linearLayoutManager);

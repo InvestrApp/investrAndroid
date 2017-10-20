@@ -2,21 +2,16 @@ package com.investrapp.investr.apis;
 
 import android.util.Log;
 
+import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
 import com.investrapp.investr.models.Price;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -27,50 +22,65 @@ public abstract class AlphaVantageDigitalCurrencyPricesCallHandler implements Ca
 
     @Override
     public void onFailure(Call call, IOException e) {
-        Log.e("AlphaAvantageClient", e.toString());
         e.printStackTrace();
     }
 
     @Override
     public void onResponse(Call call, Response response) throws IOException {
         if (!response.isSuccessful()) {
-            Log.e("AlphaAvantageClient", response.toString());
             throw new IOException("Unexpected code " + response);
         }
         String responseData = response.body().string();
-        Log.d("AlphaAvantageClient",responseData);
         try {
-            ArrayList<Price> pricesList = new ArrayList<Price>();
+            ArrayList<Price> priceList = new ArrayList<Price>();
             JSONObject jsonObject = new JSONObject(responseData);
-            JSONObject timeSeries = jsonObject.getJSONObject("Time Series (Digital Currency Monthly)");
 
-            Iterator<String> keys = timeSeries.keys();
-            int count = 0;
-            while (keys.hasNext() && count < 25) {
-                String date = keys.next();
-                JSONObject values = timeSeries.getJSONObject(date);
-                Double price = values.getDouble(values.keys().next());
+            //get the meta data
+            Iterator<String> mainKeys = jsonObject.keys();
+            String metaDataKey = null;
+            if(mainKeys.hasNext()) {
+                metaDataKey = mainKeys.next();
+            }
+            JSONObject metaData = jsonObject.getJSONObject(metaDataKey);
 
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                Date parsedDate = null;
-                Log.d("DEBUG", date);
-
-                try {
-                    parsedDate = format.parse(date);
-                    Log.d("DEBUG", parsedDate.toString());
-                    pricesList.add(new Price(parsedDate, price));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                count++;
+            String information = metaData.getString("1. Information");
+            String ticker = metaData.getString("2. Digital Currency Code");
+            String cryptocurrencyName = metaData.getString("3. Digital Currency Name");
+            String market = metaData.getString("4. Market Code");
+            String marketName = metaData.getString("5. Market Name");
+            String lastRefreshed = null;
+            if (metaData.has("6. Last Refreshed")) {
+                lastRefreshed = metaData.getString("6. Last Refreshed");
+            } else {
+                lastRefreshed = metaData.getString("7. Last Refreshed");
             }
 
-            onPricesResponse(pricesList);
+            String timeZone = null;
+            if (metaData.has("7. Time Zone")) {
+                timeZone = metaData.getString("7. Time Zone");
+            } else {
+                timeZone = metaData.getString("8. Time Zone");
+            }
+
+            //get the time series of digital currency values in the specified market
+
+            JSONObject timeSeries = jsonObject.getJSONObject(mainKeys.next());
+
+            Iterator<String> keys = timeSeries.keys();
+            while (keys.hasNext()) {
+                String date = keys.next();
+                JSONObject jsonObjectValue = timeSeries.getJSONObject(date);
+                Double valuation= jsonObjectValue.getDouble(jsonObjectValue.keys().next());
+                priceList.add(new Price(date, valuation));
+            }
+
+            CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries = new CryptocurrencyPriceTimeSeries(information, ticker, cryptocurrencyName, market, marketName, lastRefreshed, timeZone, priceList);
+            onPricesResponse(cryptocurrencyPriceTimeSeries);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public abstract void onPricesResponse(List<Price> prices);
+    public abstract void onPricesResponse(CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries);
 
 }

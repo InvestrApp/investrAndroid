@@ -12,6 +12,8 @@ import com.investrapp.investr.models.Price;
 
 import java.util.List;
 
+import static com.investrapp.investr.application.InvestrApplication.context;
+
 public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> {
 
     private List<Price> mPrices;
@@ -28,7 +30,8 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
         }
     }
 
-    public PriceAdapter(List<Price> prices) {
+    public PriceAdapter(Context context, List<Price> prices) {
+        this.mContext = context;
         this.mPrices = prices;
     }
 
@@ -38,8 +41,8 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        this.mContext = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
 
         View vPrice = inflater.inflate(R.layout.item_price, parent, false);
         ViewHolder vhPrice = new ViewHolder(vPrice);

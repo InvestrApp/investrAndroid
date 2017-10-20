@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +18,54 @@ import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
 import com.investrapp.investr.models.Price;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+/**
+ * Created by michaelsignorotti on 10/19/17.
+ */
 
-public abstract class AssetPriceFragment extends Fragment {
+public class IntradayPriceFragment extends Fragment {
+
+
+
+    public IntradayPriceFragment() {
+    }
+
+
+    public static IntradayPriceFragment newInstance(String ticker) {
+        IntradayPriceFragment fragment = new IntradayPriceFragment();
+        Bundle args = new Bundle();
+        args.putString("ticker", ticker);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
+    //@Override
+    public void loadPrices(String assetTicker) {
+
+        AlphaVantageClient.getCurrentDigitalCurrencyPricesIntraday(assetTicker, new AlphaVantageDigitalCurrencyPricesCallHandler() {
+            @Override
+            public void onPricesResponse(CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries) {
+                updatePrices(cryptocurrencyPriceTimeSeries);
+            }
+        });
+    }
+
+
+    ///////
+    //////
+    //////
+    public void updatePrices(final CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries) {
+
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                Log.d("AssetPriceAdapter", "" + cryptocurrencyPriceTimeSeries.getPriceList().size());
+                prices.addAll(cryptocurrencyPriceTimeSeries.getPriceList());
+                priceAdapter.notifyDataSetChanged();
+            }
+        });
+    }
 
     PriceAdapter priceAdapter;
     ArrayList<Price> prices;
@@ -32,7 +74,7 @@ public abstract class AssetPriceFragment extends Fragment {
     LinearLayoutManager linearLayoutManager;
 
 
-    @Nullable
+    //@Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //inflate the view
@@ -51,24 +93,10 @@ public abstract class AssetPriceFragment extends Fragment {
         //set the adapter
         rvPrices.setAdapter(priceAdapter);
 
-Log.d("AssetPriceAdapter", "here here");
+        Log.d("AssetPriceAdapter", "here here");
         //this.ticker = getArguments().getString("ticker");
         loadPrices("BTC");
 
         return v;
     }
-
-    public abstract void loadPrices(String assetTicker);
-
-    public void updatePrices(final CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries) {
-
-        getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                Log.d("AssetPriceAdapter", "" + cryptocurrencyPriceTimeSeries.getPriceList().size());
-                prices.addAll(cryptocurrencyPriceTimeSeries.getPriceList());
-                priceAdapter.notifyDataSetChanged();
-            }
-        });
-    }
 }
-

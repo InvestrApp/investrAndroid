@@ -8,19 +8,19 @@ import java.util.Date;
 
 public class Price {
 
-    private Date date;
+    private String date;
     private double price;
 
-    public Price(Date date, double price) {
+    public Price(String date, double price) {
         this.date = date;
         this.price = price;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

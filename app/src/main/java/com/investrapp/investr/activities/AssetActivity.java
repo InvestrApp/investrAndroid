@@ -31,10 +31,10 @@ public class AssetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_asset);
 
         // Find the toolbar view inside the activity layout
-        toolbar = (Toolbar) findViewById(R.id.AssetToolbar);
+        //toolbar = (Toolbar) findViewById(R.id.AssetToolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
         String ticker = intent.getStringExtra("ticker");

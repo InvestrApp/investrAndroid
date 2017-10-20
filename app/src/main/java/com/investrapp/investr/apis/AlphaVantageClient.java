@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -48,6 +49,8 @@ public class AlphaVantageClient {
     public static final String USD = "USD";
     public static final String TIME_SERIES_INTRADAY = "TIME_SERIES_INTRADAY";
     public static final String DIGITAL_CURRENCY_INTRADAY = "DIGITAL_CURRENCY_INTRADAY";
+    public static final String DIGITAL_CURRENCY_DAILY = "DIGITAL_CURRENCY_DAILY";
+    public static final String DIGITAL_CURRENCY_WEEKLY = "DIGITAL_CURRENCY_WEEKLY";
     public static final String DIGITAL_CURRENCY_MONTHLY = "DIGITAL_CURRENCY_MONTHLY";
     public static final String PRICE_INTERVAL_ONE_MIN = "1min";
     public static final String ALPHA_VANTAGE_URL = "https://www.alphavantage.co/query";
@@ -104,10 +107,10 @@ public class AlphaVantageClient {
     }
 
     /**
-     * This method gets a list of historical prices for a digital currency from the Alpha Vantage API.
+     * This method gets a list of cryptocurrency historical prices in five minute intervals from the Alpha Vantage API.
      * @param symbol
      */
-    public static void getCurrentDigitalCurrencyPricesOneMinute(String symbol, AlphaVantageDigitalCurrencyPricesCallHandler handler) {
+    public static void getCurrentDigitalCurrencyPricesIntraday(String symbol, AlphaVantageDigitalCurrencyPricesCallHandler handler) {
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_VANTAGE_URL).newBuilder();
         urlBuilder.addQueryParameter(API_KEY, ALPHA_VANTAGE_API_KEY);
@@ -123,6 +126,53 @@ public class AlphaVantageClient {
         client.newCall(request).enqueue(handler);
     }
 
+    /**
+     * This method gets a list of cryptocurrency historical prices in daily intervals from the Alpha Vantage API.
+     * @param symbol
+     */
+    public static void getCurrentDigitalCurrencyPricesDaily(String symbol, AlphaVantageDigitalCurrencyPricesCallHandler handler) {
+        OkHttpClient client = new OkHttpClient();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_VANTAGE_URL).newBuilder();
+        urlBuilder.addQueryParameter(API_KEY, ALPHA_VANTAGE_API_KEY);
+        urlBuilder.addQueryParameter(FUNCTION, DIGITAL_CURRENCY_DAILY);
+        urlBuilder.addQueryParameter(MARKET, USD);
+        urlBuilder.addQueryParameter(INTERVAL, PRICE_INTERVAL_ONE_MIN);
+        urlBuilder.addQueryParameter(SYMBOL, symbol);
+
+        String url = urlBuilder.build().toString();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        client.newCall(request).enqueue(handler);
+    }
+
+    /**
+     * This method gets a list of cryptocurrency historical prices in weekly intervals from the Alpha Vantage API.
+     * @param symbol
+     */
+    public static void getCurrentDigitalCurrencyPricesWeekly(String symbol, AlphaVantageDigitalCurrencyPricesCallHandler handler) {
+        OkHttpClient client = new OkHttpClient();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_VANTAGE_URL).newBuilder();
+        urlBuilder.addQueryParameter(API_KEY, ALPHA_VANTAGE_API_KEY);
+        urlBuilder.addQueryParameter(FUNCTION, DIGITAL_CURRENCY_WEEKLY);
+        urlBuilder.addQueryParameter(MARKET, USD);
+        urlBuilder.addQueryParameter(INTERVAL, PRICE_INTERVAL_ONE_MIN);
+        urlBuilder.addQueryParameter(SYMBOL, symbol);
+
+        String url = urlBuilder.build().toString();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        client.newCall(request).enqueue(handler);
+    }
+
+
+
+    /**
+     * This method gets a list of cryptocurrency historical prices in monthly intervals from the Alpha Vantage API.
+     * @param symbol
+     * @param handler
+     */
     public static void getCurrentDigitalCurrencyPricesMonthly(String symbol, AlphaVantageDigitalCurrencyPricesCallHandler handler) {
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_VANTAGE_URL).newBuilder();
@@ -138,6 +188,9 @@ public class AlphaVantageClient {
         client.newCall(request).enqueue(handler);
     }
 
+    /**
+     * This method is used for loading data into our database.
+     */
     public static void queryAllCrypotocurrencies() {
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_VANTAGE_CRYPTOCURRENCY_LIST_URL).newBuilder();
