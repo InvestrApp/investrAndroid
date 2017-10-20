@@ -5,8 +5,6 @@ import android.util.Log;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
-import org.parceler.Parcel;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,18 +14,14 @@ import java.util.List;
 
 import okhttp3.Response;
 
-import static java.lang.System.in;
-
 /**
  * Created by michaelsignorotti on 10/14/17.
  */
 
-
 @ParseClassName("Cryptocurrency")
 public class Cryptocurrency extends ParseObject implements Asset {
 
-    public String ticker;
-    public String name;
+    public static String ASSET_TYPE = "cryptocurrency";
 
     public Cryptocurrency() {
         super();
@@ -37,10 +31,7 @@ public class Cryptocurrency extends ParseObject implements Asset {
         super();
         setTicker(ticker);
         setName(name);
-        this.ticker = ticker;
-        this.name = name;
     }
-
 
     public String getTicker() {
         return getString("ticker");
@@ -58,20 +49,19 @@ public class Cryptocurrency extends ParseObject implements Asset {
         put("name", name);
     }
 
+    public String assetType() {
+        return ASSET_TYPE;
+    }
 
     public static List<Cryptocurrency> getCrytocurrencyList(Response response) {
-
         ArrayList<Cryptocurrency> cryptocurrencyList = new ArrayList<Cryptocurrency>();
-
         InputStream in = response.body().byteStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String line;
         try {
             while ((line = reader.readLine()) != null) {
                 String[] row = line.split(",");
-
                 String ticker = row[0].toUpperCase();
-                
                 if (!ticker.equals("CURRENCY CODE")) {
                     String name = row[1].toUpperCase();
                     Log.d("Cryptocurrency", ticker + " " + name);
@@ -83,4 +73,5 @@ public class Cryptocurrency extends ParseObject implements Asset {
         }
         return cryptocurrencyList;
     }
+
 }

@@ -19,12 +19,13 @@ import com.bumptech.glide.Glide;
 import com.investrapp.investr.R;
 import com.investrapp.investr.databaseSetup.DatabaseSetupUtils;
 import com.investrapp.investr.fragments.MarketplaceFragment;
+import com.investrapp.investr.fragments.PortfolioFragment;
 import com.investrapp.investr.fragments.RankingsFragment;
 import com.investrapp.investr.interfaces.OnAssetSelectedListener;
 import com.investrapp.investr.models.Asset;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.Player;
-
+import com.investrapp.investr.models.Transaction;
 
 public class CompetitionActivity extends AppCompatActivity implements OnAssetSelectedListener {
 
@@ -33,7 +34,6 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView navigationView;
-
     private ImageView ivHeaderPhoto;
     private TextView tvHeaderName;
 
@@ -50,7 +50,6 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
         setupNavigationViewHeader();
         getDataFromIntent();
         setupInitialFragment();
-
     }
 
     private void setupToolbar() {
@@ -103,7 +102,7 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
                 fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
                 break;
             case R.id.nav_portfolio_fragment:
-                fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
+                fragment = (PortfolioFragment) PortfolioFragment.newInstance(mCurrentPlayer, mCompetition);
                 break;
             case R.id.nav_marketplace_fragment:
                 fragment = (MarketplaceFragment) MarketplaceFragment.newInstance();
@@ -130,7 +129,6 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawer.openDrawer(GravityCompat.START);
@@ -142,17 +140,15 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
 
     @Override
     public void onAssetSelected(Asset asset) {
-
-        // first parameter is the context, second is the class of the activity to launch
         Intent i = new Intent(CompetitionActivity.this, AssetActivity.class);
         i.putExtra("ticker", asset.getTicker());
-        //i.putExtra("asset", Parcels.wrap(asset));
         startActivity(i);
     }
 
     //TODO remove
-    private void customTestCode() {
-        DatabaseSetupUtils.addSomeTransactions(mCurrentPlayer, mCompetition);
+    private void AddTransactons() {
+        DatabaseSetupUtils.addCryptoTransactionAndSubstractCash(mCurrentPlayer, mCompetition, "ETH", 7, Transaction.TransactionAction.BUY);
+        DatabaseSetupUtils.addCryptoTransactionAndSubstractCash(mCurrentPlayer, mCompetition, "BTC", 43, Transaction.TransactionAction.BUY);
     }
 
 }

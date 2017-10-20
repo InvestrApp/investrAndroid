@@ -14,8 +14,9 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.investrapp.investr.R;
 import com.investrapp.investr.adapters.CompetitionsAdapter;
-import com.investrapp.investr.apis.FacebookAPI;
-import com.investrapp.investr.apis.ParseAPI;
+import com.investrapp.investr.apis.FacebookClient;
+import com.investrapp.investr.apis.ParseClient;
+import com.investrapp.investr.apis.handlers.ParseGetAllCompetitionsForPlayerHandler;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.Player;
 import com.investrapp.investr.utils.ItemClickSupport;
@@ -70,16 +71,23 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getCurrentUser() {
-        ParseAPI.getPlayer(Profile.getCurrentProfile().getId(), new FindCallback<Player>() {
+        if (Profile.getCurrentProfile() == null) {
+            Profile.fetchProfileForCurrentAccessToken();
+        }
+        getCurrentUserInfo();
+    }
+
+    private void getCurrentUserInfo() {
+        ParseClient.getPlayer(Profile.getCurrentProfile().getId(), new FindCallback<Player>() {
             @Override
             public void done(List<Player> objects, ParseException e) {
                 if (objects.size() == 0) {
-                    FacebookAPI.getCurrentUser(new GraphRequest.GraphJSONObjectCallback() {
+                    FacebookClient.getCurrentUser(new GraphRequest.GraphJSONObjectCallback() {
                         @Override
                         public void onCompleted(JSONObject object, GraphResponse response) {
                             Log.d("fb_response", object.toString());
                             mCurrentPlayer = Player.getPlayerFromFB(object);
-                            ParseAPI.savePlayer(mCurrentPlayer);
+                            ParseClient.savePlayer(mCurrentPlayer);
                             getAllCompetitionsForUser();
                         }
                     });
@@ -92,10 +100,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getAllCompetitionsForUser() {
-        ParseAPI.getAllCompetitionsForPlayer(mCurrentPlayer, new FindCallback<Competition>() {
+        ParseClient.getAllCompetitionsForPlayer(mCurrentPlayer, new ParseGetAllCompetitionsForPlayerHandler() {
             @Override
-            public void done(List<Competition> objects, ParseException e) {
-                mCompetitions.addAll(objects);
+            public void done(List<Competition> competitions) {
+                mCompetitions.addAll(competitions);
                 competitionsAdapter.notifyDataSetChanged();
             }
         });

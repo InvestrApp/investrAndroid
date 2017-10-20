@@ -23,7 +23,6 @@
         android:id="@+id/rlAssetHeader"
         android:layout_below="@+id/AssetToolbar">
 
-
         <TextView
             android:id="@+id/tvAssetName"
             android:layout_width="wrap_content"
@@ -40,9 +39,6 @@
             android:layout_below="@+id/tvAssetName"
             android:layout_alignStart="@+id/tvAssetName"
             android:layout_marginTop="10dp" />
-
-
-
     </RelativeLayout>
 
     <FrameLayout
@@ -51,7 +47,6 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/rlAssetHeader">
-
     </FrameLayout>
 
 </RelativeLayout>
