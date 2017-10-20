@@ -13,6 +13,7 @@ import com.investrapp.investr.models.Cryptocurrency;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -60,7 +61,11 @@ public class AlphaVantageClient {
      */
 
     public static void getCurrentStockPrice(String symbol, AlphaVantageStockCurrentPriceCallHandler handler) {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_VANTAGE_URL).newBuilder();
         urlBuilder.addQueryParameter(API_KEY, ALPHA_VANTAGE_API_KEY);
         urlBuilder.addQueryParameter(FUNCTION, TIME_SERIES_INTRADAY);
@@ -80,7 +85,11 @@ public class AlphaVantageClient {
      * @param handler
      */
     public static void getCurrentDigitalCurrencyPrice(String ticker, AlphaVantageDigitalCurrencyCurrentPriceCallHandler handler) {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_VANTAGE_URL).newBuilder();
         urlBuilder.addQueryParameter(API_KEY, ALPHA_VANTAGE_API_KEY);
         urlBuilder.addQueryParameter(FUNCTION, DIGITAL_CURRENCY_INTRADAY);
@@ -100,7 +109,11 @@ public class AlphaVantageClient {
      * @param symbol
      */
     public static void getCurrentDigitalCurrencyPricesIntraday(String symbol, AlphaVantageDigitalCurrencyPricesCallHandler handler) {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_VANTAGE_URL).newBuilder();
         urlBuilder.addQueryParameter(API_KEY, ALPHA_VANTAGE_API_KEY);
         urlBuilder.addQueryParameter(FUNCTION, DIGITAL_CURRENCY_INTRADAY);
@@ -120,7 +133,11 @@ public class AlphaVantageClient {
      * @param symbol
      */
     public static void getCurrentDigitalCurrencyPricesDaily(String symbol, AlphaVantageDigitalCurrencyPricesCallHandler handler) {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_VANTAGE_URL).newBuilder();
         urlBuilder.addQueryParameter(API_KEY, ALPHA_VANTAGE_API_KEY);
         urlBuilder.addQueryParameter(FUNCTION, DIGITAL_CURRENCY_DAILY);
@@ -140,7 +157,11 @@ public class AlphaVantageClient {
      * @param symbol
      */
     public static void getCurrentDigitalCurrencyPricesWeekly(String symbol, AlphaVantageDigitalCurrencyPricesCallHandler handler) {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_VANTAGE_URL).newBuilder();
         urlBuilder.addQueryParameter(API_KEY, ALPHA_VANTAGE_API_KEY);
         urlBuilder.addQueryParameter(FUNCTION, DIGITAL_CURRENCY_WEEKLY);
@@ -163,7 +184,11 @@ public class AlphaVantageClient {
      * @param handler
      */
     public static void getCurrentDigitalCurrencyPricesMonthly(String symbol, AlphaVantageDigitalCurrencyPricesCallHandler handler) {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(ALPHA_VANTAGE_URL).newBuilder();
         urlBuilder.addQueryParameter(API_KEY, ALPHA_VANTAGE_API_KEY);
         urlBuilder.addQueryParameter(FUNCTION, DIGITAL_CURRENCY_MONTHLY);
