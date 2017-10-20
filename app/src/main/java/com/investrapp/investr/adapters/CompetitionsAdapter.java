@@ -12,7 +12,6 @@ import com.investrapp.investr.models.Competition;
 
 import java.util.List;
 
-
 public class CompetitionsAdapter extends RecyclerView.Adapter<CompetitionsAdapter.ViewHolder> {
 
     private List<Competition> mCompetitions;
@@ -63,4 +62,5 @@ public class CompetitionsAdapter extends RecyclerView.Adapter<CompetitionsAdapte
     public int getItemCount() {
         return mCompetitions.size();
     }
+
 }

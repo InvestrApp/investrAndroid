@@ -16,7 +16,7 @@ import android.widget.EditText;
 
 import com.investrapp.investr.R;
 import com.investrapp.investr.adapters.AssetAdapter;
-import com.investrapp.investr.apis.ParseAPI;
+import com.investrapp.investr.apis.ParseClient;
 import com.investrapp.investr.interfaces.AssetAdapterListener;
 import com.investrapp.investr.interfaces.OnAssetSelectedListener;
 import com.investrapp.investr.models.Asset;
@@ -27,7 +27,6 @@ import com.parse.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class MarketplaceFragment extends Fragment implements AssetAdapterListener {
 
@@ -56,8 +55,7 @@ public class MarketplaceFragment extends Fragment implements AssetAdapterListene
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_marketplace, container, false);
 
         rvAssets = (RecyclerView) view.findViewById(R.id.rvAssets);
@@ -68,33 +66,29 @@ public class MarketplaceFragment extends Fragment implements AssetAdapterListene
         cbCommodities = (CheckBox) view.findViewById(R.id.cbCommodities);
         cbStock = (CheckBox) view.findViewById(R.id.cbStocks);
 
-
         assets = new ArrayList<Asset>();
 
         assetAdapter = new AssetAdapter(getContext(), assets, this);
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         rvAssets.setLayoutManager(linearLayoutManager);
-
         rvAssets.setAdapter(assetAdapter);
 
         etMarketplaceSearch.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void afterTextChanged(Editable s) {
+
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String query = s.toString();
-
                 boolean cryptocurrencyChecked = cbCryptocurrency.isChecked();
                 boolean currencyChecked = cbCurrency.isChecked();
                 boolean commoditiesChecked = cbCommodities.isChecked();
@@ -119,8 +113,7 @@ public class MarketplaceFragment extends Fragment implements AssetAdapterListene
     }
 
     private void getMatchingStocks(String query) {
-
-        ParseAPI.getMatchingStocksByName(query, new FindCallback<Stock>() {
+        ParseClient.getMatchingStocksByName(query, new FindCallback<Stock>() {
             @Override
             public void done(List<Stock> stocks, ParseException e) {
                 Log.d("CompetitionActivity", "size:  " + stocks.size());
@@ -132,7 +125,7 @@ public class MarketplaceFragment extends Fragment implements AssetAdapterListene
     }
 
     private void getMatchingCryptocurrency(String query) {
-        ParseAPI.getMatchingCryptocurrenciesByName(query, new FindCallback<Cryptocurrency>() {
+        ParseClient.getMatchingCryptocurrenciesByName(query, new FindCallback<Cryptocurrency>() {
             @Override
             public void done(List<Cryptocurrency> cryptocurrencies, ParseException e) {
                 Log.d("CompetitionActivity", "size:  " + cryptocurrencies.size());
@@ -148,4 +141,5 @@ public class MarketplaceFragment extends Fragment implements AssetAdapterListene
         Asset asset = assets.get(position);
         ((OnAssetSelectedListener) getContext()).onAssetSelected(asset);
     }
+
 }

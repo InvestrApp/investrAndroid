@@ -1,5 +1,6 @@
 package com.investrapp.investr.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,14 +14,11 @@ import android.view.ViewGroup;
 
 import com.investrapp.investr.R;
 import com.investrapp.investr.adapters.PriceAdapter;
-import com.investrapp.investr.apis.AlphaVantageClient;
-import com.investrapp.investr.apis.AlphaVantageDigitalCurrencyPricesCallHandler;
 import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
 import com.investrapp.investr.models.Price;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
 
 
 public abstract class AssetPriceFragment extends Fragment {
@@ -31,14 +29,15 @@ public abstract class AssetPriceFragment extends Fragment {
 
     LinearLayoutManager linearLayoutManager;
 
+    // Define the listener of the interface type
+    // listener will the activity instance containing fragment
+    private OnPriceTimeSeriesResponseListener listener;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //inflate the view
         View v = inflater.inflate(R.layout.fragment_asset_price, container, false);
-
-
         rvPrices = (RecyclerView) v.findViewById(R.id.rvAssetPrices);
         prices = new ArrayList<Price>();
 
@@ -47,28 +46,40 @@ public abstract class AssetPriceFragment extends Fragment {
 
         rvPrices.setLayoutManager(linearLayoutManager);
 
-
         //set the adapter
         rvPrices.setAdapter(priceAdapter);
 
-Log.d("AssetPriceAdapter", "here here");
         //this.ticker = getArguments().getString("ticker");
         loadPrices("BTC");
 
         return v;
     }
 
+    // Store the listener (activity) that will have events fired once the fragment is attached
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnPriceTimeSeriesResponseListener) {
+            listener = (OnPriceTimeSeriesResponseListener) context;
+        } else {
+            throw new ClassCastException(context.toString());
+        }
+    }
+
     public abstract void loadPrices(String assetTicker);
 
     public void updatePrices(final CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries) {
-
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
-                Log.d("AssetPriceAdapter", "" + cryptocurrencyPriceTimeSeries.getPriceList().size());
+                listener.onPriceTimeSeriesResponse(cryptocurrencyPriceTimeSeries);
                 prices.addAll(cryptocurrencyPriceTimeSeries.getPriceList());
                 priceAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public interface OnPriceTimeSeriesResponseListener {
+        void onPriceTimeSeriesResponse(CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries);
     }
 }
 

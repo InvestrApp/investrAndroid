@@ -16,29 +16,102 @@
         android:layout_alignParentStart="true" />
 
     <RelativeLayout
+        android:id="@+id/rlAssetHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:id="@+id/rlAssetHeader"
-        android:layout_below="@+id/AssetToolbar">
-
+        android:layout_below="@+id/AssetToolbar"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/tvAssetName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
-            android:text="Bitcoin"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:text="TextView" />
 
         <TextView
             android:id="@+id/tvAssetTicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BTC"
-            android:layout_below="@+id/tvAssetName"
             android:layout_alignStart="@+id/tvAssetName"
-            android:layout_marginTop="10dp" />
+            android:layout_below="@+id/tvAssetName"
+            android:layout_marginTop="12dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tvAssetInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvAssetTicker"
+            android:layout_below="@+id/tvAssetTicker"
+            android:layout_marginTop="17dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tvMarketName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvMarket"
+            android:layout_alignBottom="@+id/tvMarket"
+            android:layout_marginEnd="43dp"
+            android:layout_toStartOf="@+id/tvMarket"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tvMarket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/tvAssetName"
+            android:layout_marginEnd="19dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tvLastRefreshed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvAssetInformation"
+            android:layout_below="@+id/tvAssetInformation"
+            android:layout_marginTop="17dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tvTimeZone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvLastRefreshed"
+            android:layout_marginStart="17dp"
+            android:layout_toEndOf="@+id/tvLastRefreshed"
+            android:text="TextView" />
+
+        <Button
+            android:id="@+id/btnBuyAsset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/buy"
+            android:layout_alignTop="@+id/tvAssetInformation"
+            android:layout_alignEnd="@+id/tvMarket" />
+
+        <Button
+            android:id="@+id/btnSellAsset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/btnBuyAsset"
+            android:layout_alignBottom="@+id/btnBuyAsset"
+            android:layout_alignEnd="@+id/tvMarketName"
+            android:text="@string/sell" />
+
+        <TextView
+            android:id="@+id/tvAssetPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvMarket"
+            android:layout_alignTop="@+id/tvAssetTicker"
+            android:text="TextView" />
 
     </RelativeLayout>
 

@@ -25,33 +25,26 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         callbackManager = CallbackManager.Factory.create();
-
-        if (isLoggedIn()) {
-            onLoginSuccess();
-        }
-
         lbFbLogin = (LoginButton) findViewById(R.id.lbFbLogin);
         lbFbLogin.setReadPermissions("email");
         lbFbLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-
             private ProfileTracker mProfileTracker;
 
             @Override
             public void onSuccess(final LoginResult loginResult) {
-
                 if(Profile.getCurrentProfile() == null) {
                     mProfileTracker = new ProfileTracker() {
                         @Override
                         protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                             mProfileTracker.stopTracking();
+                            Profile.setCurrentProfile(currentProfile);
                         }
-
                     };
+                    mProfileTracker.startTracking();
                 }
                 else {
                     Profile profile = Profile.getCurrentProfile();
                 }
-
                 onLoginSuccess();
             }
 
@@ -59,21 +52,21 @@ public class LoginActivity extends AppCompatActivity {
             public void onCancel() {
                 // App code
                 Toast.makeText(
-                        LoginActivity.this,
-                        "Cancel",
-                        Toast.LENGTH_LONG).show();
+                        LoginActivity.this, "Cancel", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(final FacebookException exception) {
                 // App code
                 Toast.makeText(
-                        LoginActivity.this,
-                        "Error",
-                        Toast.LENGTH_LONG).show();
+                        LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
             }
 
         });
+
+        if (isLoggedIn()) {
+            onLoginSuccess();
+        }
     }
 
     public void onLoginSuccess() {
@@ -89,6 +82,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isLoggedIn() {
         AccessToken accesstoken = AccessToken.getCurrentAccessToken();
+        if (Profile.getCurrentProfile() == null) {
+            Profile.fetchProfileForCurrentAccessToken();
+        }
         return !(accesstoken == null || accesstoken.getPermissions().isEmpty());
     }
 

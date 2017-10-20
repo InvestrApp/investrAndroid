@@ -1,4 +1,4 @@
-package com.investrapp.investr.apis;
+package com.investrapp.investr.apis.handlers;
 
 import android.util.Log;
 
@@ -11,7 +11,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public abstract class AlphaVantageDigitalCurrencyCurrentPriceCallHandler implements Callback {
+public abstract class AlphaVantageStockCurrentPriceCallHandler implements Callback {
 
     @Override
     public void onFailure(Call call, IOException e) {
@@ -29,7 +29,7 @@ public abstract class AlphaVantageDigitalCurrencyCurrentPriceCallHandler impleme
         Log.d("AlphaAvantageClient",responseData);
         try {
             JSONObject jsonObject = new JSONObject(responseData);
-            JSONObject timeSeries = jsonObject.getJSONObject("Time Series (Digital Currency Intraday)");
+            JSONObject timeSeries = jsonObject.getJSONObject("Time Series (1min)");
             JSONObject timeData = timeSeries.getJSONObject(timeSeries.keys().next());
             Double price = timeData.getDouble(timeData.keys().next());
             onPriceResponse(price);

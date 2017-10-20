@@ -15,8 +15,6 @@ import com.investrapp.investr.models.Stock;
 
 import java.util.List;
 
-
-
 public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.ViewHolder> {
 
     private List<Asset> mAssets;
@@ -33,7 +31,6 @@ public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.ViewHolder> 
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             tvTicker = (TextView) itemView.findViewById(R.id.tvTicker);
-
 
             // Attach a click listener to the entire row view
             itemView.setOnClickListener(this);
@@ -88,4 +85,5 @@ public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.ViewHolder> 
     public int getItemCount() {
         return mAssets.size();
     }
+
 }

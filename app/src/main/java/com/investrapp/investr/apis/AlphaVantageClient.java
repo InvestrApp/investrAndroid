@@ -4,24 +4,15 @@ import android.content.Context;
 import android.util.Log;
 
 import com.investrapp.investr.R;
+import com.investrapp.investr.apis.handlers.AlphaVantageDigitalCurrencyCurrentPriceCallHandler;
+import com.investrapp.investr.apis.handlers.AlphaVantageDigitalCurrencyPricesCallHandler;
+import com.investrapp.investr.apis.handlers.AlphaVantageStockCurrentPriceCallHandler;
 import com.investrapp.investr.databaseSetup.DatabaseSetupUtils;
-import com.investrapp.investr.fragments.AssetPriceFragment;
 import com.investrapp.investr.models.Cryptocurrency;
-import com.investrapp.investr.models.Price;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -29,8 +20,6 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import static com.investrapp.investr.application.InvestrApplication.context;
 
 /**
  * Created by michaelsignorotti on 10/13/17.
@@ -218,4 +207,5 @@ public class AlphaVantageClient {
             }
         });
     }
+
 }

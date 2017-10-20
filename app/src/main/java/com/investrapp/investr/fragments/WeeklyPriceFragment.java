@@ -3,11 +3,8 @@ package com.investrapp.investr.fragments;
 import android.os.Bundle;
 
 import com.investrapp.investr.apis.AlphaVantageClient;
-import com.investrapp.investr.apis.AlphaVantageDigitalCurrencyPricesCallHandler;
+import com.investrapp.investr.apis.handlers.AlphaVantageDigitalCurrencyPricesCallHandler;
 import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
-import com.investrapp.investr.models.Price;
-
-import java.util.List;
 
 /**
  * Created by michaelsignorotti on 10/19/17.

@@ -62,4 +62,5 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
     public int getItemCount() {
         return mPrices.size();
     }
+
 }

@@ -31,7 +31,6 @@ public class PricesPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            Log.d("PricesPagerAdapter", "entered 1");
             return new IntradayPriceFragment();
         } else if (position == 1) {
             return new DailyPriceFragment();
