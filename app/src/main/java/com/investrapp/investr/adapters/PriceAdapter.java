@@ -12,8 +12,6 @@ import com.investrapp.investr.models.Price;
 
 import java.util.List;
 
-import static com.investrapp.investr.application.InvestrApplication.context;
-
 public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> {
 
     private List<Price> mPrices;

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="3dp">
+
+    <TextView
+        android:id="@+id/tvPlayerRank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="7dp" />
+
+    <ImageView
+        android:id="@+id/ivPlayerProfile"
+        android:layout_toEndOf="@+id/tvPlayerRank"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="10dp"
+        app:srcCompat="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sahil Agarwal"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tvPortfolioValue"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/tvPortfolioValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$500,000.00"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="12dp"
+        android:layout_below="@+id/tvName"
+        android:layout_toEndOf="@+id/ivPlayerProfile"
+        android:layout_marginTop="11dp" />
+
+</RelativeLayout>

@@ -31,9 +31,10 @@ public abstract class AlphaVantageStockCurrentPriceCallHandler implements Callba
             JSONObject jsonObject = new JSONObject(responseData);
             JSONObject timeSeries = jsonObject.getJSONObject("Time Series (1min)");
             JSONObject timeData = timeSeries.getJSONObject(timeSeries.keys().next());
-            Double price = timeData.getDouble(timeData.keys().next());
+            Double price = timeData.getDouble("1a. price (USD)");
             onPriceResponse(price);
         } catch (JSONException e) {
+            Log.e("ERROR", responseData);
             e.printStackTrace();
         }
     }

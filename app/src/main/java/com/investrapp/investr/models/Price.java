@@ -1,7 +1,5 @@
 package com.investrapp.investr.models;
 
-import java.util.Date;
-
 /**
  * Created by michaelsignorotti on 10/15/17.
  */
@@ -31,4 +29,5 @@ public class Price {
     public void setPrice(double price) {
         this.price = price;
     }
+
 }

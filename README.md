@@ -4,7 +4,7 @@ Investr is an app that allows individuals and groups to compete in the virtual i
 
 ## User Stories
 
-* App mocks can be found at https://github.com/InvestrApp/investrAndroid/tree/master/appMocks.
+* App mocks can be found at https://github.com/InvestrApp/investrAndroid/tree/master/meta.
 
 Core:
 

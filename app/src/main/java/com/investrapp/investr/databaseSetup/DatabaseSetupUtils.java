@@ -8,6 +8,7 @@ import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
 import com.investrapp.investr.models.Cryptocurrency;
 import com.investrapp.investr.models.Player;
+import com.investrapp.investr.models.Ranking;
 import com.investrapp.investr.models.Stock;
 import com.investrapp.investr.models.Transaction;
 import com.parse.FindCallback;
@@ -129,6 +130,12 @@ public class DatabaseSetupUtils {
                 ParseClient.addTransaction(transaction);
             }
         });
+    }
+
+    public static void createRankingTable(final Player player, final Competition competition,
+                                          final Double value, final int rank) {
+        Ranking ranking = new Ranking(player, competition, rank, value);
+        ranking.saveInBackground();
     }
 
 }

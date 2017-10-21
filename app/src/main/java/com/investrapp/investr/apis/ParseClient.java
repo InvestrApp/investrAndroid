@@ -6,6 +6,7 @@ import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
 import com.investrapp.investr.models.Cryptocurrency;
 import com.investrapp.investr.models.Player;
+import com.investrapp.investr.models.Ranking;
 import com.investrapp.investr.models.Stock;
 import com.investrapp.investr.models.Transaction;
 import com.parse.FindCallback;
@@ -118,8 +119,17 @@ public class ParseClient {
         ParseQuery<Transaction> transactionParseQuery = ParseQuery.getQuery(Transaction.class);
         transactionParseQuery.whereEqualTo("player", player);
         transactionParseQuery.whereEqualTo("competition", competition);
+        transactionParseQuery.orderByDescending("buy_date");
         transactionParseQuery.setLimit(999);
         transactionParseQuery.findInBackground(handler);
+    }
+
+    public static void getRankingsForCompetition(Competition competition, FindCallback<Ranking> handler) {
+        ParseQuery<Ranking> query = ParseQuery.getQuery(Ranking.class);
+        query.whereEqualTo("competition", competition);
+        query.include("player");
+        query.orderByDescending("ranking");
+        query.findInBackground(handler);
     }
 
 }
