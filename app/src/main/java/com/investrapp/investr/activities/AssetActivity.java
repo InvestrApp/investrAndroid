@@ -2,11 +2,13 @@ package com.investrapp.investr.activities;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -14,6 +16,7 @@ import com.investrapp.investr.R;
 import com.investrapp.investr.apis.AlphaVantageClient;
 import com.investrapp.investr.apis.handlers.AlphaVantageDigitalCurrencyCurrentPriceCallHandler;
 import com.investrapp.investr.fragments.AssetPriceFragment;
+import com.investrapp.investr.fragments.AssetTransactionDialogFragment;
 import com.investrapp.investr.fragments.PricesPagerAdapter;
 import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
 
@@ -72,6 +75,25 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
 
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(vpPager);
+
+
+        btnBuyAsset.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                AssetTransactionDialogFragment assetTransactionDialogFragment = AssetTransactionDialogFragment.newInstance();
+
+                assetTransactionDialogFragment.show(fm, "fragment_asset_transaction");
+            }
+        });
+
+        btnSellAsset.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                AssetTransactionDialogFragment assetTransactionDialogFragment = AssetTransactionDialogFragment.newInstance();
+
+                assetTransactionDialogFragment.show(fm, "fragment_asset_transaction");
+            }
+        });
 
     }
 
