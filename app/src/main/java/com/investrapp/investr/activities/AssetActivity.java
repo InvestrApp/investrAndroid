@@ -2,28 +2,23 @@ package com.investrapp.investr.activities;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.investrapp.investr.R;
+import com.investrapp.investr.apis.AlphaVantageClient;
+import com.investrapp.investr.apis.handlers.AlphaVantageDigitalCurrencyCurrentPriceCallHandler;
 import com.investrapp.investr.fragments.AssetPriceFragment;
+import com.investrapp.investr.fragments.AssetTransactionDialogFragment;
 import com.investrapp.investr.fragments.PricesPagerAdapter;
-import com.investrapp.investr.models.Asset;
 import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
-import com.investrapp.investr.models.Price;
-
-import org.parceler.Parcels;
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-
-import static android.R.attr.timeZone;
 
 
 public class AssetActivity extends AppCompatActivity implements AssetPriceFragment.OnPriceTimeSeriesResponseListener {
@@ -73,11 +68,31 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
         Intent intent = getIntent();
         String ticker = intent.getStringExtra("ticker");
 
+        getAssetPrice(ticker);
+      
         pricesPagerAdapter = new PricesPagerAdapter(getSupportFragmentManager(), this, ticker);
         vpPager.setAdapter(pricesPagerAdapter);
 
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(vpPager);
+
+        btnBuyAsset.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                AssetTransactionDialogFragment assetTransactionDialogFragment = AssetTransactionDialogFragment.newInstance();
+
+                assetTransactionDialogFragment.show(fm, "fragment_asset_transaction");
+            }
+        });
+
+        btnSellAsset.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                AssetTransactionDialogFragment assetTransactionDialogFragment = AssetTransactionDialogFragment.newInstance();
+
+                assetTransactionDialogFragment.show(fm, "fragment_asset_transaction");
+            }
+        });
 
     }
 
@@ -98,5 +113,24 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
         tvMarketName.setText(marketName);
         tvLastRefreshed.setText(lastRefreshed);
         tvTimeZone.setText(timeZone);
+    }
+
+    public void getAssetPrice(String assetTicker) {
+
+        AlphaVantageClient.getCurrentDigitalCurrencyPrice(assetTicker, new AlphaVantageDigitalCurrencyCurrentPriceCallHandler() {
+            @Override
+            public void onPriceResponse(Double price) {
+                Log.d("AssetActivity", "current price:  " + price);
+                setAssetPrice(price);
+            }
+        });
+    }
+
+    public void setAssetPrice(final Double price) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                tvAssetPrice.setText("" + String.format ("%,.2f", price));
+            }
+        });
     }
 }
