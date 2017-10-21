@@ -75,7 +75,9 @@ public abstract class AlphaVantageDigitalCurrencyPricesCallHandler implements Ca
             }
 
             CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries = new CryptocurrencyPriceTimeSeries(information, ticker, cryptocurrencyName, market, marketName, lastRefreshed, timeZone, priceList);
-            onPricesResponse(cryptocurrencyPriceTimeSeries);
+            if (cryptocurrencyPriceTimeSeries != null) {
+                onPricesResponse(cryptocurrencyPriceTimeSeries);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

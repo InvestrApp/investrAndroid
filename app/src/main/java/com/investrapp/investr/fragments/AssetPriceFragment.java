@@ -29,6 +29,8 @@ public abstract class AssetPriceFragment extends Fragment {
 
     LinearLayoutManager linearLayoutManager;
 
+    String ticker;
+
     // Define the listener of the interface type
     // listener will the activity instance containing fragment
     private OnPriceTimeSeriesResponseListener listener;
@@ -49,8 +51,8 @@ public abstract class AssetPriceFragment extends Fragment {
         //set the adapter
         rvPrices.setAdapter(priceAdapter);
 
-        //this.ticker = getArguments().getString("ticker");
-        loadPrices("BTC");
+        this.ticker = getArguments().getString("ticker");
+        loadPrices(ticker);
 
         return v;
     }
