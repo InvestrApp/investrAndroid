@@ -31,7 +31,7 @@ public abstract class AlphaVantageDigitalCurrencyCurrentPriceCallHandler impleme
             JSONObject jsonObject = new JSONObject(responseData);
             JSONObject timeSeries = jsonObject.getJSONObject("Time Series (Digital Currency Intraday)");
             JSONObject timeData = timeSeries.getJSONObject(timeSeries.keys().next());
-            Double price = timeData.getDouble(timeData.keys().next());
+            Double price = timeData.getDouble("1a. price (USD)");
             onPriceResponse(price);
         } catch (JSONException e) {
             Log.e("ERROR", responseData);

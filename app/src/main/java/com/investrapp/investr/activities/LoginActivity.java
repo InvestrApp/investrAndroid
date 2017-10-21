@@ -3,6 +3,7 @@ package com.investrapp.investr.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -24,10 +25,12 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        callbackManager = CallbackManager.Factory.create();
         lbFbLogin = (LoginButton) findViewById(R.id.lbFbLogin);
         lbFbLogin.setReadPermissions("email");
+        callbackManager = CallbackManager.Factory.create();
+
         lbFbLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
             private ProfileTracker mProfileTracker;
 
             @Override
@@ -36,14 +39,13 @@ public class LoginActivity extends AppCompatActivity {
                     mProfileTracker = new ProfileTracker() {
                         @Override
                         protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                            Log.v("facebook - profile", currentProfile.getFirstName());
                             mProfileTracker.stopTracking();
-                            Profile.setCurrentProfile(currentProfile);
                         }
                     };
-                    mProfileTracker.startTracking();
-                }
-                else {
+                } else {
                     Profile profile = Profile.getCurrentProfile();
+                    Log.v("facebook - profile", profile.getFirstName());
                 }
                 onLoginSuccess();
             }
@@ -77,7 +79,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (callbackManager.onActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
     }
 
     private boolean isLoggedIn() {

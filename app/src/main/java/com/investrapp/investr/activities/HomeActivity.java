@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
@@ -23,6 +24,7 @@ import com.investrapp.investr.utils.ItemClickSupport;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -72,13 +74,29 @@ public class HomeActivity extends AppCompatActivity {
 
     private void getCurrentUser() {
         if (Profile.getCurrentProfile() == null) {
-            Profile.fetchProfileForCurrentAccessToken();
+            GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject object, GraphResponse response) {
+                            try {
+                                String id = object.getString("id");
+                                getCurrentUserInfo(id);
+                            } catch (JSONException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    });
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,name,");
+            request.setParameters(parameters);
+            request.executeAsync();
+        } else {
+            getCurrentUserInfo(Profile.getCurrentProfile().getId());
         }
-        getCurrentUserInfo();
     }
 
-    private void getCurrentUserInfo() {
-        ParseClient.getPlayer(Profile.getCurrentProfile().getId(), new FindCallback<Player>() {
+    private void getCurrentUserInfo(String id) {
+        ParseClient.getPlayer(id, new FindCallback<Player>() {
             @Override
             public void done(List<Player> objects, ParseException e) {
                 if (objects.size() == 0) {
