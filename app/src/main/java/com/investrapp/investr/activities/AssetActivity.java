@@ -69,13 +69,12 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
         String ticker = intent.getStringExtra("ticker");
 
         getAssetPrice(ticker);
-
+      
         pricesPagerAdapter = new PricesPagerAdapter(getSupportFragmentManager(), this, ticker);
         vpPager.setAdapter(pricesPagerAdapter);
 
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(vpPager);
-
 
         btnBuyAsset.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
