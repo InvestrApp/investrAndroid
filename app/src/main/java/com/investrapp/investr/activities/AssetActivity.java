@@ -70,15 +70,14 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
 
         vpPager = (ViewPager) findViewById(R.id.viewpager);
 
-        pricesPagerAdapter = new PricesPagerAdapter(getSupportFragmentManager(), this);
+        Intent intent = getIntent();
+        String ticker = intent.getStringExtra("ticker");
+
+        pricesPagerAdapter = new PricesPagerAdapter(getSupportFragmentManager(), this, ticker);
         vpPager.setAdapter(pricesPagerAdapter);
 
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(vpPager);
-
-        Intent intent = getIntent();
-        String ticker = intent.getStringExtra("ticker");
-
 
     }
 

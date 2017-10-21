@@ -14,10 +14,12 @@ public class PricesPagerAdapter extends FragmentPagerAdapter {
 
     private String[] tabTitles = new String[]{"Intraday", "Daily", "Weekly", "Monthly"};
     private Context context;
+    private String ticker;
 
-    public PricesPagerAdapter(FragmentManager fm, Context context) {
+    public PricesPagerAdapter(FragmentManager fm, Context context, String ticker) {
         super(fm);
         this.context = context;
+        this.ticker = ticker;
     }
 
     //return the total number of fragments
@@ -30,17 +32,18 @@ public class PricesPagerAdapter extends FragmentPagerAdapter {
     //return the fragment to use depending on position
     @Override
     public Fragment getItem(int position) {
+        AssetPriceFragment fragment = null;
         if (position == 0) {
-            return new IntradayPriceFragment();
+            fragment = IntradayPriceFragment.newInstance(ticker);
         } else if (position == 1) {
-            return new DailyPriceFragment();
+            fragment = DailyPriceFragment.newInstance(ticker);
         } else if (position == 2) {
-            return new WeeklyPriceFragment();
+            fragment =  WeeklyPriceFragment.newInstance(ticker);
         } else if (position == 3) {
-            return new MonthlyPriceFragment();
-        } else {
-            return null;
+            fragment = MonthlyPriceFragment.newInstance(ticker);
         }
+
+        return fragment;
     }
 
 
