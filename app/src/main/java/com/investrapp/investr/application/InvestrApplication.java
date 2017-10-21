@@ -10,6 +10,7 @@ import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
 import com.investrapp.investr.models.Cryptocurrency;
 import com.investrapp.investr.models.Player;
+import com.investrapp.investr.models.Ranking;
 import com.investrapp.investr.models.Stock;
 import com.investrapp.investr.models.Transaction;
 import com.parse.Parse;
@@ -41,6 +42,7 @@ public class InvestrApplication extends Application {
         ParseObject.registerSubclass(Stock.class);
         ParseObject.registerSubclass(Cash.class);
         ParseObject.registerSubclass(Transaction.class);
+        ParseObject.registerSubclass(Ranking.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(getResources().getString(R.string.parse_app_id))

@@ -12,11 +12,9 @@ import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
 
 public class WeeklyPriceFragment extends AssetPriceFragment {
 
-
-
     public WeeklyPriceFragment() {
-    }
 
+    }
 
     public static WeeklyPriceFragment newInstance(String ticker) {
         WeeklyPriceFragment fragment = new WeeklyPriceFragment();
@@ -26,10 +24,8 @@ public class WeeklyPriceFragment extends AssetPriceFragment {
         return fragment;
     }
 
-
     @Override
     public void loadPrices(String assetTicker) {
-
         AlphaVantageClient.getCurrentDigitalCurrencyPricesWeekly(assetTicker, new AlphaVantageDigitalCurrencyPricesCallHandler() {
             @Override
             public void onPricesResponse(CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries) {
@@ -37,4 +33,5 @@ public class WeeklyPriceFragment extends AssetPriceFragment {
             }
         });
     }
+
 }

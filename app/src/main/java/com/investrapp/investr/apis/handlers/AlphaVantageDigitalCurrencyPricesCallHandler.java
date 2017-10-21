@@ -1,7 +1,5 @@
 package com.investrapp.investr.apis.handlers;
 
-import android.util.Log;
-
 import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
 import com.investrapp.investr.models.Price;
 
@@ -11,14 +9,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
 public abstract class AlphaVantageDigitalCurrencyPricesCallHandler implements Callback {
-
 
     @Override
     public void onFailure(Call call, IOException e) {

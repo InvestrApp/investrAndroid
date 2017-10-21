@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.investrapp.investr.R;
-import com.investrapp.investr.databaseSetup.DatabaseSetupUtils;
 import com.investrapp.investr.fragments.MarketplaceFragment;
 import com.investrapp.investr.fragments.PortfolioFragment;
 import com.investrapp.investr.fragments.RankingsFragment;
@@ -25,7 +24,6 @@ import com.investrapp.investr.interfaces.OnAssetSelectedListener;
 import com.investrapp.investr.models.Asset;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.Player;
-import com.investrapp.investr.models.Transaction;
 
 public class CompetitionActivity extends AppCompatActivity implements OnAssetSelectedListener {
 
@@ -111,20 +109,19 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
                 fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
         }
 
-        // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
         menuItem.setChecked(true);
-        setTitle(menuItem.getTitle());
+        setTitle(mCompetition.getName() + " - " + menuItem.getTitle());
         mDrawer.closeDrawers();
     }
 
     private void setupInitialFragment() {
-        navigationView.getMenu().getItem(0).setChecked(true);
+        navigationView.getMenu().getItem(1).setChecked(true);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, RankingsFragment.newInstance(mCompetition)).commit();
-        setTitle(R.string.rankings);
+        fragmentManager.beginTransaction().replace(R.id.flContent, PortfolioFragment.newInstance(mCurrentPlayer, mCompetition)).commit();
+        setTitle(mCompetition.getName() + " - " + navigationView.getMenu().getItem(1).getTitle());
     }
 
     @Override
@@ -143,12 +140,6 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
         Intent i = new Intent(CompetitionActivity.this, AssetActivity.class);
         i.putExtra("ticker", asset.getTicker());
         startActivity(i);
-    }
-
-    //TODO remove
-    private void AddTransactons() {
-        DatabaseSetupUtils.addCryptoTransactionAndSubstractCash(mCurrentPlayer, mCompetition, "ETH", 7, Transaction.TransactionAction.BUY);
-        DatabaseSetupUtils.addCryptoTransactionAndSubstractCash(mCurrentPlayer, mCompetition, "BTC", 43, Transaction.TransactionAction.BUY);
     }
 
 }
