@@ -2,12 +2,17 @@ package com.investrapp.investr.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,13 +39,6 @@ public class MarketplaceFragment extends Fragment implements AssetAdapterListene
     ArrayList<Asset> assets;
     RecyclerView rvAssets;
 
-    EditText etMarketplaceSearch;
-    Button btnMarketplaceSearch;
-    CheckBox cbCryptocurrency;
-    CheckBox cbCurrency;
-    CheckBox cbCommodities;
-    CheckBox cbStock;
-
     LinearLayoutManager linearLayoutManager;
 
     private View view;
@@ -59,12 +57,6 @@ public class MarketplaceFragment extends Fragment implements AssetAdapterListene
         view = inflater.inflate(R.layout.fragment_marketplace, container, false);
 
         rvAssets = (RecyclerView) view.findViewById(R.id.rvAssets);
-        etMarketplaceSearch = (EditText) view.findViewById(R.id.etMarketplaceSearch);
-        btnMarketplaceSearch = (Button) view.findViewById(R.id.btnMarketplaceSearch);
-        cbCryptocurrency = (CheckBox) view.findViewById(R.id.cbCryptocurrency);
-        cbCurrency = (CheckBox) view.findViewById(R.id.cbForeignCurrency);
-        cbCommodities = (CheckBox) view.findViewById(R.id.cbCommodities);
-        cbStock = (CheckBox) view.findViewById(R.id.cbStocks);
 
         assets = new ArrayList<Asset>();
 
@@ -74,35 +66,31 @@ public class MarketplaceFragment extends Fragment implements AssetAdapterListene
         rvAssets.setLayoutManager(linearLayoutManager);
         rvAssets.setAdapter(assetAdapter);
 
-        etMarketplaceSearch.addTextChangedListener(new TextWatcher() {
+        setHasOptionsMenu(true);
 
+        return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar.
+        inflater.inflate(R.menu.menu_marketplace, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void afterTextChanged(Editable s) {
-
+            public boolean onQueryTextSubmit(String query) {
+                return true;
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String query = s.toString();
-                boolean cryptocurrencyChecked = cbCryptocurrency.isChecked();
-                boolean currencyChecked = cbCurrency.isChecked();
-                boolean commoditiesChecked = cbCommodities.isChecked();
-                boolean stockChecked = cbStock.isChecked();
-
-                //TODO
-                //add additional conditions below and combine queries
-                if (cryptocurrencyChecked) {
-                    getMatchingCryptocurrency(query);
-                }
+            public boolean onQueryTextChange(String newText) {
+                getMatchingCryptocurrency(newText);
+                return true;
             }
         });
 
-        return view;
     }
 
     public static MarketplaceFragment newInstance() {
@@ -110,18 +98,6 @@ public class MarketplaceFragment extends Fragment implements AssetAdapterListene
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    private void getMatchingStocks(String query) {
-        ParseClient.getMatchingStocksByName(query, new FindCallback<Stock>() {
-            @Override
-            public void done(List<Stock> stocks, ParseException e) {
-                Log.d("CompetitionActivity", "size:  " + stocks.size());
-                for (Stock stock : stocks) {
-                    Log.d("CompetitionActivity", stock.getName());
-                }
-            }
-        });
     }
 
     private void getMatchingCryptocurrency(String query) {

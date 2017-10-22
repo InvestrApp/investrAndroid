@@ -19,8 +19,8 @@ public class IntradayPriceFragment extends AssetPriceFragment {
     }
 
 
-    public static DailyPriceFragment newInstance(String ticker) {
-        DailyPriceFragment fragment = new DailyPriceFragment();
+    public static IntradayPriceFragment newInstance(String ticker) {
+        IntradayPriceFragment fragment = new IntradayPriceFragment();
         Bundle args = new Bundle();
         args.putString("ticker", ticker);
         fragment.setArguments(args);
