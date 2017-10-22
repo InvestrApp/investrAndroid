@@ -1,6 +1,6 @@
 package com.investrapp.investr.apis;
 
-import com.investrapp.investr.apis.handlers.ParseGetAllCompetitionsForPlayerHandler;
+import com.investrapp.investr.apis.handlers.ParseGetAllCompetitionsHandler;
 import com.investrapp.investr.models.Cash;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
@@ -14,7 +14,7 @@ import com.parse.ParseQuery;
 
 public class ParseClient {
 
-    public static void getAllCompetitionsForPlayer(Player player, ParseGetAllCompetitionsForPlayerHandler handler) {
+    public static void getAllCompetitionsForPlayer(Player player, ParseGetAllCompetitionsHandler handler) {
         ParseQuery<CompetitionPlayer> competitionPlayerParseQuery = ParseQuery.getQuery(CompetitionPlayer.class);
         competitionPlayerParseQuery.include("competition");
         competitionPlayerParseQuery.whereEqualTo("player", player);
@@ -34,6 +34,7 @@ public class ParseClient {
 
     public static void getAllCompetitions(FindCallback<Competition> handler) {
         ParseQuery<Competition> query = ParseQuery.getQuery(Competition.class);
+        query.orderByDescending("end_date");
         query.findInBackground(handler);
     }
 
@@ -128,7 +129,7 @@ public class ParseClient {
         ParseQuery<Ranking> query = ParseQuery.getQuery(Ranking.class);
         query.whereEqualTo("competition", competition);
         query.include("player");
-        query.orderByDescending("ranking");
+        query.orderByAscending("ranking");
         query.findInBackground(handler);
     }
 

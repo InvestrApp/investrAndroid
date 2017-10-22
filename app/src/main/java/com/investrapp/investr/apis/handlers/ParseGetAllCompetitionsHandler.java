@@ -8,7 +8,7 @@ import com.parse.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ParseGetAllCompetitionsForPlayerHandler implements FindCallback<CompetitionPlayer> {
+public abstract class ParseGetAllCompetitionsHandler implements FindCallback<CompetitionPlayer> {
 
     @Override
     public void done(List<CompetitionPlayer> objects, ParseException e) {

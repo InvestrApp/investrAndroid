@@ -12,6 +12,8 @@ import com.investrapp.investr.models.Competition;
 
 import java.util.List;
 
+import static com.investrapp.investr.application.InvestrApplication.context;
+
 public class CompetitionsAdapter extends RecyclerView.Adapter<CompetitionsAdapter.ViewHolder> {
 
     private List<Competition> mCompetitions;
@@ -28,9 +30,8 @@ public class CompetitionsAdapter extends RecyclerView.Adapter<CompetitionsAdapte
         }
     }
 
-    public CompetitionsAdapter(Context context, List<Competition> competitions) {
+    public CompetitionsAdapter(List<Competition> competitions) {
         mCompetitions = competitions;
-        mContext = context;
     }
 
     public Context getContext() {
@@ -39,7 +40,7 @@ public class CompetitionsAdapter extends RecyclerView.Adapter<CompetitionsAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        mContext = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View competitionsView = inflater.inflate(R.layout.item_competition, parent, false);
@@ -61,6 +62,16 @@ public class CompetitionsAdapter extends RecyclerView.Adapter<CompetitionsAdapte
     @Override
     public int getItemCount() {
         return mCompetitions.size();
+    }
+
+    public void clear() {
+        mCompetitions.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<Competition> list) {
+        mCompetitions.addAll(list);
+        notifyDataSetChanged();
     }
 
 }

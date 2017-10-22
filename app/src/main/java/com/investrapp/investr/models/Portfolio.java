@@ -80,7 +80,7 @@ public class Portfolio {
 
     public void calculateTotalPortfolioValue() {
         final HashMap<String, Integer> cryptocurrencyMap = new HashMap<>();
-        HashMap<String, Integer> stockMap = new HashMap<>();
+        final HashMap<String, Integer> stockMap = new HashMap<>();
         for (Transaction transaction : mTransactions) {
             if (transaction.getAssetType().equals(Cash.ASSET_TYPE)) {
                 value += transaction.getPrice() * transaction.getUnits();
@@ -90,52 +90,59 @@ public class Portfolio {
                 value += handleTransctions(transaction, cryptocurrencyMap);
             }
         }
-
-        for (final String ticker : cryptocurrencyMap.keySet()) {
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    AlphaVantageClient.getCurrentDigitalCurrencyPrice(ticker, new AlphaVantageDigitalCurrencyCurrentPriceCallHandler() {
-                        @Override
-                        public void onPriceResponse(Double price) {
-                            Double assetValue = price * cryptocurrencyMap.get(ticker);
-                            System.out.println(ticker + " " + assetValue + " " + value);
-                            value += assetValue;
-                            mPortfolioListener.onValueUpdate();
-                        }
-                    });
-                }
-            });
-        }
-
-        for (final String ticker : stockMap.keySet()) {
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    AlphaVantageClient.getCurrentStockPrice(ticker, new AlphaVantageStockCurrentPriceCallHandler() {
-                        @Override
-                        public void onPriceResponse(Double price) {
-                            Double assetValue = price * cryptocurrencyMap.get(ticker);
-                            value += assetValue;
-                            mPortfolioListener.onValueUpdate();
-                        }
-                    });
-                }
-            });
-        }
-
+        addCurrentAssetValue(cryptocurrencyMap, Cryptocurrency.ASSET_TYPE);
+        addCurrentAssetValue(stockMap, Stock.ASSET_TYPE);
     }
 
     private double handleTransctions(Transaction transaction, HashMap<String, Integer> map) {
+        if (map.containsKey(transaction.getAssetTicker())) {
+            map.put(transaction.getAssetTicker(), transaction.getUnits() + map.get(transaction.getAssetTicker()));
+        } else {
+            map.put(transaction.getAssetTicker(), transaction.getUnits());
+        }
         if (transaction.getAction().equals(Transaction.TransactionAction.BUY.toString())) {
-            if (map.containsKey(transaction.getAssetTicker())) {
-                map.put(transaction.getAssetTicker(), transaction.getUnits() + map.get(transaction.getAssetTicker()));
-            } else {
-                map.put(transaction.getAssetTicker(), transaction.getUnits());
-            }
             return 0;
         } else {
             return transaction.getPrice() * transaction.getUnits();
+        }
+    }
+
+    private void addCurrentAssetValue(final HashMap<String, Integer> map, final String assetType) {
+        for (final String ticker : map.keySet()) {
+            if (map.get(ticker) <= 0) {
+                return;
+            }
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    if (assetType.equals(Cryptocurrency.ASSET_TYPE)) {
+                        AlphaVantageClient.getCurrentDigitalCurrencyPrice(ticker, new AlphaVantageDigitalCurrencyCurrentPriceCallHandler() {
+                            @Override
+                            public void onPriceResponse(Double price) {
+                                Double assetValue = price * map.get(ticker);
+                                System.out.println(ticker + " " + assetValue + " " + value);
+                                value += assetValue;
+                                mPortfolioListener.onValueUpdate();
+                            }
+                        });
+                    } else if (assetType.equals(Stock.ASSET_TYPE)) {
+                        AsyncTask.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                            AlphaVantageClient.getCurrentStockPrice(ticker, new AlphaVantageStockCurrentPriceCallHandler() {
+                                @Override
+                                public void onPriceResponse(Double price) {
+                                    Double assetValue = price * map.get(ticker);
+                                    System.out.println(ticker + " " + assetValue + " " + value);
+                                    value += assetValue;
+                                    mPortfolioListener.onValueUpdate();
+                                }
+                            });
+                            }
+                        });
+                    }
+                }
+            });
         }
     }
 

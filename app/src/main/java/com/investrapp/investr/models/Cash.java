@@ -7,6 +7,7 @@ import com.parse.ParseObject;
 public class Cash extends ParseObject implements Asset {
 
     public static String ASSET_TYPE = "cash";
+    public static String TICKER = "CASH";
 
     public Cash() {
         super();
