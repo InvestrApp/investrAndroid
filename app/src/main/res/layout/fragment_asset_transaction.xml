@@ -1,24 +1,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/assetTransaction"
-    android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:layout_gravity="center" android:orientation="vertical"  >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/transactionTitle"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="center" android:orientation="horizontal"  >
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:orientation="horizontal">
+
         <TextView
-            android:id="@+id/transactionAssetName"
+            android:id="@+id/tvTransactionAssetName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
             android:text="TextView" />
+
         <TextView
-            android:id="@+id/transactionAssetTicker"
+            android:id="@+id/tvTransactionAssetTicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
             android:text="TextView" />
+
         <TextView
-            android:id="@+id/transactionAssetCurrentPrice"
+            android:id="@+id/tvTransactionAssetCurrentPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
@@ -29,32 +39,59 @@
         android:id="@+id/tvCurrentAssetCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/tvSelectNumberOfUnitsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
         android:text="Select Unit Count" />
 
     <EditText
-        android:id="@+id/tvSelectNumberOfUnits"
+        android:id="@+id/etSelectNumberOfUnits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Enter unit count..." />
+        android:hint="Enter unit count..."
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:inputType="number" />
 
     <TextView
         android:id="@+id/tvTransactionPriceTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
         android:text="Total Cost" />
 
     <TextView
         android:id="@+id/tvTransactionPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvCashRemainingTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvCashRemaining"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
         android:text="TextView" />
 
     <Button

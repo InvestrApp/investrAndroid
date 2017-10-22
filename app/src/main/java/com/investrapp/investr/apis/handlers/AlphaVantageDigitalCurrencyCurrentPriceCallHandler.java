@@ -22,11 +22,9 @@ public abstract class AlphaVantageDigitalCurrencyCurrentPriceCallHandler impleme
     @Override
     public void onResponse(Call call, Response response) throws IOException {
         if (!response.isSuccessful()) {
-            Log.e("AlphaAvantageClient", response.toString());
             throw new IOException("Unexpected code " + response);
         }
         String responseData = response.body().string();
-        Log.d("AlphaAvantageClient",responseData);
         try {
             JSONObject jsonObject = new JSONObject(responseData);
             JSONObject timeSeries = jsonObject.getJSONObject("Time Series (Digital Currency Intraday)");

@@ -14,11 +14,19 @@ import android.widget.TextView;
 
 import com.investrapp.investr.R;
 import com.investrapp.investr.apis.AlphaVantageClient;
+import com.investrapp.investr.apis.ParseClient;
 import com.investrapp.investr.apis.handlers.AlphaVantageDigitalCurrencyCurrentPriceCallHandler;
 import com.investrapp.investr.fragments.AssetPriceFragment;
 import com.investrapp.investr.fragments.AssetTransactionDialogFragment;
 import com.investrapp.investr.fragments.PricesPagerAdapter;
+import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
+import com.investrapp.investr.models.Player;
+import com.investrapp.investr.models.Transaction;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+
+import java.util.List;
 
 
 public class AssetActivity extends AppCompatActivity implements AssetPriceFragment.OnPriceTimeSeriesResponseListener {
@@ -40,6 +48,14 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
     TabLayout tabLayout;
 
     PricesPagerAdapter pricesPagerAdapter;
+
+    Competition competition;
+    Player player;
+    String ticker;
+    String cryptocurrencyName;
+
+    int totalOwned;
+    double price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +82,9 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
         vpPager = (ViewPager) findViewById(R.id.viewpager);
 
         Intent intent = getIntent();
-        String ticker = intent.getStringExtra("ticker");
+        this.ticker = intent.getStringExtra("ticker");
+        this.competition = (Competition) getIntent().getParcelableExtra("competition");
+        this.player = (Player) getIntent().getParcelableExtra("player");
 
         getAssetPrice(ticker);
       
@@ -79,7 +97,7 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
         btnBuyAsset.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 FragmentManager fm = getSupportFragmentManager();
-                AssetTransactionDialogFragment assetTransactionDialogFragment = AssetTransactionDialogFragment.newInstance();
+                AssetTransactionDialogFragment assetTransactionDialogFragment = AssetTransactionDialogFragment.newInstance(competition, player, cryptocurrencyName, ticker, totalOwned, price, "BUY");
 
                 assetTransactionDialogFragment.show(fm, "fragment_asset_transaction");
             }
@@ -88,11 +106,13 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
         btnSellAsset.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 FragmentManager fm = getSupportFragmentManager();
-                AssetTransactionDialogFragment assetTransactionDialogFragment = AssetTransactionDialogFragment.newInstance();
+                AssetTransactionDialogFragment assetTransactionDialogFragment = AssetTransactionDialogFragment.newInstance(competition, player, cryptocurrencyName, ticker, totalOwned, price, "SELL");
 
                 assetTransactionDialogFragment.show(fm, "fragment_asset_transaction");
             }
         });
+
+        getCryptocurrencyTransactionsByTickerUserCompetition();
 
     }
 
@@ -100,7 +120,7 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
     public void onPriceTimeSeriesResponse(CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries) {
         String information = cryptocurrencyPriceTimeSeries.getInformation();
         String ticker = cryptocurrencyPriceTimeSeries.getTicker();
-        String cryptocurrencyName = cryptocurrencyPriceTimeSeries.getCryptocurrencyName();
+        this.cryptocurrencyName = cryptocurrencyPriceTimeSeries.getCryptocurrencyName();
         String market = cryptocurrencyPriceTimeSeries.getMarket();
         String marketName = cryptocurrencyPriceTimeSeries.getMarketName();
         String lastRefreshed = cryptocurrencyPriceTimeSeries.getLastRefreshed();
@@ -118,17 +138,34 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
     public void getAssetPrice(String assetTicker) {
         AlphaVantageClient.getCurrentDigitalCurrencyPrice(assetTicker, new AlphaVantageDigitalCurrencyCurrentPriceCallHandler() {
             @Override
-            public void onPriceResponse(Double price) {
-                Log.d("AssetActivity", "current price:  " + price);
-                setAssetPrice(price);
+            public void onPriceResponse(Double priceResponse) {
+                setAssetPrice(priceResponse);
             }
         });
     }
 
-    public void setAssetPrice(final Double price) {
+    public void setAssetPrice(final Double priceResponse) {
         runOnUiThread(new Runnable() {
             public void run() {
-                tvAssetPrice.setText("" + String.format ("%,.2f", price));
+                price  = priceResponse;
+                tvAssetPrice.setText("" + String.format("%,.2f", price));
+            }
+        });
+    }
+
+    public void getCryptocurrencyTransactionsByTickerUserCompetition() {
+        ParseClient.getCryptocurrencyTransactionsByTickerUserCompetition(ticker, competition, player, new FindCallback<Transaction>() {
+
+            @Override
+            public void done(List<Transaction> transactions, ParseException e) {
+                for (Transaction t : transactions) {
+                    totalOwned+=t.getUnits();
+                }
+
+                //hide the sell button if the player does not own the selected asset
+                if (totalOwned == 0) {
+                    btnSellAsset.setVisibility(View.GONE);
+                }
             }
         });
     }

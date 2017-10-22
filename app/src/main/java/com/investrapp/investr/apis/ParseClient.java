@@ -10,7 +10,12 @@ import com.investrapp.investr.models.Ranking;
 import com.investrapp.investr.models.Stock;
 import com.investrapp.investr.models.Transaction;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
+import java.util.List;
 
 public class ParseClient {
 
@@ -97,6 +102,14 @@ public class ParseClient {
         cash.saveInBackground();
     }
 
+    public static void updateCash(Player player, Competition competition, FindCallback<Transaction> findCallback) {
+        ParseQuery<Transaction> query = ParseQuery.getQuery(Transaction.class);
+        query.whereEqualTo("asset_type", "cash");
+        query.whereEqualTo("player", player);
+        query.whereEqualTo("competition", competition);
+        query.findInBackground(findCallback);
+    }
+
     public static void getCashObject(FindCallback<Cash> handler) {
         ParseQuery<Cash> query = ParseQuery.getQuery(Cash.class);
         query.whereEqualTo("ticker", "CASH");
@@ -133,4 +146,11 @@ public class ParseClient {
         query.findInBackground(handler);
     }
 
+    public static void getCryptocurrencyTransactionsByTickerUserCompetition(String query, Competition competition, Player player, FindCallback<Transaction> handler) {
+        ParseQuery<Transaction> transactionParseQuery = ParseQuery.getQuery(Transaction.class);
+        transactionParseQuery.whereEqualTo("asset_ticker", query.toUpperCase());
+        transactionParseQuery.whereEqualTo("competition", competition);
+        transactionParseQuery.whereEqualTo("player", player);
+        transactionParseQuery.findInBackground(handler);
+    }
 }

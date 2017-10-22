@@ -1,5 +1,7 @@
 package com.investrapp.investr.apis.handlers;
 
+import android.util.Log;
+
 import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
 import com.investrapp.investr.models.Price;
 
@@ -37,6 +39,7 @@ public abstract class AlphaVantageDigitalCurrencyPricesCallHandler implements Ca
             if(mainKeys.hasNext()) {
                 metaDataKey = mainKeys.next();
             }
+            Log.d("DEBUG", jsonObject.toString());
             JSONObject metaData = jsonObject.getJSONObject(metaDataKey);
 
             String information = metaData.getString("1. Information");

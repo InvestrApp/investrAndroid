@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -143,6 +144,8 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
     public void onAssetSelected(Asset asset) {
         Intent i = new Intent(CompetitionActivity.this, AssetActivity.class);
         i.putExtra("ticker", asset.getTicker());
+        i.putExtra("player", mCurrentPlayer);
+        i.putExtra("competition", mCompetition);
         startActivity(i);
     }
 
