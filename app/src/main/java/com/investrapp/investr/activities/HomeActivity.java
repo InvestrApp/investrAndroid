@@ -9,8 +9,6 @@ import android.support.v7.widget.Toolbar;
 import com.investrapp.investr.R;
 import com.investrapp.investr.adapters.HomeFragmentPagerAdapter;
 
-import static com.parse.ParseUser.getCurrentUser;
-
 public class HomeActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -21,7 +19,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         setupToolbar();
         setupTabs();
-        getCurrentUser();
     }
 
     private void setupToolbar() {

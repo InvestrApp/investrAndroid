@@ -22,6 +22,7 @@ import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.Player;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -117,6 +118,8 @@ public abstract class HomeCompetitionsFragment extends Fragment {
                     });
                 } else {
                     mCurrentPlayer = objects.get(0);
+                    mCurrentPlayer.setInstallation(ParseInstallation.getCurrentInstallation().getInstallationId());
+                    ParseClient.savePlayer(mCurrentPlayer);
                     getAllCompetitions();
                 }
             }
