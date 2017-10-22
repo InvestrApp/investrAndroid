@@ -7,6 +7,7 @@
     <string name="rankings">Rankings</string>
     <string name="portfolio">Portfolio</string>
     <string name="marketplace">Marketplace</string>
+    <string name="all_competitions">All Competitions</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="enter_asset_name">Enter Asset Name...</string>

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.investrapp.investr.R;
 import com.investrapp.investr.adapters.RankingsAdapter;
@@ -61,6 +62,8 @@ public class RankingsFragment extends Fragment {
                 mRankings.clear();
                 mRankings.addAll(objects);
                 mAdapter.notifyDataSetChanged();
+                String message = "Rankings updated every 15 minutes.";
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
         });
     }

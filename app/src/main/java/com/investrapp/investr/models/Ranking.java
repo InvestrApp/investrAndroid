@@ -62,5 +62,4 @@ public class Ranking extends ParseObject {
         return formatter.format(getPortfolioValue());
     }
 
-
 }

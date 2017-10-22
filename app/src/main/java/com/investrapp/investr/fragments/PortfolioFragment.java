@@ -100,6 +100,9 @@ public class PortfolioFragment extends Fragment implements PortfolioListener {
 
     @Override
     public void onValueUpdate() {
+        if(getActivity() == null) {
+            return;
+        }
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 tvPortfolioValue.setText(mPortfolio.getValueFormatted() + " portfolio value");

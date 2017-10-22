@@ -6,8 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +16,6 @@ import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
 import com.investrapp.investr.models.Price;
 
 import java.util.ArrayList;
-
-
 
 public abstract class AssetPriceFragment extends Fragment {
 
@@ -71,6 +67,9 @@ public abstract class AssetPriceFragment extends Fragment {
     public abstract void loadPrices(String assetTicker);
 
     public void updatePrices(final CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries) {
+        if(getActivity() == null) {
+            return;
+        }
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 listener.onPriceTimeSeriesResponse(cryptocurrencyPriceTimeSeries);
@@ -83,5 +82,6 @@ public abstract class AssetPriceFragment extends Fragment {
     public interface OnPriceTimeSeriesResponseListener {
         void onPriceTimeSeriesResponse(CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries);
     }
+
 }
 
