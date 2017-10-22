@@ -105,6 +105,9 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
             case R.id.nav_marketplace_fragment:
                 fragment = (MarketplaceFragment) MarketplaceFragment.newInstance();
                 break;
+            case R.id.nav_home:
+                Intent i = new Intent(CompetitionActivity.this, HomeActivity.class);
+                startActivity(i);
             default:
                 fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
         }
@@ -118,10 +121,11 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
     }
 
     private void setupInitialFragment() {
-        navigationView.getMenu().getItem(1).setChecked(true);
+        int menuItem = 0;
+        navigationView.getMenu().getItem(menuItem).setChecked(true);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, PortfolioFragment.newInstance(mCurrentPlayer, mCompetition)).commit();
-        setTitle(mCompetition.getName() + " - " + navigationView.getMenu().getItem(1).getTitle());
+        fragmentManager.beginTransaction().replace(R.id.flContent, RankingsFragment.newInstance(mCompetition)).commit();
+        setTitle(mCompetition.getName() + " - " + navigationView.getMenu().getItem(menuItem).getTitle());
     }
 
     @Override

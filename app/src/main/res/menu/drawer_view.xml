@@ -15,6 +15,10 @@
             android:id="@+id/nav_marketplace_fragment"
             android:icon="@mipmap/ic_launcher"
             android:title="@string/marketplace" />
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/all_competitions" />
     </group>
 
 </menu>

@@ -116,7 +116,6 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
     }
 
     public void getAssetPrice(String assetTicker) {
-
         AlphaVantageClient.getCurrentDigitalCurrencyPrice(assetTicker, new AlphaVantageDigitalCurrencyCurrentPriceCallHandler() {
             @Override
             public void onPriceResponse(Double price) {
@@ -133,4 +132,5 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
             }
         });
     }
+
 }
