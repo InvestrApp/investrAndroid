@@ -19,20 +19,15 @@ public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.ViewHolder> 
 
     private List<Asset> mAssets;
     private Context mContext;
-
     private AssetAdapterListener assetAdapterListener;
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         public TextView tvName;
         public TextView tvTicker;
-
         public ViewHolder(View itemView) {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             tvTicker = (TextView) itemView.findViewById(R.id.tvTicker);
-
-            // Attach a click listener to the entire row view
             itemView.setOnClickListener(this);
         }
 

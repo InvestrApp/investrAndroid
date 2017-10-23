@@ -1,13 +1,10 @@
-package com.investrapp.investr.fragments;
+package com.investrapp.investr.fragments.assetPrice;
 
 import android.os.Bundle;
 
 import com.investrapp.investr.apis.AlphaVantageClient;
 import com.investrapp.investr.apis.handlers.AlphaVantageDigitalCurrencyPricesCallHandler;
 import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
-import com.investrapp.investr.models.Price;
-
-import java.util.List;
 
 /**
  * Created by michaelsignorotti on 10/19/17.
@@ -15,11 +12,9 @@ import java.util.List;
 
 public class MonthlyPriceFragment extends AssetPriceFragment {
 
-
-
     public MonthlyPriceFragment() {
-    }
 
+    }
 
     public static MonthlyPriceFragment newInstance(String ticker) {
         MonthlyPriceFragment fragment = new MonthlyPriceFragment();
@@ -29,10 +24,8 @@ public class MonthlyPriceFragment extends AssetPriceFragment {
         return fragment;
     }
 
-
     @Override
     public void loadPrices(String assetTicker) {
-
         AlphaVantageClient.getCurrentDigitalCurrencyPricesMonthly(assetTicker, new AlphaVantageDigitalCurrencyPricesCallHandler() {
             @Override
             public void onPricesResponse(CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries) {
@@ -40,4 +33,5 @@ public class MonthlyPriceFragment extends AssetPriceFragment {
             }
         });
     }
+
 }

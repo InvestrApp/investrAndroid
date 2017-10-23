@@ -18,9 +18,8 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
     private Context mContext;
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvPriceDate;
-        public TextView tvPriceAmount;
-
+        private TextView tvPriceDate;
+        private TextView tvPriceAmount;
         public ViewHolder(View itemView) {
             super(itemView);
             tvPriceDate = (TextView) itemView.findViewById(R.id.tvPriceDate);
@@ -41,7 +40,6 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-
         View vPrice = inflater.inflate(R.layout.item_price, parent, false);
         ViewHolder vhPrice = new ViewHolder(vPrice);
         return vhPrice;
@@ -52,8 +50,8 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
         Price price = mPrices.get(position);
         TextView tvPriceDate = holder.tvPriceDate;
         TextView tvPriceAmount = holder.tvPriceAmount;
-        tvPriceDate.setText(price.getDate().toString());
-        tvPriceAmount.setText("" + price.getPrice());
+        tvPriceDate.setText(price.getDateFormatted());
+        tvPriceAmount.setText(price.getPriceFormatted());
     }
 
     @Override

@@ -8,16 +8,19 @@ import java.util.ArrayList;
 
 public class CryptocurrencyPriceTimeSeries {
 
-    String information;
-    String ticker;
-    String cryptocurrencyName;
-    String market;
-    String marketName;
-    String lastRefreshed;
-    String timeZone;
-    ArrayList<Price> priceList;
+    private String information;
+    private String ticker;
+    private String cryptocurrencyName;
+    private String market;
+    private String marketName;
+    private String lastRefreshed;
+    private String timeZone;
+    private ArrayList<Price> priceList;
 
-    public CryptocurrencyPriceTimeSeries(String information, String ticker, String cryptocurrencyName, String market, String marketName, String lastRefreshed, String timeZone, ArrayList<Price> priceList) {
+    public CryptocurrencyPriceTimeSeries(String information, String ticker,
+                                         String cryptocurrencyName, String market,
+                                         String marketName, String lastRefreshed,
+                                         String timeZone, ArrayList<Price> priceList) {
         this.information = information;
         this.ticker = ticker;
         this.cryptocurrencyName = cryptocurrencyName;
@@ -91,4 +94,5 @@ public class CryptocurrencyPriceTimeSeries {
     public void setPriceList(ArrayList<Price> priceList) {
         this.priceList = priceList;
     }
+
 }

@@ -11,12 +11,11 @@ import com.investrapp.investr.models.Ranking;
 import com.investrapp.investr.models.Stock;
 import com.investrapp.investr.models.Transaction;
 import com.parse.FindCallback;
-
+import com.parse.ParseCloud;
 import com.parse.ParseQuery;
 
-import com.parse.ParseCloud;
-
 import java.util.HashMap;
+import java.util.List;
 
 public class ParseClient {
 
@@ -160,6 +159,19 @@ public class ParseClient {
         data.put("installationId", player.getInstallation());
         data.put("message", message);
         ParseCloud.callFunctionInBackground("push", data);
+    }
+
+    public static void sendPushToAllCompetitors(Competition competition, final Player currentPlayer, final String message) {
+        ParseClient.getAllPlayersInCompetition(competition, new ParseGetAllPlayersHandler() {
+            @Override
+            public void done(List<Player> players) {
+                for (Player player : players) {
+                    if (player.getObjectId() != currentPlayer.getObjectId()) {
+                        ParseClient.sendPushto(player, message);
+                    }
+                }
+            }
+        });
     }
 
 }

@@ -4,7 +4,12 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
+
+import com.investrapp.investr.fragments.assetPrice.AssetPriceFragment;
+import com.investrapp.investr.fragments.assetPrice.DailyPriceFragment;
+import com.investrapp.investr.fragments.assetPrice.IntradayPriceFragment;
+import com.investrapp.investr.fragments.assetPrice.MonthlyPriceFragment;
+import com.investrapp.investr.fragments.assetPrice.WeeklyPriceFragment;
 
 /**
  * Created by michaelsignorotti on 10/7/17.

@@ -1,4 +1,4 @@
-package com.investrapp.investr.fragments;
+package com.investrapp.investr.fragments.assetPrice;
 
 import android.os.Bundle;
 
@@ -10,14 +10,14 @@ import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
  * Created by michaelsignorotti on 10/19/17.
  */
 
-public class WeeklyPriceFragment extends AssetPriceFragment {
+public class IntradayPriceFragment extends AssetPriceFragment {
 
-    public WeeklyPriceFragment() {
+    public IntradayPriceFragment() {
 
     }
 
-    public static WeeklyPriceFragment newInstance(String ticker) {
-        WeeklyPriceFragment fragment = new WeeklyPriceFragment();
+    public static IntradayPriceFragment newInstance(String ticker) {
+        IntradayPriceFragment fragment = new IntradayPriceFragment();
         Bundle args = new Bundle();
         args.putString("ticker", ticker);
         fragment.setArguments(args);
@@ -26,7 +26,7 @@ public class WeeklyPriceFragment extends AssetPriceFragment {
 
     @Override
     public void loadPrices(String assetTicker) {
-        AlphaVantageClient.getCurrentDigitalCurrencyPricesWeekly(assetTicker, new AlphaVantageDigitalCurrencyPricesCallHandler() {
+        AlphaVantageClient.getCurrentDigitalCurrencyPricesIntraday(assetTicker, new AlphaVantageDigitalCurrencyPricesCallHandler() {
             @Override
             public void onPricesResponse(CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries) {
                 updatePrices(cryptocurrencyPriceTimeSeries);
