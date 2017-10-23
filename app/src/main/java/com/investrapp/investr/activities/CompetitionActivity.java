@@ -40,9 +40,7 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_competition);
-
         navigationView = (NavigationView) findViewById(R.id.nvView);
-
         setupToolbar();
         setupDrawerLayout();
         setupDrawerContent();
@@ -65,13 +63,13 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
 
     private void setupDrawerContent() {
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return true;
-                    }
-                });
+            new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    selectDrawerItem(menuItem);
+                    return true;
+                }
+            });
     }
 
     private void setupNavigationViewHeader() {
@@ -115,7 +113,6 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-
         menuItem.setChecked(true);
         setTitle(mCompetition.getName() + " - " + menuItem.getTitle());
         mDrawer.closeDrawers();

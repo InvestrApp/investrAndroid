@@ -1,31 +1,24 @@
 package com.investrapp.investr.activities;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.DatePicker;
 
 import com.investrapp.investr.R;
 import com.investrapp.investr.adapters.HomeFragmentPagerAdapter;
 import com.investrapp.investr.fragments.AllCompetitionsFragment;
 import com.investrapp.investr.fragments.CreateCompetitionDialogFragment;
-import com.investrapp.investr.fragments.DatePickerFragment;
-import com.investrapp.investr.fragments.HomeCompetitionsFragment;
 import com.investrapp.investr.fragments.MyCompetitionsFragment;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
 import com.investrapp.investr.models.Player;
 
-
 public class HomeActivity extends AppCompatActivity implements CreateCompetitionDialogFragment.FinishCreateCompetitionDetailsListener{
-
 
     private Toolbar toolbar;
     ViewPager viewPager;
@@ -76,10 +69,8 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
         }
     }
 
-
     @Override
     public void onFinishCompetitionDetails(Competition competition) {
-
         MyCompetitionsFragment MyCompetitionsFragment = (MyCompetitionsFragment) homeFragmentPagerAdapter.getRegisteredFragment(0);
         MyCompetitionsFragment.addCompetition(competition);
         viewPager.setCurrentItem(1);
@@ -89,4 +80,5 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
         competitionPlayer.saveInBackground();
         allCompetitionsFragment.addCompetition(competition);
     }
+
 }
