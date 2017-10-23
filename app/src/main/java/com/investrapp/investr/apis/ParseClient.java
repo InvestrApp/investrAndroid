@@ -1,6 +1,7 @@
 package com.investrapp.investr.apis;
 
 import com.investrapp.investr.apis.handlers.ParseGetAllCompetitionsHandler;
+import com.investrapp.investr.apis.handlers.ParseGetAllPlayersHandler;
 import com.investrapp.investr.models.Cash;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
@@ -10,12 +11,10 @@ import com.investrapp.investr.models.Ranking;
 import com.investrapp.investr.models.Stock;
 import com.investrapp.investr.models.Transaction;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
+import com.parse.ParseCloud;
 import com.parse.ParseQuery;
 
-import java.util.List;
+import java.util.HashMap;
 
 public class ParseClient {
 
@@ -26,7 +25,7 @@ public class ParseClient {
         competitionPlayerParseQuery.findInBackground(handler);
     }
 
-    public static void getAllPlayersInCompetition(Competition competition, FindCallback<CompetitionPlayer> handler) {
+    public static void getAllPlayersInCompetition(Competition competition, ParseGetAllPlayersHandler handler) {
         ParseQuery<CompetitionPlayer> competitionPlayerParseQuery = ParseQuery.getQuery(CompetitionPlayer.class);
         competitionPlayerParseQuery.include("player");
         competitionPlayerParseQuery.whereEqualTo("competition", competition);
@@ -153,4 +152,12 @@ public class ParseClient {
         transactionParseQuery.whereEqualTo("player", player);
         transactionParseQuery.findInBackground(handler);
     }
+
+    public static void sendPushto(Player player, String message) {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("installationId", player.getInstallation());
+        data.put("message", message);
+        ParseCloud.callFunctionInBackground("push", data);
+    }
+
 }

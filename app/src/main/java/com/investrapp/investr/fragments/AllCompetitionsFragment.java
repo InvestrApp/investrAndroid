@@ -9,9 +9,11 @@ import android.widget.Toast;
 import com.investrapp.investr.activities.CompetitionActivity;
 import com.investrapp.investr.apis.ParseClient;
 import com.investrapp.investr.apis.handlers.ParseGetAllCompetitionsHandler;
+import com.investrapp.investr.apis.handlers.ParseGetAllPlayersHandler;
 import com.investrapp.investr.models.Cash;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
+import com.investrapp.investr.models.Player;
 import com.investrapp.investr.models.Transaction;
 import com.investrapp.investr.utils.ItemClickSupport;
 import com.parse.FindCallback;
@@ -75,7 +77,7 @@ public class AllCompetitionsFragment extends HomeCompetitionsFragment {
         });
     }
 
-    private void joinCompetition(Competition competition) {
+    private void joinCompetition(final Competition competition) {
         if (isPlayerInCompetition(competition)) {
             Toast.makeText(getContext(), "You're already in this competition", Toast.LENGTH_SHORT).show();
             return;
@@ -95,6 +97,15 @@ public class AllCompetitionsFragment extends HomeCompetitionsFragment {
 
         CompetitionPlayer competitionPlayer = new CompetitionPlayer(competition, mCurrentPlayer);
         ParseClient.addPlayerToCompetition(competitionPlayer);
+
+        ParseClient.getAllPlayersInCompetition(competition, new ParseGetAllPlayersHandler() {
+            @Override
+            public void done(List<Player> players) {
+                for (Player player : players) {
+                    ParseClient.sendPushto(player, "A new player has joined " + competition.getName());
+                }
+            }
+        });
 
         Intent i = new Intent(getActivity(), CompetitionActivity.class);
         i.putExtra("player", mCurrentPlayer);

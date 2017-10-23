@@ -1,6 +1,7 @@
 package com.investrapp.investr.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 
 import org.json.JSONException;
@@ -13,13 +14,14 @@ public class Player extends ParseObject {
         super();
     }
 
-    public Player(String id, String name, String email, String gender) {
+    public Player(String id, String name, String email, String gender, String installation) {
         super();
         setId(id);
         setName(name);
         setEmail(email);
         setGender(gender);
         setProfileImageUrl("https://graph.facebook.com/" + id + "/picture?type=large");
+        setInstallation(installation);
     }
 
     public void setId(String id) {
@@ -42,6 +44,10 @@ public class Player extends ParseObject {
         put("profileImageUrl", profileImageUrl);
     }
 
+    public void setInstallation(String installation) {
+        put("installation", installation);
+    }
+
     public String getId() {
         return getString("id");
     }
@@ -62,11 +68,16 @@ public class Player extends ParseObject {
         return getString("profileImageUrl");
     }
 
+    public String getInstallation() {
+        return getString("installation");
+    }
+
     public static Player getPlayerFromFB(JSONObject object) {
         String id = null;
         String name = null;
         String email = null;
         String gender = null;
+        String installation = ParseInstallation.getCurrentInstallation().getInstallationId();
         try {
             id = object.getString("id");
             name = object.getString("name");
@@ -75,7 +86,7 @@ public class Player extends ParseObject {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return new Player(id, name, email, gender);
+        return new Player(id, name, email, gender, installation);
     }
 
 }

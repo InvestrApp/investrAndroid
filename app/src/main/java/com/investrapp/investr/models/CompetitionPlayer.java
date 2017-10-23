@@ -27,4 +27,8 @@ public class CompetitionPlayer extends ParseObject {
         return (Competition) get("competition");
     }
 
+    public Player getPlayer() {
+        return (Player) get("player");
+    }
+
 }
