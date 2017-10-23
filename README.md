@@ -9,18 +9,15 @@ Investr is an app that allows individuals and groups to compete in the virtual i
 Core:
 
 * [x] Users can login via Facebook.
-* [ ] Users can receive push notifications concerning market movements.
+* [x] Users can receive push notifications concerning market movements.
 * [x] Users can access a marketplace where they can perform the following actions.
-* [ ] Users can buy and sell assets.
-* [ ] Users can view an asset's current price and historical performance.
-* [ ] User can create custom competitions.
-* [ ] Competitions can have a custom starting and ending date.
-* [ ] Competitions can only include users added by the creator of the competition.
-* [ ] The initial investment amount is variable but uniform across all participants.
-* [ ] The competition can be limited to particular classes of investments.
-* [ ] Users can review their portfolios for each of their competitions.
-* [ ] Users can add themselves to location based competitions.
-* [ ] Users can review rankings within each competition.
+* [x] Users can buy and sell assets.
+* [x] Users can view an asset's current price and historical performance.
+* [x] User can create custom competitions.
+* [x] Competitions can have a custom starting and ending date.
+* [x] The initial investment amount is variable but uniform across all participants.
+* [x] Users can review their portfolios for each of their competitions.
+* [x] Users can review rankings within each competition.
 
 Stretch: 
 * [ ] Users can receive news targeted to their investment portfolios.
@@ -28,13 +25,13 @@ Stretch:
 * [ ] Users can participate in a basic investment best practices tutorial.
 * [ ] Users can transfer their portfolios to real world trading platforms.
 * [ ] Users are alerted upon login with an image/gif representing their performance in the market.
-* [ ] Users can view a portfolio's historical performance.
+* [x] Users can view a portfolio's historical performance.
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://i.imgur.com/nUGpN2q.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/U6oue2G.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
