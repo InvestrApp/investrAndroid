@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.investrapp.investr.fragments.AllCompetitionsFragment;
 import com.investrapp.investr.fragments.MyCompetitionsFragment;
 
-public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
+public class HomeFragmentPagerAdapter extends SmartFragmentStatePagerAdapter {
 
     final int PAGE_COUNT = 2;
     private String tabTitles[] = new String[] {"My Competitions", "Find Competitions"};

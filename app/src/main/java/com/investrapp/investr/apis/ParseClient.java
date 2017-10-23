@@ -11,8 +11,10 @@ import com.investrapp.investr.models.Ranking;
 import com.investrapp.investr.models.Stock;
 import com.investrapp.investr.models.Transaction;
 import com.parse.FindCallback;
-import com.parse.ParseCloud;
+
 import com.parse.ParseQuery;
+
+import com.parse.ParseCloud;
 
 import java.util.HashMap;
 
