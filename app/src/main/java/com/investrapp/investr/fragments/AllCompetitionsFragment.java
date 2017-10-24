@@ -3,18 +3,15 @@ package com.investrapp.investr.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.investrapp.investr.activities.CompetitionActivity;
 import com.investrapp.investr.apis.ParseClient;
 import com.investrapp.investr.apis.handlers.ParseGetAllCompetitionsHandler;
-import com.investrapp.investr.apis.handlers.ParseGetAllPlayersHandler;
 import com.investrapp.investr.models.Cash;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
-import com.investrapp.investr.models.Player;
 import com.investrapp.investr.models.Transaction;
 import com.investrapp.investr.utils.ItemClickSupport;
 import com.parse.FindCallback;
@@ -29,6 +26,7 @@ import java.util.List;
 public class AllCompetitionsFragment extends HomeCompetitionsFragment {
 
     private List<Competition> playerCompetitions;
+    private Double initialCash = 10000.00;
 
     public static AllCompetitionsFragment newInstance() {
         Bundle args = new Bundle();
@@ -91,22 +89,12 @@ public class AllCompetitionsFragment extends HomeCompetitionsFragment {
             return;
         }
 
-        Double initialCash = 10000.00;
         Transaction transaction = new Transaction(mCurrentPlayer, competition, Cash.ASSET_TYPE, Cash.TICKER,
                 currentDate, Transaction.TransactionAction.BUY, initialCash, 1);
         ParseClient.addTransaction(transaction);
-
         CompetitionPlayer competitionPlayer = new CompetitionPlayer(competition, mCurrentPlayer);
         ParseClient.addPlayerToCompetition(competitionPlayer);
-
-        ParseClient.getAllPlayersInCompetition(competition, new ParseGetAllPlayersHandler() {
-            @Override
-            public void done(List<Player> players) {
-                for (Player player : players) {
-                    ParseClient.sendPushto(player, "A new player has joined " + competition.getName());
-                }
-            }
-        });
+        ParseClient.sendPushToAllCompetitors(competition, mCurrentPlayer, "A new player has joined " + competition.getName());
 
         Intent i = new Intent(getActivity(), CompetitionActivity.class);
         i.putExtra("player", mCurrentPlayer);

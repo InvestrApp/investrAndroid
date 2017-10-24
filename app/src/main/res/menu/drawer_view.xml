@@ -4,20 +4,20 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_rankings_fragment"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_rankings"
             android:checked="true"
             android:title="@string/rankings" />
         <item
             android:id="@+id/nav_portfolio_fragment"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_portfolio"
             android:title="@string/portfolio" />
         <item
             android:id="@+id/nav_marketplace_fragment"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_marketplace"
             android:title="@string/marketplace" />
         <item
             android:id="@+id/nav_home"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_competition_list"
             android:title="@string/all_competitions" />
     </group>
 

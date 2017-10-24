@@ -37,6 +37,8 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
+* Icons were found at https://iconmonstr.com.
+
 ## Open-source and other libraries used
 
 * Parse: http://parseplatform.org

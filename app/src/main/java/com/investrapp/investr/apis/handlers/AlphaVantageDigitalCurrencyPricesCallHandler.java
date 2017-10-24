@@ -64,16 +64,16 @@ public abstract class AlphaVantageDigitalCurrencyPricesCallHandler implements Ca
             //get the time series of digital currency values in the specified market
 
             JSONObject timeSeries = jsonObject.getJSONObject(mainKeys.next());
-
             Iterator<String> keys = timeSeries.keys();
             while (keys.hasNext()) {
                 String date = keys.next();
                 JSONObject jsonObjectValue = timeSeries.getJSONObject(date);
-                Double valuation= jsonObjectValue.getDouble(jsonObjectValue.keys().next());
+                Double valuation = jsonObjectValue.getDouble(jsonObjectValue.keys().next());
                 priceList.add(new Price(date, valuation));
             }
 
-            CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries = new CryptocurrencyPriceTimeSeries(information, ticker, cryptocurrencyName, market, marketName, lastRefreshed, timeZone, priceList);
+            CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries =
+                    new CryptocurrencyPriceTimeSeries(information, ticker, cryptocurrencyName, market, marketName, lastRefreshed, timeZone, priceList);
             if (cryptocurrencyPriceTimeSeries != null) {
                 onPricesResponse(cryptocurrencyPriceTimeSeries);
             }

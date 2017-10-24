@@ -1,4 +1,4 @@
-package com.investrapp.investr.fragments;
+package com.investrapp.investr.fragments.assetPrice;
 
 import android.os.Bundle;
 
@@ -6,18 +6,15 @@ import com.investrapp.investr.apis.AlphaVantageClient;
 import com.investrapp.investr.apis.handlers.AlphaVantageDigitalCurrencyPricesCallHandler;
 import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
 
-
 /**
  * Created by michaelsignorotti on 10/19/17.
  */
 
 public class DailyPriceFragment extends AssetPriceFragment {
 
-
-
     public DailyPriceFragment() {
-    }
 
+    }
 
     public static DailyPriceFragment newInstance(String ticker) {
         DailyPriceFragment fragment = new DailyPriceFragment();
@@ -27,10 +24,8 @@ public class DailyPriceFragment extends AssetPriceFragment {
         return fragment;
     }
 
-
     @Override
     public void loadPrices(String assetTicker) {
-
         AlphaVantageClient.getCurrentDigitalCurrencyPricesDaily(assetTicker, new AlphaVantageDigitalCurrencyPricesCallHandler() {
             @Override
             public void onPricesResponse(CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries) {
@@ -38,4 +33,5 @@ public class DailyPriceFragment extends AssetPriceFragment {
             }
         });
     }
+
 }

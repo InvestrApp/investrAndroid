@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,38 +20,29 @@ import com.investrapp.investr.models.Transaction;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 
 public class AssetTransactionDialogFragment extends DialogFragment {
 
-    TextView tvAssetName;
-    TextView tvAssetTicker;
-    TextView tvAssetPrice;
-
-    EditText etSelectNumberOfUnits;
-
-    TextView tvCurrentAssetCount;
-
-    TextView tvTransactionPrice;
-    TextView tvCashRemaining;
-
-    Button btnSubmitTransaction;
-
-    Competition competition;
-    Player player;
-    String ticker;
-    String name;
-
-    int totalUnits;
-    double cash;
-    double price;
-
-    String action;
-
+    private View view;
+    private TextView tvAssetName;
+    private TextView tvAssetPrice;
+    private EditText etSelectNumberOfUnits;
+    private TextView tvCurrentAssetCount;
+    private TextView tvTransactionPrice;
+    private TextView tvCashRemaining;
+    private Button btnSubmitTransaction;
+    private Competition competition;
+    private Player player;
+    private String ticker;
+    private String name;
+    private int totalUnits;
+    private double cash;
+    private double price;
+    private String action;
 
     public AssetTransactionDialogFragment() {
         // Empty constructor is required for DialogFragment
@@ -60,7 +50,9 @@ public class AssetTransactionDialogFragment extends DialogFragment {
         // Use `newInstance` instead as shown below
     }
 
-    public static AssetTransactionDialogFragment newInstance(Competition competition, Player player, String name, String ticker, int totalUnits, double price, String action) {
+    public static AssetTransactionDialogFragment newInstance(Competition competition, Player player,
+                                                             String name, String ticker, int totalUnits,
+                                                             double price, String action) {
         AssetTransactionDialogFragment frag = new AssetTransactionDialogFragment();
         Bundle args = new Bundle();
         args.putParcelable("competition", competition);
@@ -82,18 +74,10 @@ public class AssetTransactionDialogFragment extends DialogFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        this.view = view;
+        setupViews();
 
-        this.tvAssetName = view.findViewById(R.id.tvTransactionAssetName);
-        this.tvAssetTicker = view.findViewById(R.id.tvTransactionAssetTicker);
-        this.tvAssetPrice = view.findViewById(R.id.tvTransactionAssetCurrentPrice);
-        this.tvCurrentAssetCount = view.findViewById(R.id.tvCurrentAssetCount);
-        this.tvTransactionPrice = view.findViewById(R.id.tvTransactionPrice);
-        this.tvCashRemaining = view.findViewById(R.id.tvCashRemaining);
-        this.btnSubmitTransaction = view.findViewById(R.id.btnSubmitTransaction);
-
-        this.etSelectNumberOfUnits = view.findViewById(R.id.etSelectNumberOfUnits);
         etSelectNumberOfUnits.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void afterTextChanged(Editable s) {
             }
@@ -116,23 +100,15 @@ public class AssetTransactionDialogFragment extends DialogFragment {
                     } else {
                         updatedCash = cash + totalCost;
                     }
-
-                    tvTransactionPrice.setText("$" + totalCost);
-                    tvCashRemaining.setText("$" + updatedCash + " Cash Remaining");
+                    tvTransactionPrice.setText("Total cost: " + NumberFormat.getCurrencyInstance().format(totalCost));
+                    tvCashRemaining.setText(NumberFormat.getCurrencyInstance().format(updatedCash) + " cash left");
                 } else {
-                    tvCashRemaining.setText("$" + cash + " Cash Remaining");
+                    tvCashRemaining.setText(NumberFormat.getCurrencyInstance().format(cash) + " cash left");
                 }
             }
         });
 
-        this.competition = getArguments().getParcelable("competition");
-        this.player = getArguments().getParcelable("player");
-        this.ticker = getArguments().getString("ticker");
-        this.name = getArguments().getString("name");
-        this.totalUnits = getArguments().getInt("totalUnits");
-        this.price = getArguments().getDouble("price");
-        this.action = getArguments().getString("action");
-
+        getItemsFromParcelable();
         getCashForPlayerInCompetition();
         setViewInformation();
 
@@ -148,6 +124,25 @@ public class AssetTransactionDialogFragment extends DialogFragment {
         });
     }
 
+    private void setupViews() {
+        this.tvAssetName = view.findViewById(R.id.tvTransactionAssetName);
+        this.tvAssetPrice = view.findViewById(R.id.tvTransactionAssetCurrentPrice);
+        this.tvCurrentAssetCount = view.findViewById(R.id.tvCurrentAssetCount);
+        this.tvTransactionPrice = view.findViewById(R.id.tvTransactionPrice);
+        this.tvCashRemaining = view.findViewById(R.id.tvCashRemaining);
+        this.btnSubmitTransaction = view.findViewById(R.id.btnSubmitTransaction);
+        this.etSelectNumberOfUnits = view.findViewById(R.id.etSelectNumberOfUnits);
+    }
+
+    private void getItemsFromParcelable() {
+        this.competition = getArguments().getParcelable("competition");
+        this.player = getArguments().getParcelable("player");
+        this.ticker = getArguments().getString("ticker");
+        this.name = getArguments().getString("name");
+        this.totalUnits = getArguments().getInt("totalUnits");
+        this.price = getArguments().getDouble("price");
+        this.action = getArguments().getString("action");
+    }
 
     public void getCashForPlayerInCompetition() {
         ParseClient.getCashForPlayerInCompetition(player, competition, new FindCallback<Transaction>() {
@@ -158,18 +153,17 @@ public class AssetTransactionDialogFragment extends DialogFragment {
                 for (Transaction t : objects) {
                     cash += t.getPrice();
                 }
-                tvCashRemaining.setText("" + cash);
+                tvCashRemaining.setText(NumberFormat.getCurrencyInstance().format(cash) + " cash left");
             }
         });
     }
 
     public void setViewInformation() {
         tvAssetName.setText(name);
-        tvAssetTicker.setText(ticker);
-        tvAssetPrice.setText("" + price);
-        tvCurrentAssetCount.setText("You own " + totalUnits + " " + ticker);
-        tvTransactionPrice.setText("$0");
-        tvCashRemaining.setText("$" + cash);
+        tvAssetPrice.setText(NumberFormat.getCurrencyInstance().format(price));
+        tvCurrentAssetCount.setText("You currently own " + totalUnits + " " + ticker + ".");
+        tvTransactionPrice.setText("Total cost: $0.00");
+        tvCashRemaining.setText(NumberFormat.getCurrencyInstance().format(cash) + " cash left");
 
         if (action.equals("BUY")) {
             btnSubmitTransaction.setText("Buy");
@@ -195,6 +189,7 @@ public class AssetTransactionDialogFragment extends DialogFragment {
                 }
             }
         });
+        sendNotificationToCompetitors();
         dismiss();
     }
 
@@ -215,6 +210,12 @@ public class AssetTransactionDialogFragment extends DialogFragment {
                 }
             }
         });
+        sendNotificationToCompetitors();
         dismiss();
     }
+
+    private void sendNotificationToCompetitors() {
+        ParseClient.sendPushToAllCompetitors(competition, player, "Someone just traded " + ticker + "! What do you think?");
+    }
+
 }

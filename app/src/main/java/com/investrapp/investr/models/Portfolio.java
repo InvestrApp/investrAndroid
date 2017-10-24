@@ -79,6 +79,7 @@ public class Portfolio {
     }
 
     public void calculateTotalPortfolioValue() {
+        value = 0.0;
         final HashMap<String, Integer> cryptocurrencyMap = new HashMap<>();
         final HashMap<String, Integer> stockMap = new HashMap<>();
         for (Transaction transaction : mTransactions) {
@@ -100,10 +101,11 @@ public class Portfolio {
         } else {
             map.put(transaction.getAssetTicker(), transaction.getUnits());
         }
+
         if (transaction.getAction().equals(Transaction.TransactionAction.BUY.toString())) {
             return 0;
         } else {
-            return transaction.getPrice() * transaction.getUnits();
+            return transaction.getPrice() * Math.abs(transaction.getUnits());
         }
     }
 
@@ -126,18 +128,13 @@ public class Portfolio {
                             }
                         });
                     } else if (assetType.equals(Stock.ASSET_TYPE)) {
-                        AsyncTask.execute(new Runnable() {
+                        AlphaVantageClient.getCurrentStockPrice(ticker, new AlphaVantageStockCurrentPriceCallHandler() {
                             @Override
-                            public void run() {
-                            AlphaVantageClient.getCurrentStockPrice(ticker, new AlphaVantageStockCurrentPriceCallHandler() {
-                                @Override
-                                public void onPriceResponse(Double price) {
-                                    Double assetValue = price * map.get(ticker);
-                                    System.out.println(ticker + " " + assetValue + " " + value);
-                                    value += assetValue;
-                                    mPortfolioListener.onValueUpdate();
-                                }
-                            });
+                            public void onPriceResponse(Double price) {
+                                Double assetValue = price * map.get(ticker);
+                                System.out.println(ticker + " " + assetValue + " " + value);
+                                value += assetValue;
+                                mPortfolioListener.onValueUpdate();
                             }
                         });
                     }

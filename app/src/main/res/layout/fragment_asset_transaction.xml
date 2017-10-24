@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/assetTransaction"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -18,20 +19,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
-            android:text="TextView" />
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:textColor="@color/colorTextPrimary"
+            tools:text="Bitcoin" />
 
         <TextView
             android:id="@+id/tvTransactionAssetTicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
-            android:text="TextView" />
+            android:text="\@" />
 
         <TextView
             android:id="@+id/tvTransactionAssetCurrentPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:textColor="@color/colorTextPrimary"
+            tools:text="$5,000.00" />
 
     </LinearLayout>
 
@@ -39,64 +44,49 @@
         android:id="@+id/tvCurrentAssetCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/tvSelectNumberOfUnitsTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="Select Unit Count" />
+        android:layout_marginBottom="10dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextPrimary"
+        tools:text="You currently own 51 BTC." />
 
     <EditText
         android:id="@+id/etSelectNumberOfUnits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Enter unit count..."
+        android:hint="How many to trade?"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:inputType="number" />
-
-    <TextView
-        android:id="@+id/tvTransactionPriceTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="Total Cost" />
 
     <TextView
         android:id="@+id/tvTransactionPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/tvCashRemainingTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="TextView" />
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/colorTextPrimary"
+        tools:text="Total: $3,334.44" />
 
     <TextView
         android:id="@+id/tvCashRemaining"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="TextView" />
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/colorTextPrimary"
+        tools:text="$4134.33 cash left" />
 
     <Button
         android:id="@+id/btnSubmitTransaction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/colorPrimaryLight"
+        android:textSize="18sp"
+        android:text="BUY" />
+
 </LinearLayout>

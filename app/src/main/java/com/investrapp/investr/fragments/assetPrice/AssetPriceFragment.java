@@ -1,4 +1,4 @@
-package com.investrapp.investr.fragments;
+package com.investrapp.investr.fragments.assetPrice;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,13 +19,11 @@ import java.util.ArrayList;
 
 public abstract class AssetPriceFragment extends Fragment {
 
-    PriceAdapter priceAdapter;
-    ArrayList<Price> prices;
-    RecyclerView rvPrices;
-
-    LinearLayoutManager linearLayoutManager;
-
-    String ticker;
+    protected PriceAdapter priceAdapter;
+    protected ArrayList<Price> prices;
+    protected RecyclerView rvPrices;
+    protected LinearLayoutManager linearLayoutManager;
+    protected String ticker;
 
     // Define the listener of the interface type
     // listener will the activity instance containing fragment
@@ -34,17 +32,13 @@ public abstract class AssetPriceFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //inflate the view
         View v = inflater.inflate(R.layout.fragment_asset_price, container, false);
         rvPrices = (RecyclerView) v.findViewById(R.id.rvAssetPrices);
         prices = new ArrayList<Price>();
 
         priceAdapter = new PriceAdapter(getContext(), prices);
         linearLayoutManager = new LinearLayoutManager(getContext());
-
         rvPrices.setLayoutManager(linearLayoutManager);
-
-        //set the adapter
         rvPrices.setAdapter(priceAdapter);
 
         this.ticker = getArguments().getString("ticker");
