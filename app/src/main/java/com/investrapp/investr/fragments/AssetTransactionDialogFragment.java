@@ -76,41 +76,10 @@ public class AssetTransactionDialogFragment extends DialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         this.view = view;
         setupViews();
-
-        etSelectNumberOfUnits.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                String input = s.toString();
-                if (!input.equals("")) {
-                    int tradeVolume = Integer.parseInt(s.toString());
-                    double totalCost = tradeVolume * price;
-                    double updatedCash = 0;
-                    if (action.equals("BUY")) {
-                        updatedCash = cash - totalCost;
-                    } else {
-                        updatedCash = cash + totalCost;
-                    }
-                    tvTransactionPrice.setText("Total cost: " + NumberFormat.getCurrencyInstance().format(totalCost));
-                    tvCashRemaining.setText(NumberFormat.getCurrencyInstance().format(updatedCash) + " cash left");
-                } else {
-                    tvCashRemaining.setText(NumberFormat.getCurrencyInstance().format(cash) + " cash left");
-                }
-            }
-        });
-
         getItemsFromParcelable();
         getCashForPlayerInCompetition();
         setViewInformation();
+        setUpEditTextChangeListener();
 
         btnSubmitTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +113,7 @@ public class AssetTransactionDialogFragment extends DialogFragment {
         this.action = getArguments().getString("action");
     }
 
-    public void getCashForPlayerInCompetition() {
+    private void getCashForPlayerInCompetition() {
         ParseClient.getCashForPlayerInCompetition(player, competition, new FindCallback<Transaction>() {
             @Override
             public void done(List<Transaction> objects, ParseException e) {
@@ -158,7 +127,7 @@ public class AssetTransactionDialogFragment extends DialogFragment {
         });
     }
 
-    public void setViewInformation() {
+    private void setViewInformation() {
         tvAssetName.setText(name);
         tvAssetPrice.setText(NumberFormat.getCurrencyInstance().format(price));
         tvCurrentAssetCount.setText("You currently own " + totalUnits + " " + ticker + ".");
@@ -172,7 +141,41 @@ public class AssetTransactionDialogFragment extends DialogFragment {
         }
     }
 
-    public void buySelected() {
+    private void setUpEditTextChangeListener() {
+        etSelectNumberOfUnits.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                String input = s.toString();
+                if (!input.equals("")) {
+                    int tradeVolume = Integer.parseInt(s.toString());
+                    double totalCost = tradeVolume * price;
+                    double updatedCash = 0;
+                    if (action.equals("BUY")) {
+                        updatedCash = cash - totalCost;
+                    } else {
+                        updatedCash = cash + totalCost;
+                    }
+                    tvTransactionPrice.setText("Total cost: " + NumberFormat.getCurrencyInstance().format(totalCost));
+                    tvCashRemaining.setText(NumberFormat.getCurrencyInstance().format(updatedCash) + " cash left");
+                } else {
+                    tvTransactionPrice.setText("Total cost: $0.00");
+                    tvCashRemaining.setText(NumberFormat.getCurrencyInstance().format(cash) + " cash left");
+                }
+            }
+        });
+    }
+
+    private void buySelected() {
         final int units = Integer.parseInt(etSelectNumberOfUnits.getText().toString());
         //buy the cryptocurrency
         Transaction transaction = new Transaction(player, competition, "cryptocurrency", ticker,
@@ -193,7 +196,7 @@ public class AssetTransactionDialogFragment extends DialogFragment {
         dismiss();
     }
 
-    public void sellSelected() {
+    private void sellSelected() {
         final int units = -1*Integer.parseInt(etSelectNumberOfUnits.getText().toString());
         //buy the cryptocurrency
         Transaction transaction = new Transaction(player, competition, "cryptocurrency", ticker,
@@ -215,7 +218,7 @@ public class AssetTransactionDialogFragment extends DialogFragment {
     }
 
     private void sendNotificationToCompetitors() {
-        ParseClient.sendPushToAllCompetitors(competition, player, "Someone just traded " + ticker + "! What do you think?");
+        ParseClient.sendPushToAllCompetitors(competition, player, "Someone just traded " + ticker + "! Open Investr now to get into the action.");
     }
 
 }
