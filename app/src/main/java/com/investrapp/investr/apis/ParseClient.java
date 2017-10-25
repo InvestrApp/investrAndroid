@@ -166,7 +166,7 @@ public class ParseClient {
             @Override
             public void done(List<Player> players) {
                 for (Player player : players) {
-                    if (player.getObjectId() != currentPlayer.getObjectId()) {
+                    if (!player.getObjectId().equals(currentPlayer.getObjectId())) {
                         ParseClient.sendPushto(player, message);
                     }
                 }

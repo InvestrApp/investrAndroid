@@ -96,7 +96,6 @@ public class AlphaVantageClient {
         urlBuilder.addQueryParameter(MARKET, USD);
         urlBuilder.addQueryParameter(INTERVAL, PRICE_INTERVAL_ONE_MIN);
         urlBuilder.addQueryParameter(SYMBOL, ticker);
-
         String url = urlBuilder.build().toString();
         Request request = new Request.Builder()
                 .url(url)

@@ -30,18 +30,16 @@ public abstract class AlphaVantageDigitalCurrencyPricesCallHandler implements Ca
         }
         String responseData = response.body().string();
         try {
-            ArrayList<Price> priceList = new ArrayList<Price>();
+            ArrayList<Price> priceList = new ArrayList<>();
             JSONObject jsonObject = new JSONObject(responseData);
-
+            Log.d("DEBUG", jsonObject.toString());
             //get the meta data
             Iterator<String> mainKeys = jsonObject.keys();
             String metaDataKey = null;
             if(mainKeys.hasNext()) {
                 metaDataKey = mainKeys.next();
             }
-            Log.d("DEBUG", jsonObject.toString());
             JSONObject metaData = jsonObject.getJSONObject(metaDataKey);
-
             String information = metaData.getString("1. Information");
             String ticker = metaData.getString("2. Digital Currency Code");
             String cryptocurrencyName = metaData.getString("3. Digital Currency Name");
@@ -53,7 +51,6 @@ public abstract class AlphaVantageDigitalCurrencyPricesCallHandler implements Ca
             } else {
                 lastRefreshed = metaData.getString("7. Last Refreshed");
             }
-
             String timeZone = null;
             if (metaData.has("7. Time Zone")) {
                 timeZone = metaData.getString("7. Time Zone");
@@ -62,7 +59,6 @@ public abstract class AlphaVantageDigitalCurrencyPricesCallHandler implements Ca
             }
 
             //get the time series of digital currency values in the specified market
-
             JSONObject timeSeries = jsonObject.getJSONObject(mainKeys.next());
             Iterator<String> keys = timeSeries.keys();
             while (keys.hasNext()) {
