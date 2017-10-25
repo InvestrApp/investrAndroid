@@ -10,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -119,10 +118,10 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
     }
 
     private void setupInitialFragment() {
-        int menuItem = 0;
+        int menuItem = 1;
         navigationView.getMenu().getItem(menuItem).setChecked(true);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, RankingsFragment.newInstance(mCompetition)).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContent, PortfolioFragment.newInstance(mCurrentPlayer, mCompetition)).commit();
         setTitle(mCompetition.getName() + " - " + navigationView.getMenu().getItem(menuItem).getTitle());
     }
 

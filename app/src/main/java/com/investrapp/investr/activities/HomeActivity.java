@@ -11,12 +11,19 @@ import android.view.MenuItem;
 
 import com.investrapp.investr.R;
 import com.investrapp.investr.adapters.HomeFragmentPagerAdapter;
+import com.investrapp.investr.apis.ParseClient;
 import com.investrapp.investr.fragments.AllCompetitionsFragment;
 import com.investrapp.investr.fragments.CreateCompetitionDialogFragment;
 import com.investrapp.investr.fragments.MyCompetitionsFragment;
+import com.investrapp.investr.models.Cash;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
 import com.investrapp.investr.models.Player;
+import com.investrapp.investr.models.Transaction;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class HomeActivity extends AppCompatActivity implements CreateCompetitionDialogFragment.FinishCreateCompetitionDetailsListener{
 
@@ -75,10 +82,16 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
         MyCompetitionsFragment.addCompetition(competition);
         viewPager.setCurrentItem(1);
         AllCompetitionsFragment allCompetitionsFragment = (AllCompetitionsFragment) homeFragmentPagerAdapter.getRegisteredFragment(1);
-        Player player = allCompetitionsFragment.getmCurrentPlayer();
-        CompetitionPlayer competitionPlayer = new CompetitionPlayer(competition, player);
-        competitionPlayer.saveInBackground();
+        Player currentPlayer = allCompetitionsFragment.getCurrentPlayer();
         allCompetitionsFragment.addCompetition(competition);
+
+        Calendar calendar = new GregorianCalendar();
+        Date currentDate = calendar.getTime();
+        Transaction transaction = new Transaction(currentPlayer, competition, Cash.ASSET_TYPE, Cash.TICKER,
+                currentDate, Transaction.TransactionAction.BUY, competition.getInitialAmount(), 1);
+        ParseClient.addTransaction(transaction);
+        CompetitionPlayer competitionPlayer = new CompetitionPlayer(competition, currentPlayer);
+        competitionPlayer.saveInBackground();
     }
 
 }
