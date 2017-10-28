@@ -26,7 +26,6 @@ import java.util.List;
 public class AllCompetitionsFragment extends HomeCompetitionsFragment {
 
     private List<Competition> playerCompetitions;
-    private Double initialCash = 10000.00;
 
     public static AllCompetitionsFragment newInstance() {
         Bundle args = new Bundle();
@@ -89,6 +88,11 @@ public class AllCompetitionsFragment extends HomeCompetitionsFragment {
             return;
         }
 
+        Double initialCash = 10000.00;
+        if (competition.getInitialAmount() != null) {
+            initialCash = competition.getInitialAmount();
+        }
+
         Transaction transaction = new Transaction(mCurrentPlayer, competition, Cash.ASSET_TYPE, Cash.TICKER,
                 currentDate, Transaction.TransactionAction.BUY, initialCash, 1);
         ParseClient.addTransaction(transaction);
@@ -115,7 +119,6 @@ public class AllCompetitionsFragment extends HomeCompetitionsFragment {
         mCompetitions.add(0, competition);
         competitionsAdapter.notifyItemInserted(0);
         rvCompetitions.smoothScrollToPosition(0);
-
     }
 
 }

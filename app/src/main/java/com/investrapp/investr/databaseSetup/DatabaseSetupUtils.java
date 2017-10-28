@@ -27,9 +27,9 @@ public class DatabaseSetupUtils {
         Date currentDate = calendar.getTime();
         calendar.add(Calendar.DATE, 30);
         Date currentDatePlusThirty = calendar.getTime();
-        Competition general = new Competition("General" , currentDate, currentDatePlusThirty);
-        Competition codePath = new Competition("Code Path" , currentDate, currentDatePlusThirty);
-        Competition sanFrancisco = new Competition("San Francisco" , currentDate, currentDatePlusThirty);
+        Competition general = new Competition("General" , currentDate, currentDatePlusThirty, 10000.00);
+        Competition codePath = new Competition("Code Path" , currentDate, currentDatePlusThirty, 10000.00);
+        Competition sanFrancisco = new Competition("San Francisco" , currentDate, currentDatePlusThirty, 10000.00);
         List<Competition> competitions = new ArrayList<>();
         competitions.add(general);
         competitions.add(codePath);

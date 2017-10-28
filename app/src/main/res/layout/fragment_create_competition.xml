@@ -1,91 +1,116 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/createCompetition"
-    android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:layout_gravity="center" android:orientation="vertical"  >
-    <TextView
-        android:id="@+id/tvCreateCompetitionTitle"
-        android:layout_width="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/create_competition" />
+        android:layout_margin="20dp">
 
-    <TextView
-        android:id="@+id/tvCreateCompetitionName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/empty" />
+        <TextView
+            android:id="@+id/tvCreateCompetitionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create_competition"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
+            android:textColor="@color/colorTextPrimary" />
 
-    <EditText
-        android:id="@+id/etCreateCompetitionName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/enter_name"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/etCreateCompetitionName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvCreateCompetitionTitle"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="@string/enter_name"
+            android:inputType="textPersonName"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/tvCreateCompetitionStartDateTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/starting_date" />
+        <EditText
+            android:id="@+id/etCreateCompetitionStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etCreateCompetitionName"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="@string/select_starting_date"
+            android:inputType="textPersonName"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/etCreateCompetitionStartDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:focusable="false"
-        android:hint="@string/select_starting_date" />
+        <EditText
+            android:id="@+id/etCreateCompetitionEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etCreateCompetitionStartDate"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="@string/select_ending_date"
+            android:inputType="textPersonName"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/tvCreateCompetitionEndDateTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/ending_date" />
+        <TextView
+            android:id="@+id/tvCreateCompetitionStartingAmountTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etCreateCompetitionEndDate"
+            android:layout_marginTop="20dp"
+            android:text="@string/select_starting_amount"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:textColor="@color/colorTextPrimary" />
 
-    <EditText
-        android:id="@+id/etCreateCompetitionEndDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:focusable="false"
-        android:inputType="textPersonName"
-        android:hint="@string/select_ending_date" />
+        <SeekBar
+            android:id="@+id/sbCreateCompetitionStartingAmount"
+            android:min="1"
+            android:max="100"
+            android:progress="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvCreateCompetitionStartingAmountTitle" />
 
-    <TextView
-        android:id="@+id/tvCreateCompetitionStartingAmountTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/select_starting_amount" />
+        <TextView
+            android:id="@+id/tvCreateCompetitionStartingAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sbCreateCompetitionStartingAmount"
+            android:layout_marginTop="2dp"
+            android:text=""
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Small"
+            android:textColor="@color/colorTextSecondary" />
 
-    <SeekBar
-        android:id="@+id/sbCreateCompetitionStartingAmount"
-        android:min="1"
-        android:max="100"
-        android:progress="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/tvCreateCompetitionStartingAmount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/empty" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnCreateCompetitionNext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/colorPrimaryLight"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:layout_below="@+id/tvCreateCompetitionStartingAmount"
+            android:text="@string/create" />
 
         <Button
             android:id="@+id/btnCreateCompetitionCancel"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/colorPrimaryLight"
+            android:textSize="18sp"
+            android:layout_below="@+id/btnCreateCompetitionNext"
             android:text="@string/cancel" />
-        <Button
-            android:id="@+id/btnCreateCompetitionNext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/next" />
-    </LinearLayout>
-</LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

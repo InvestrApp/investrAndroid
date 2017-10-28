@@ -12,10 +12,11 @@ public class Competition extends ParseObject {
         super();
     }
 
-    public Competition(String name, Date startDate, Date endDate) {
+    public Competition(String name, Date startDate, Date endDate, Double initialAmount) {
         setName(name);
         setStartDate(startDate);
         setEndDate(endDate);
+        setInitialAmount(initialAmount);
     }
 
     public void setName(String name) {
@@ -30,6 +31,10 @@ public class Competition extends ParseObject {
         put("end_date", endDate);
     }
 
+    public void setInitialAmount(Double initialAmount) {
+        put("initial_amount", initialAmount);
+    }
+
     public String getName() {
         return getString("name");
     }
@@ -40,6 +45,10 @@ public class Competition extends ParseObject {
 
     public Date getEndDate() {
         return getDate("end_date");
+    }
+
+    public Double getInitialAmount() {
+        return getDouble("initial_amount");
     }
 
 }

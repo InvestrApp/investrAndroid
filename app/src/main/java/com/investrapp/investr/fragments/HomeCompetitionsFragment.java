@@ -128,7 +128,7 @@ public abstract class HomeCompetitionsFragment extends Fragment {
 
     protected abstract void getAllCompetitions();
 
-    public Player getmCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return mCurrentPlayer;
     }
 }

@@ -15,23 +15,23 @@ import com.investrapp.investr.R;
 import com.investrapp.investr.activities.HomeActivity;
 import com.investrapp.investr.models.Competition;
 
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 
 public class CreateCompetitionDialogFragment extends DialogFragment implements DatePickerFragment.FinishSelectionDialogListener {
 
-    EditText etCreateCompetitionName;
-    EditText etCreateCompetitionStartDate;
-    EditText etCreateCompetitionEndDate;
-    SeekBar sbCreateCompetitionStartingAmount;
-    TextView tvCreateCompetitionStartingAmount;
-
-    Button btnCreateCompetitionCancel;
-    Button btnCreateCompetitionNext;
-
-    Date startDate;
-    Date endDate;
+    private EditText etCreateCompetitionName;
+    private EditText etCreateCompetitionStartDate;
+    private EditText etCreateCompetitionEndDate;
+    private SeekBar sbCreateCompetitionStartingAmount;
+    private TextView tvCreateCompetitionStartingAmount;
+    private Button btnCreateCompetitionCancel;
+    private Button btnCreateCompetitionNext;
+    private Date startDate;
+    private Date endDate;
+    private Double intialAmount;
 
     public interface FinishCreateCompetitionDetailsListener {
         void onFinishCompetitionDetails(Competition c);
@@ -68,8 +68,6 @@ public class CreateCompetitionDialogFragment extends DialogFragment implements D
 
         //set the change listener for the SeekBar
         sbCreateCompetitionStartingAmount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 updateSeekBarLabel();
@@ -109,10 +107,8 @@ public class CreateCompetitionDialogFragment extends DialogFragment implements D
             @Override
             public void onClick(View v) {
                 String name = etCreateCompetitionName.getText().toString();
-
-                Competition competition = new Competition(name, startDate, endDate);
+                Competition competition = new Competition(name, startDate, endDate, intialAmount);
                 competition.saveInBackground();
-
                 HomeActivity listener = (HomeActivity) getActivity();
                 listener.onFinishCompetitionDetails(competition);
                 // Close the dialog and return back to the parent activity
@@ -120,28 +116,26 @@ public class CreateCompetitionDialogFragment extends DialogFragment implements D
 
             }
         });
-
         btnCreateCompetitionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-
         updateSeekBarLabel();
     }
 
 
-    public int convertStartingValue(int val) {
-        return val * 10000;
+    public double convertStartingValue(int val) {
+        intialAmount = Double.valueOf(val * 10000);
+        return intialAmount;
     }
 
     public void updateSeekBarLabel() {
-        int progress = sbCreateCompetitionStartingAmount.getProgress();
-        String message = "Starting Amount:  $" + convertStartingValue(progress);
+        double value = convertStartingValue(sbCreateCompetitionStartingAmount.getProgress());
+        String message = "Starting Amount: " + NumberFormat.getCurrencyInstance().format(value);
         tvCreateCompetitionStartingAmount.setText(message);
     }
-
 
     @Override
     public void onFinishDatePicker(Calendar c, String dateType) {
@@ -157,4 +151,5 @@ public class CreateCompetitionDialogFragment extends DialogFragment implements D
             endDate = c.getTime();
         }
     }
+
 }
