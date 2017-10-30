@@ -11,8 +11,10 @@ import com.investrapp.investr.models.Ranking;
 import com.investrapp.investr.models.Stock;
 import com.investrapp.investr.models.Transaction;
 import com.parse.FindCallback;
-import com.parse.ParseCloud;
+
 import com.parse.ParseQuery;
+
+import com.parse.ParseCloud;
 
 import java.util.HashMap;
 import java.util.List;
@@ -84,6 +86,11 @@ public class ParseClient {
         cryptocurrencyQuery.findInBackground(handler);
     }
 
+    public static void getCryptocurrencyNameByTicker(String ticker, FindCallback<Cryptocurrency> handler) {
+        ParseQuery<Cryptocurrency> cryptocurrencyQuery = ParseQuery.getQuery(Cryptocurrency.class);
+        cryptocurrencyQuery.whereContains("ticker", ticker.toUpperCase());
+        cryptocurrencyQuery.findInBackground(handler);
+    }
     public static void getStockByTicker(String query, FindCallback<Stock> handler) {
         ParseQuery<Stock> stockQuery = ParseQuery.getQuery(Stock.class);
         stockQuery.whereEqualTo("ticker", query.toUpperCase());

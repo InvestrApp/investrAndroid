@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/addPlayers"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/select_competitors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvSearchPlayers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search_players"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
+            android:textColor="@color/colorTextPrimary" />
+
+
+        <EditText
+            android:id="@+id/etSearchPlayers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvSearchPlayers"
+            android:ems="10"
+            android:hint="Search Player Name..."
+            android:inputType="textPersonName"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="18sp" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvPlayers"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/etSearchPlayers"
+            android:layout_marginTop="20dp" />
+
+        <Button
+            android:id="@+id/btnDoneSelectingPlayers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/colorPrimaryLight"
+            android:textSize="18sp"
+            android:text="@string/done" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

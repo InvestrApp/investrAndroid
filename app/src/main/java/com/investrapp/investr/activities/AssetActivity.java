@@ -16,7 +16,7 @@ import com.investrapp.investr.apis.AlphaVantageClient;
 import com.investrapp.investr.apis.ParseClient;
 import com.investrapp.investr.apis.handlers.AlphaVantageDigitalCurrencyCurrentPriceCallHandler;
 import com.investrapp.investr.fragments.AssetTransactionDialogFragment;
-import com.investrapp.investr.fragments.PricesPagerAdapter;
+import com.investrapp.investr.adapters.PricesPagerAdapter;
 import com.investrapp.investr.fragments.assetPrice.AssetPriceFragment;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CryptocurrencyPriceTimeSeries;
@@ -125,9 +125,15 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
             @Override
             public void onPriceResponse(Double priceResponse) {
                 setAssetPrice(priceResponse);
-                String priceFormatted = NumberFormat.getCurrencyInstance().format(priceResponse);
-                btnBuyAsset.setText("BUY @ " + priceFormatted);
-                btnSellAsset.setText("SELL @ " + priceFormatted);
+                final String priceFormatted = NumberFormat.getCurrencyInstance().format(priceResponse);
+
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        btnBuyAsset.setText("BUY @ " + priceFormatted);
+                        btnSellAsset.setText("SELL @ " + priceFormatted);
+                    }
+                });
+
             }
         });
     }

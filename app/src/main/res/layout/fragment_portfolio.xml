@@ -1,8 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.investrapp.investr.fragments.PortfolioFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.investrapp.investr.fragments.PortfolioFragment"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rlHeader"
@@ -47,11 +49,26 @@
 
     </RelativeLayout>
 
+    <!--
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvTransactions"
         android:layout_marginTop="2dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rlHeader" />
+        -->
 
-</RelativeLayout>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rlAssetHeader"
+        app:tabMode="fixed" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

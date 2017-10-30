@@ -48,6 +48,14 @@ public class Player extends ParseObject {
         put("installation", installation);
     }
 
+    public void setLatitude(double latitide) {
+        put("latitude", latitide);
+    }
+
+    public void setLongitude(double longitude) {
+        put("longitude", longitude);
+    }
+
     public String getId() {
         return getString("id");
     }
@@ -72,6 +80,13 @@ public class Player extends ParseObject {
         return getString("installation");
     }
 
+    public double getLatitude() {
+        return getDouble("latitude");
+    }
+
+    public double getLongitude() {
+        return getDouble("longitude");
+    }
     public static Player getPlayerFromFB(JSONObject object) {
         String id = null;
         String name = null;

@@ -33,9 +33,11 @@ public class CreateCompetitionDialogFragment extends DialogFragment implements D
     private Date endDate;
     private Double intialAmount;
 
+
     public interface FinishCreateCompetitionDetailsListener {
         void onFinishCompetitionDetails(Competition c);
     }
+
 
     public CreateCompetitionDialogFragment() {
         // Empty constructor is required for DialogFragment

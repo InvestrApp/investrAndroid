@@ -13,7 +13,7 @@ import com.investrapp.investr.models.Transaction;
 
 import java.util.List;
 
-public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
+public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionHistoryAdapter.ViewHolder> {
 
     private List<Transaction> mTransactions;
     private Context context;
@@ -33,7 +33,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
     }
 
-    public TransactionAdapter(Context context, List<Transaction> transactions) {
+    public TransactionHistoryAdapter(Context context, List<Transaction> transactions) {
         this.context = context;
         mTransactions = transactions;
     }

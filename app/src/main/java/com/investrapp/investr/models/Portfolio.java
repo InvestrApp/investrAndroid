@@ -1,40 +1,53 @@
 package com.investrapp.investr.models;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.investrapp.investr.apis.AlphaVantageClient;
 import com.investrapp.investr.apis.handlers.AlphaVantageDigitalCurrencyCurrentPriceCallHandler;
 import com.investrapp.investr.apis.handlers.AlphaVantageStockCurrentPriceCallHandler;
+import com.investrapp.investr.interfaces.PortfolioValueListener;
+
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
 public class Portfolio {
 
     private Player mPlayer;
     private Competition mCompetition;
     private List<Transaction> mTransactions;
-    private PortfolioListener mPortfolioListener;
+    private List<Allocation> mAllocations;
+    private PortfolioValueListener mPortfolioListener;
     private Double value = 0.0;
     private Double cash = 0.0;
     private NumberFormat formatter;
+
+
+    // empty constructor needed by the Parceler library
+    public Portfolio() {
+    }
 
     public Portfolio(Player player, Competition competition) {
         formatter = NumberFormat.getCurrencyInstance();
         mPlayer = player;
         mCompetition = competition;
         mTransactions = new ArrayList<>();
+        mAllocations = new ArrayList<>();
     }
 
     public void addTransactions(List<Transaction> transactions) {
         mTransactions.addAll(transactions);
-        calculateAvailableCash();
-        calculateTotalPortfolioValue();
     }
 
-    public void setPortfolioListener(PortfolioListener portfolioListener) {
+    public void addAllocations(List<Allocation> allocations) {
+        mAllocations.addAll(allocations);
+    }
+
+    public void setPortfolioListener(PortfolioValueListener portfolioListener) {
         mPortfolioListener = portfolioListener;
     }
 
@@ -62,7 +75,7 @@ public class Portfolio {
         return mCompetition;
     }
 
-    private void calculateAvailableCash() {
+    public void calculateAvailableCash() {
         for (Transaction transaction : mTransactions) {
             if (transaction.getAssetType().equals(Cash.ASSET_TYPE)) {
                 cash = transaction.getPrice();
@@ -76,6 +89,14 @@ public class Portfolio {
 
     public String getCashFormatted() {
         return formatter.format(cash);
+    }
+
+    public List<Allocation> getmAllocations() {
+        return mAllocations;
+    }
+
+    public void setmAllocations(List<Allocation> mAllocations) {
+        this.mAllocations = mAllocations;
     }
 
     public void calculateTotalPortfolioValue() {

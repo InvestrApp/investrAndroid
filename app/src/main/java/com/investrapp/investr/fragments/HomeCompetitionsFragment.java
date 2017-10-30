@@ -1,5 +1,6 @@
 package com.investrapp.investr.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,6 +16,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.investrapp.investr.R;
+import com.investrapp.investr.activities.HomeActivity;
 import com.investrapp.investr.adapters.CompetitionsAdapter;
 import com.investrapp.investr.apis.FacebookClient;
 import com.investrapp.investr.apis.ParseClient;
@@ -114,6 +116,7 @@ public abstract class HomeCompetitionsFragment extends Fragment {
                             mCurrentPlayer = Player.getPlayerFromFB(object);
                             ParseClient.savePlayer(mCurrentPlayer);
                             getAllCompetitions();
+                            updatePlayerGPS();
                         }
                     });
                 } else {
@@ -121,6 +124,7 @@ public abstract class HomeCompetitionsFragment extends Fragment {
                     mCurrentPlayer.setInstallation(ParseInstallation.getCurrentInstallation().getInstallationId());
                     ParseClient.savePlayer(mCurrentPlayer);
                     getAllCompetitions();
+                    updatePlayerGPS();
                 }
             }
         });
@@ -130,5 +134,18 @@ public abstract class HomeCompetitionsFragment extends Fragment {
 
     public Player getCurrentPlayer() {
         return mCurrentPlayer;
+    }
+
+    public void addCompetition(Competition competition) {
+        mCompetitions.add(0, competition);
+        competitionsAdapter.notifyItemInserted(0);
+        rvCompetitions.smoothScrollToPosition(0);
+
+    }
+
+    public void updatePlayerGPS() {
+        HomeActivity homeActivity = (HomeActivity) getActivity();
+        homeActivity.checkPermissions();
+        homeActivity.startLocationUpdates(mCurrentPlayer);
     }
 }

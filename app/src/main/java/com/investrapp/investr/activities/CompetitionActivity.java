@@ -80,7 +80,6 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
     private void getDataFromIntent() {
         mCurrentPlayer = getIntent().getParcelableExtra("player");
         mCompetition = getIntent().getParcelableExtra("competition");
-        System.out.println(mCompetition.getName());
         loadHeaderWithPlayerInfo();
     }
 
@@ -144,5 +143,4 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
         i.putExtra("competition", mCompetition);
         startActivity(i);
     }
-
 }

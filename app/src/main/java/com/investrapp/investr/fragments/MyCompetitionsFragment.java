@@ -49,11 +49,4 @@ public class MyCompetitionsFragment extends HomeCompetitionsFragment {
         });
     }
 
-    public void addCompetition(Competition competition) {
-        mCompetitions.add(0, competition);
-        competitionsAdapter.notifyItemInserted(0);
-        rvCompetitions.smoothScrollToPosition(0);
-
-    }
-
 }
