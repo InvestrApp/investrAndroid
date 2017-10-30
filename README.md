@@ -18,6 +18,7 @@ Core:
 * [x] The initial investment amount is variable but uniform across all participants.
 * [x] Users can review their portfolios for each of their competitions.
 * [x] Users can review rankings within each competition.
+* [x] After creating a competition, the creator can see all registered users and invite nearby users (via GPS location) 
 
 Stretch: 
 * [ ] Users can receive news targeted to their investment portfolios.
@@ -31,7 +32,7 @@ Stretch:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://i.imgur.com/U6oue2G.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/3zqt547.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
