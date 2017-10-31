@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.investrapp.investr.R;
 import com.investrapp.investr.models.Allocation;
+import com.investrapp.investr.models.Cash;
 
 import java.util.List;
 
@@ -49,7 +50,6 @@ public class PortfolioAllocationsAdapter extends RecyclerView.Adapter<PortfolioA
         return viewHolder;
     }
 
-
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Allocation allocation = mAllocations.get(position);
@@ -58,11 +58,13 @@ public class PortfolioAllocationsAdapter extends RecyclerView.Adapter<PortfolioA
         String ticker = allocation.getTicker();
         int unitCount = allocation.getUnits();
 
-        tvAssetTicker.setText(ticker);
-        if (unitCount == 1) {
-            tvAssetUnitCount.setText("" + unitCount + " unit");
-        } else {
-            tvAssetUnitCount.setText("" + unitCount + " units");
+        if (!allocation.getTicker().equals(Cash.TICKER)) {
+            tvAssetTicker.setText(ticker);
+            if (unitCount == 1) {
+                tvAssetUnitCount.setText("" + unitCount + " unit");
+            } else {
+                tvAssetUnitCount.setText("" + unitCount + " units");
+            }
         }
     }
 

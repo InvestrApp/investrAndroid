@@ -37,7 +37,6 @@ public class PortfolioFragment extends Fragment implements PortfolioValueListene
     private TextView tvName;
     private TextView tvPortfolioValue;
     private TextView tvCashValue;
-
     private FragmentPagerAdapter adapterViewPager;
     private TabLayout tabLayout;
 
@@ -68,7 +67,6 @@ public class PortfolioFragment extends Fragment implements PortfolioValueListene
     }
 
     private void setupView() {
-        //rvTransactions = (RecyclerView) view.findViewById(R.id.rvTransactions);
         ivPlayerProfile = (ImageView) view.findViewById(R.id.ivPlayerProfile);
         tvName = (TextView) view.findViewById(R.id.tvName);
         tvPortfolioValue = (TextView) view.findViewById(R.id.tvPortfolioValue);
