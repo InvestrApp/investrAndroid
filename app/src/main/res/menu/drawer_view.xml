@@ -16,6 +16,10 @@
             android:icon="@drawable/ic_marketplace"
             android:title="@string/marketplace" />
         <item
+            android:id="@+id/nav_research"
+            android:icon="@drawable/ic_research"
+            android:title="@string/research" />
+        <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_competition_list"
             android:title="@string/all_competitions" />

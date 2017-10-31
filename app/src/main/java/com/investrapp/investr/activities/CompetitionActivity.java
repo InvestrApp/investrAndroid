@@ -20,6 +20,7 @@ import com.investrapp.investr.R;
 import com.investrapp.investr.fragments.MarketplaceFragment;
 import com.investrapp.investr.fragments.PortfolioFragment;
 import com.investrapp.investr.fragments.RankingsFragment;
+import com.investrapp.investr.fragments.WebviewFragment;
 import com.investrapp.investr.interfaces.OnAssetSelectedListener;
 import com.investrapp.investr.models.Asset;
 import com.investrapp.investr.models.Competition;
@@ -105,6 +106,9 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
             case R.id.nav_home:
                 Intent i = new Intent(CompetitionActivity.this, HomeActivity.class);
                 startActivity(i);
+            case R.id.nav_research:
+                fragment = (WebviewFragment) WebviewFragment.newInstance("https://www.google.com/search?tbm=nws&q=cryptocurrency");
+                break;
             default:
                 fragment = (RankingsFragment) RankingsFragment.newInstance(mCompetition);
         }
