@@ -3,7 +3,6 @@ package com.investrapp.investr.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -115,4 +114,5 @@ public class AllCompetitionsFragment extends HomeCompetitionsFragment {
         }
         return false;
     }
+
 }

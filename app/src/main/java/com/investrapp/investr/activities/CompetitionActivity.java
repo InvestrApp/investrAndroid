@@ -143,4 +143,5 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
         i.putExtra("competition", mCompetition);
         startActivity(i);
     }
+
 }

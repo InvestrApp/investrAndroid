@@ -3,7 +3,6 @@ package com.investrapp.investr.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,8 +21,6 @@ import com.parse.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class SelectCompetitorsDialogFragment extends DialogFragment {
 
     protected Player mCurrentPlayer;
@@ -34,7 +31,6 @@ public class SelectCompetitorsDialogFragment extends DialogFragment {
     protected LinearLayoutManager linearLayoutManager;
     protected View view;
     protected Button btnDoneSelectingPlayers;
-
 
     public SelectCompetitorsDialogFragment() {
         // Empty constructor is required for DialogFragment
@@ -102,4 +98,5 @@ public class SelectCompetitorsDialogFragment extends DialogFragment {
             }
         });
     }
+
 }

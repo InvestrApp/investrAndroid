@@ -17,13 +17,9 @@ import java.util.List;
 
 import static com.investrapp.investr.R.id.rvPortfolioList;
 
-
 public class PortfolioTransactionsFragment extends PortfolioItemsFragment {
 
-
-
     protected TransactionHistoryAdapter mAdapter;
-
 
     public static PortfolioTransactionsFragment newInstance(Competition competition, Player player) {
         PortfolioTransactionsFragment portfolioTransactionsFragment = new PortfolioTransactionsFragment();
@@ -33,7 +29,6 @@ public class PortfolioTransactionsFragment extends PortfolioItemsFragment {
         portfolioTransactionsFragment.setArguments(args);
         return portfolioTransactionsFragment;
     }
-
 
     @Override
     void setupRecyclerView() {
@@ -53,4 +48,5 @@ public class PortfolioTransactionsFragment extends PortfolioItemsFragment {
             }
         });
     }
+
 }

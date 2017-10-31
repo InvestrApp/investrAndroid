@@ -1,19 +1,16 @@
 package com.investrapp.investr.models;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.investrapp.investr.apis.AlphaVantageClient;
 import com.investrapp.investr.apis.handlers.AlphaVantageDigitalCurrencyCurrentPriceCallHandler;
 import com.investrapp.investr.apis.handlers.AlphaVantageStockCurrentPriceCallHandler;
 import com.investrapp.investr.interfaces.PortfolioValueListener;
 
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 
 public class Portfolio {
 

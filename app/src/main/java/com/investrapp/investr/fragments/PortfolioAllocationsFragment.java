@@ -6,10 +6,8 @@ import android.support.v7.widget.RecyclerView;
 
 import com.investrapp.investr.adapters.PortfolioAllocationsAdapter;
 import com.investrapp.investr.apis.ParseClient;
-
 import com.investrapp.investr.models.Allocation;
 import com.investrapp.investr.models.Competition;
-import com.investrapp.investr.models.Cryptocurrency;
 import com.investrapp.investr.models.Player;
 import com.investrapp.investr.models.Transaction;
 import com.parse.FindCallback;
@@ -21,11 +19,9 @@ import java.util.List;
 
 import static com.investrapp.investr.R.id.rvPortfolioList;
 
-
 public class PortfolioAllocationsFragment extends PortfolioItemsFragment {
 
     protected PortfolioAllocationsAdapter mAdapter;
-
 
     public static PortfolioAllocationsFragment newInstance(Competition competition, Player player) {
         PortfolioAllocationsFragment portfolioAllocationsFragment = new PortfolioAllocationsFragment();
@@ -75,4 +71,5 @@ public class PortfolioAllocationsFragment extends PortfolioItemsFragment {
             }
         });
     }
+
 }

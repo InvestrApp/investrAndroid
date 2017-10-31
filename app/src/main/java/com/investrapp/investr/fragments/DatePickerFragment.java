@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
-import com.investrapp.investr.fragments.CreateCompetitionDialogFragment;
-
 import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment {
@@ -15,7 +13,6 @@ public class DatePickerFragment extends DialogFragment {
     public interface FinishSelectionDialogListener {
         void onFinishDatePicker(Calendar c, String dateType);
     }
-
 
     String dateType;
 
@@ -55,4 +52,5 @@ public class DatePickerFragment extends DialogFragment {
         }
 
     };
+
 }

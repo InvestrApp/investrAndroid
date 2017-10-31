@@ -9,7 +9,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -17,11 +16,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -29,14 +25,11 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.investrapp.investr.R;
 import com.investrapp.investr.adapters.HomeFragmentPagerAdapter;
 import com.investrapp.investr.apis.ParseClient;
 import com.investrapp.investr.fragments.AllCompetitionsFragment;
 import com.investrapp.investr.fragments.CreateCompetitionDialogFragment;
-
 import com.investrapp.investr.fragments.MyCompetitionsFragment;
 import com.investrapp.investr.fragments.SelectCompetitorsDialogFragment;
 import com.investrapp.investr.models.Cash;
@@ -51,9 +44,7 @@ import java.util.GregorianCalendar;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
-
 public class HomeActivity extends AppCompatActivity implements CreateCompetitionDialogFragment.FinishCreateCompetitionDetailsListener {
-
 
     //constants used for GPS services
     private int REQUEST_FINE_LOCATION = 1;
@@ -61,10 +52,9 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
 
     private Toolbar toolbar;
-    ViewPager viewPager;
-    HomeFragmentPagerAdapter homeFragmentPagerAdapter;
-
-    LocationManager locationManager;
+    private ViewPager viewPager;
+    private HomeFragmentPagerAdapter homeFragmentPagerAdapter;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,10 +102,8 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
         }
     }
 
-
     @Override
     public void onFinishCompetitionDetails(Competition competition) {
-
         MyCompetitionsFragment MyCompetitionsFragment = (MyCompetitionsFragment) homeFragmentPagerAdapter.getRegisteredFragment(0);
         MyCompetitionsFragment.addCompetition(competition);
         viewPager.setCurrentItem(1);
@@ -131,13 +119,11 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
         CompetitionPlayer competitionPlayer = new CompetitionPlayer(competition, currentPlayer);
         competitionPlayer.saveInBackground();
 
-
         //Launch the fragment for adding other players to the competition
         FragmentManager fm = getSupportFragmentManager();
         SelectCompetitorsDialogFragment selectCompetitorsDialogFragment = SelectCompetitorsDialogFragment.newInstance(competition, currentPlayer);
         selectCompetitorsDialogFragment.show(fm, "fragment_select_competitors");
     }
-
 
     /**
      * This method checks whether the user should be prompted to turn on GPS services or authorize the app to use
@@ -164,7 +150,6 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
     }
-
 
     public void startLocationUpdates(final Player player) {
         // Create the location request to start receiving updates
@@ -206,7 +191,6 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
         ParseClient.savePlayer(player);
     }
 
-
     /**
      * This method is from the following Stack Overflow post. An alert dialog gives
      * users the option to open the phone's settings and enable GPS services.
@@ -233,4 +217,5 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
     }
+
 }

@@ -1,6 +1,5 @@
 package com.investrapp.investr.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -148,4 +147,5 @@ public abstract class HomeCompetitionsFragment extends Fragment {
         homeActivity.checkPermissions();
         homeActivity.startLocationUpdates(mCurrentPlayer);
     }
+
 }

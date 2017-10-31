@@ -12,7 +12,6 @@ public class Allocation {
     //private double totalAmount;
     //private double percentage;
 
-
     public Allocation(String ticker, int units) {
         this.ticker = ticker;
         this.units = units;
@@ -33,4 +32,5 @@ public class Allocation {
     public void setUnits(int units) {
         this.units = units;
     }
+
 }

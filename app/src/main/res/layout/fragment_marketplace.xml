@@ -16,5 +16,16 @@
             android:layout_height="match_parent" />
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/tvSearchHint"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="175dp"
+        android:text="Try hitting the search button up top to find an asset. \n\n Maybe see what's the latest on bitcoins."
+        android:textAlignment="center"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:textColor="@color/colorTextPrimary" />
 
 </RelativeLayout>

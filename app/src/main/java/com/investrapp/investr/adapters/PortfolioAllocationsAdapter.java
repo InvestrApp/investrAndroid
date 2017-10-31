@@ -53,11 +53,8 @@ public class PortfolioAllocationsAdapter extends RecyclerView.Adapter<PortfolioA
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Allocation allocation = mAllocations.get(position);
-
         TextView tvAssetTicker = holder.tvVAssetAllocationTicker;
         TextView tvAssetUnitCount = holder.tvAssetAllocationUnitCount;
-
-
         String ticker = allocation.getTicker();
         int unitCount = allocation.getUnits();
 
@@ -67,8 +64,6 @@ public class PortfolioAllocationsAdapter extends RecyclerView.Adapter<PortfolioA
         } else {
             tvAssetUnitCount.setText("" + unitCount + " units");
         }
-
-
     }
 
     @Override
