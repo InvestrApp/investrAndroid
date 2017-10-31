@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.investrapp.investr.R;
 import com.investrapp.investr.models.Allocation;
 import com.investrapp.investr.models.Cash;
+import com.investrapp.investr.models.Portfolio;
 
 import java.util.List;
 
@@ -17,8 +18,8 @@ import static com.investrapp.investr.R.id.tvAssetAllocationTicker;
 
 public class PortfolioAllocationsAdapter extends RecyclerView.Adapter<PortfolioAllocationsAdapter.ViewHolder> {
 
+    private Portfolio mPortfolio;
     private List<Allocation> mAllocations;
-    private Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvVAssetAllocationTicker;
@@ -31,13 +32,9 @@ public class PortfolioAllocationsAdapter extends RecyclerView.Adapter<PortfolioA
         }
     }
 
-    public PortfolioAllocationsAdapter(Context context, List<Allocation> allocations) {
-        this.context = context;
-        this.mAllocations = allocations;
-    }
-
-    public Context getContext() {
-        return context;
+    public PortfolioAllocationsAdapter(Portfolio portfolio) {
+        this.mPortfolio = portfolio;
+        this.mAllocations = portfolio.getAllocations();
     }
 
     @Override
@@ -57,9 +54,10 @@ public class PortfolioAllocationsAdapter extends RecyclerView.Adapter<PortfolioA
         TextView tvAssetUnitCount = holder.tvAssetAllocationUnitCount;
         String ticker = allocation.getTicker();
         int unitCount = allocation.getUnits();
-
-        if (!allocation.getTicker().equals(Cash.TICKER)) {
-            tvAssetTicker.setText(ticker);
+        tvAssetTicker.setText(ticker);
+        if (ticker.equals(Cash.TICKER)) {
+            tvAssetUnitCount.setText(mPortfolio.getCashFormatted());
+        } else {
             if (unitCount == 1) {
                 tvAssetUnitCount.setText("" + unitCount + " unit");
             } else {

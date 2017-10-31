@@ -95,7 +95,6 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
                 FragmentManager fm = getSupportFragmentManager();
                 CreateCompetitionDialogFragment createCompetitionDialogFragment = CreateCompetitionDialogFragment.newInstance();
                 createCompetitionDialogFragment.show(fm, "fragment_create_competition");
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

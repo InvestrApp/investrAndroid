@@ -6,11 +6,8 @@ package com.investrapp.investr.models;
 
 public class Allocation {
 
-    //private String name;
     private String ticker;
     private int units;
-    //private double totalAmount;
-    //private double percentage;
 
     public Allocation(String ticker, int units) {
         this.ticker = ticker;
