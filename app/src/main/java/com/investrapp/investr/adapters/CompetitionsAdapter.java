@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.investrapp.investr.R;
 import com.investrapp.investr.models.Competition;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.investrapp.investr.application.InvestrApplication.context;
@@ -17,21 +18,25 @@ import static com.investrapp.investr.application.InvestrApplication.context;
 public class CompetitionsAdapter extends RecyclerView.Adapter<CompetitionsAdapter.ViewHolder> {
 
     private List<Competition> mCompetitions;
+    private List<Competition> mPlayerCompetitions;;
     private Context mContext;
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        public View mItemView;
         public TextView competitionNameTextView;
         public TextView endDateTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            mItemView = itemView;
             competitionNameTextView = (TextView) itemView.findViewById(R.id.tvCompetitionName);
             endDateTextView = (TextView) itemView.findViewById(R.id.tvEndDate);
         }
     }
 
-    public CompetitionsAdapter(List<Competition> competitions) {
+    public CompetitionsAdapter(List<Competition> competitions, List<Competition> playerCompetitions) {
         mCompetitions = competitions;
+        mPlayerCompetitions = playerCompetitions;
     }
 
     public Context getContext() {
@@ -57,6 +62,16 @@ public class CompetitionsAdapter extends RecyclerView.Adapter<CompetitionsAdapte
 
         android.text.format.DateFormat df = new android.text.format.DateFormat();
         competitionEndDateTextView.setText("Ends " + df.format("MM/dd/yyyy", competition.getEndDate()));
+
+        if (mPlayerCompetitions.size() > 0) {
+            if (Competition.isPlayerInCompetition(competition, mPlayerCompetitions) || competition.getEndDate().before(new Date())) {
+                holder.itemView.setBackgroundColor(getContext().getResources().getColor(R.color.colorWhite));
+            } else {
+                holder.itemView.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimaryLight));
+            }
+        } else {
+            holder.itemView.setBackgroundColor(getContext().getResources().getColor(R.color.colorWhite));
+        }
     }
 
     @Override

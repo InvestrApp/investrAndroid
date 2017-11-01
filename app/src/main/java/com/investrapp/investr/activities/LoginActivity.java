@@ -30,9 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
         lbFbLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-
             private ProfileTracker mProfileTracker;
-
             @Override
             public void onSuccess(final LoginResult loginResult) {
                 if(Profile.getCurrentProfile() == null) {
@@ -53,17 +51,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCancel() {
                 // App code
-                Toast.makeText(
-                        LoginActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Cancel", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(final FacebookException exception) {
                 // App code
-                Toast.makeText(
-                        LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
             }
-
         });
 
         if (isLoggedIn()) {

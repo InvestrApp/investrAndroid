@@ -1,19 +1,16 @@
 package com.investrapp.investr.models;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.investrapp.investr.apis.AlphaVantageClient;
 import com.investrapp.investr.apis.handlers.AlphaVantageDigitalCurrencyCurrentPriceCallHandler;
 import com.investrapp.investr.apis.handlers.AlphaVantageStockCurrentPriceCallHandler;
 import com.investrapp.investr.interfaces.PortfolioValueListener;
 
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 
 public class Portfolio {
 
@@ -26,9 +23,9 @@ public class Portfolio {
     private Double cash = 0.0;
     private NumberFormat formatter;
 
-
     // empty constructor needed by the Parceler library
     public Portfolio() {
+
     }
 
     public Portfolio(Player player, Competition competition) {
@@ -49,6 +46,10 @@ public class Portfolio {
 
     public void setPortfolioListener(PortfolioValueListener portfolioListener) {
         mPortfolioListener = portfolioListener;
+    }
+
+    public void setCash(Double cash) {
+        this.cash = cash;
     }
 
     public void setValue(Double value) {
@@ -91,12 +92,12 @@ public class Portfolio {
         return formatter.format(cash);
     }
 
-    public List<Allocation> getmAllocations() {
+    public List<Allocation> getAllocations() {
         return mAllocations;
     }
 
-    public void setmAllocations(List<Allocation> mAllocations) {
-        this.mAllocations = mAllocations;
+    public void setAllocations(List<Allocation> allocations) {
+        this.mAllocations = allocations;
     }
 
     public void calculateTotalPortfolioValue() {

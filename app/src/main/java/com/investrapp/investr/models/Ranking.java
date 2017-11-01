@@ -4,6 +4,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 import java.text.NumberFormat;
+import java.util.Date;
 
 @ParseClassName("Ranking")
 public class Ranking extends ParseObject {
@@ -12,6 +13,7 @@ public class Ranking extends ParseObject {
     private static String COMPETITION_FIELD = "competition";
     private static String PLAYER_FIELD = "player";
     private static String PORTFOLIO_VALUE_FIELD = "portfolio_value";
+    private static String UPDATED_AT_FIELD = "updatedAt";
     private NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
     public Ranking() {
@@ -60,6 +62,10 @@ public class Ranking extends ParseObject {
 
     public String getValueFormatted() {
         return formatter.format(getPortfolioValue());
+    }
+
+    public Date getUpdatedAt() {
+        return getDate(UPDATED_AT_FIELD);
     }
 
 }

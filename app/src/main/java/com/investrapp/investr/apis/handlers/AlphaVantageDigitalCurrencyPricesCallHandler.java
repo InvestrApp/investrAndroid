@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import okhttp3.Call;
@@ -67,6 +68,7 @@ public abstract class AlphaVantageDigitalCurrencyPricesCallHandler implements Ca
                 Double valuation = jsonObjectValue.getDouble(jsonObjectValue.keys().next());
                 priceList.add(new Price(date, valuation));
             }
+            Collections.sort(priceList);
 
             CryptocurrencyPriceTimeSeries cryptocurrencyPriceTimeSeries =
                     new CryptocurrencyPriceTimeSeries(information, ticker, cryptocurrencyName, market, marketName, lastRefreshed, timeZone, priceList);

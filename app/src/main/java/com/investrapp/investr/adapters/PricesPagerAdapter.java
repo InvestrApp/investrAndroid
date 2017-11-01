@@ -33,7 +33,6 @@ public class PricesPagerAdapter extends FragmentPagerAdapter {
         return 4;
     }
 
-
     //return the fragment to use depending on position
     @Override
     public Fragment getItem(int position) {
@@ -51,11 +50,11 @@ public class PricesPagerAdapter extends FragmentPagerAdapter {
         return fragment;
     }
 
-
     //return the title
     @Override
     public CharSequence getPageTitle(int position) {
         //generate title based on item position
         return tabTitles[position];
     }
+
 }

@@ -7,5 +7,7 @@ import com.investrapp.investr.models.Asset;
  */
 
 public interface OnAssetSelectedListener {
+
     void onAssetSelected(Asset asset);
+
 }

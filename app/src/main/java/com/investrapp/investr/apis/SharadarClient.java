@@ -25,15 +25,12 @@ public class SharadarClient {
     public static final String SHARADAR_API_ALL_STOCKS = "http://www.sharadar.com/meta/tickers.json";
 
     public static void queryAllStocks() {
-
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(SHARADAR_API_ALL_STOCKS).newBuilder();
         String url = urlBuilder.build().toString();
-
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-
         client.newCall(request).enqueue(new Callback() {
 
             @Override
@@ -48,9 +45,7 @@ public class SharadarClient {
                     Log.e("SharadarClient", response.toString());
                     throw new IOException("Unexpected code " + response);
                 }
-
                 String responseData = response.body().string();
-
                 try {
                     JSONArray jsonArray = new JSONArray(responseData);
                     List<Stock> stockList = Stock.getStockList(jsonArray);
@@ -61,4 +56,5 @@ public class SharadarClient {
             }
         });
     }
+
 }

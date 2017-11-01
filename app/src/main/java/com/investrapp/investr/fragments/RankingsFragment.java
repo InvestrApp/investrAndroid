@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,11 @@ import com.investrapp.investr.models.Ranking;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class RankingsFragment extends Fragment {
 
@@ -62,7 +66,7 @@ public class RankingsFragment extends Fragment {
                 mRankings.clear();
                 mRankings.addAll(objects);
                 mAdapter.notifyDataSetChanged();
-                String message = "Rankings updated every 15 minutes.";
+                String message = getLastUpdatedFormatted(mRankings.get(0));
                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
         });
@@ -74,6 +78,22 @@ public class RankingsFragment extends Fragment {
         args.putParcelable("competiton", competition);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private String getLastUpdatedFormatted(Ranking ranking) {
+        if (ranking == null) {
+            return "Rankings are updated every 15 minutes";
+        }
+        Date date = ranking.getUpdatedAt();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy 'at' hh:mm a");
+        sdf.setTimeZone(TimeZone.getTimeZone("PST"));
+        DateFormat df = new android.text.format.DateFormat();
+        try {
+            return "Rankings last updated at " + df.format("hh:mm a", sdf.parse(date.toString())).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Rankings are updated every 15 minutes";
+        }
     }
 
 }

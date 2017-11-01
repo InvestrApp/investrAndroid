@@ -37,9 +37,8 @@ public class PortfolioFragment extends Fragment implements PortfolioValueListene
     private TextView tvName;
     private TextView tvPortfolioValue;
     private TextView tvCashValue;
-
-    FragmentPagerAdapter adapterViewPager;
-    TabLayout tabLayout;
+    private FragmentPagerAdapter adapterViewPager;
+    private TabLayout tabLayout;
 
     public PortfolioFragment() {
 
@@ -68,7 +67,6 @@ public class PortfolioFragment extends Fragment implements PortfolioValueListene
     }
 
     private void setupView() {
-        //rvTransactions = (RecyclerView) view.findViewById(R.id.rvTransactions);
         ivPlayerProfile = (ImageView) view.findViewById(R.id.ivPlayerProfile);
         tvName = (TextView) view.findViewById(R.id.tvName);
         tvPortfolioValue = (TextView) view.findViewById(R.id.tvPortfolioValue);
@@ -80,8 +78,6 @@ public class PortfolioFragment extends Fragment implements PortfolioValueListene
                 .into(ivPlayerProfile);
     }
 
-
-
     public static PortfolioFragment newInstance(Player player, Competition competition) {
         PortfolioFragment fragment = new PortfolioFragment();
         Bundle args = new Bundle();
@@ -90,7 +86,6 @@ public class PortfolioFragment extends Fragment implements PortfolioValueListene
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public void onValueUpdate() {
@@ -115,4 +110,5 @@ public class PortfolioFragment extends Fragment implements PortfolioValueListene
             }
         });
     }
+
 }

@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.investrapp.investr.R;
 import com.investrapp.investr.adapters.AssetAdapter;
@@ -34,6 +35,7 @@ public class MarketplaceFragment extends Fragment implements AssetAdapterListene
     private RecyclerView rvAssets;
     private LinearLayoutManager linearLayoutManager;
     private View view;
+    private TextView tvSearchHint;
 
     public MarketplaceFragment() {
 
@@ -48,6 +50,7 @@ public class MarketplaceFragment extends Fragment implements AssetAdapterListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_marketplace, container, false);
         rvAssets = (RecyclerView) view.findViewById(R.id.rvAssets);
+        tvSearchHint = (TextView) view.findViewById(R.id.tvSearchHint);
         assets = new ArrayList<Asset>();
         assetAdapter = new AssetAdapter(getContext(), assets, this);
         linearLayoutManager = new LinearLayoutManager(getContext());
@@ -71,6 +74,7 @@ public class MarketplaceFragment extends Fragment implements AssetAdapterListene
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                tvSearchHint.setVisibility(View.INVISIBLE);
                 getMatchingCryptocurrency(newText);
                 return true;
             }

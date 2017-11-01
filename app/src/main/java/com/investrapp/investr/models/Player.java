@@ -87,6 +87,7 @@ public class Player extends ParseObject {
     public double getLongitude() {
         return getDouble("longitude");
     }
+
     public static Player getPlayerFromFB(JSONObject object) {
         String id = null;
         String name = null;

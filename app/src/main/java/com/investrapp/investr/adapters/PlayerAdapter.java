@@ -2,7 +2,6 @@ package com.investrapp.investr.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.investrapp.investr.models.Cash;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
 import com.investrapp.investr.models.Player;
-import com.investrapp.investr.models.Price;
 import com.investrapp.investr.models.Transaction;
 import com.investrapp.investr.utils.DistanceUtils;
 
@@ -27,7 +25,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
-
 
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder> {
 

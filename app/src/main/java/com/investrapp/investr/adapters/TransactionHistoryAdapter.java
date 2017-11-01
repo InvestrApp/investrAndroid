@@ -71,7 +71,6 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
             tvDate.setText( df.format("MM/dd/yyyy", transaction.getDate()));
             tvUnits.setText(Integer.toString(transaction.getUnits()) + " units");
         }
-
     }
 
     @Override

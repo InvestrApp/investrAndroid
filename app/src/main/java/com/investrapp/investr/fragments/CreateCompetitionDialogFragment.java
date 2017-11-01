@@ -19,7 +19,6 @@ import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
 public class CreateCompetitionDialogFragment extends DialogFragment implements DatePickerFragment.FinishSelectionDialogListener {
 
     private EditText etCreateCompetitionName;
@@ -33,11 +32,9 @@ public class CreateCompetitionDialogFragment extends DialogFragment implements D
     private Date endDate;
     private Double intialAmount;
 
-
     public interface FinishCreateCompetitionDetailsListener {
         void onFinishCompetitionDetails(Competition c);
     }
-
 
     public CreateCompetitionDialogFragment() {
         // Empty constructor is required for DialogFragment
@@ -126,7 +123,6 @@ public class CreateCompetitionDialogFragment extends DialogFragment implements D
         });
         updateSeekBarLabel();
     }
-
 
     public double convertStartingValue(int val) {
         intialAmount = Double.valueOf(val * 10000);

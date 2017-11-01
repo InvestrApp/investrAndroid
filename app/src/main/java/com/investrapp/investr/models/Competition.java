@@ -4,6 +4,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 import java.util.Date;
+import java.util.List;
 
 @ParseClassName("Competition")
 public class Competition extends ParseObject {
@@ -49,6 +50,15 @@ public class Competition extends ParseObject {
 
     public Double getInitialAmount() {
         return getDouble("initial_amount");
+    }
+
+    public static boolean isPlayerInCompetition(Competition competition, List<Competition> playerCompetitions) {
+        for (Competition playerCompetition : playerCompetitions) {
+            if (playerCompetition.getObjectId().equals(competition.getObjectId())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

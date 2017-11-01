@@ -1,6 +1,5 @@
 package com.investrapp.investr.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -41,6 +40,7 @@ public abstract class HomeCompetitionsFragment extends Fragment {
     protected LinearLayoutManager linearLayoutManager;
     protected View view;
     protected SwipeRefreshLayout swipeContainer;
+    protected List<Competition> playerCompetitions;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,8 @@ public abstract class HomeCompetitionsFragment extends Fragment {
     private void setupRecyclerView() {
         rvCompetitions = (RecyclerView) view.findViewById(R.id.rvCompetitions);
         mCompetitions = new ArrayList<>();
-        competitionsAdapter = new CompetitionsAdapter(mCompetitions);
+        playerCompetitions = new ArrayList<>();
+        competitionsAdapter = new CompetitionsAdapter(mCompetitions, playerCompetitions);
         linearLayoutManager = new LinearLayoutManager(getContext());
         rvCompetitions.setAdapter(competitionsAdapter);
         rvCompetitions.setLayoutManager(linearLayoutManager);
@@ -140,7 +141,6 @@ public abstract class HomeCompetitionsFragment extends Fragment {
         mCompetitions.add(0, competition);
         competitionsAdapter.notifyItemInserted(0);
         rvCompetitions.smoothScrollToPosition(0);
-
     }
 
     public void updatePlayerGPS() {
@@ -148,4 +148,5 @@ public abstract class HomeCompetitionsFragment extends Fragment {
         homeActivity.checkPermissions();
         homeActivity.startLocationUpdates(mCurrentPlayer);
     }
+
 }

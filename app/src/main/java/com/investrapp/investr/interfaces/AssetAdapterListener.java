@@ -5,5 +5,7 @@ package com.investrapp.investr.interfaces;
  */
 
 public interface AssetAdapterListener {
+
     void assetSelected(int position);
+
 }

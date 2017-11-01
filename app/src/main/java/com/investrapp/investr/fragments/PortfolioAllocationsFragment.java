@@ -6,10 +6,9 @@ import android.support.v7.widget.RecyclerView;
 
 import com.investrapp.investr.adapters.PortfolioAllocationsAdapter;
 import com.investrapp.investr.apis.ParseClient;
-
 import com.investrapp.investr.models.Allocation;
+import com.investrapp.investr.models.Cash;
 import com.investrapp.investr.models.Competition;
-import com.investrapp.investr.models.Cryptocurrency;
 import com.investrapp.investr.models.Player;
 import com.investrapp.investr.models.Transaction;
 import com.parse.FindCallback;
@@ -21,11 +20,9 @@ import java.util.List;
 
 import static com.investrapp.investr.R.id.rvPortfolioList;
 
-
 public class PortfolioAllocationsFragment extends PortfolioItemsFragment {
 
     protected PortfolioAllocationsAdapter mAdapter;
-
 
     public static PortfolioAllocationsFragment newInstance(Competition competition, Player player) {
         PortfolioAllocationsFragment portfolioAllocationsFragment = new PortfolioAllocationsFragment();
@@ -38,7 +35,7 @@ public class PortfolioAllocationsFragment extends PortfolioItemsFragment {
 
     @Override
     void setupRecyclerView() {
-        mAdapter = new PortfolioAllocationsAdapter(view.getContext(), mPortfolio.getmAllocations());
+        mAdapter = new PortfolioAllocationsAdapter(mPortfolio);
         rvTransactions = (RecyclerView) view.findViewById(rvPortfolioList);
         rvTransactions.setAdapter(mAdapter);
         rvTransactions.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -53,12 +50,17 @@ public class PortfolioAllocationsFragment extends PortfolioItemsFragment {
                 for (Transaction t : objects) {
                     String ticker = t.getAssetTicker();
                     int units = t.getUnits();
+
                     if (!allocationsMap.containsKey(ticker)) {
                         allocationsMap.put(ticker, units);
                     } else {
                         int currentUnitCount = allocationsMap.get(ticker);
-                        currentUnitCount+=units;
+                        currentUnitCount += units;
                         allocationsMap.put(ticker, currentUnitCount);
+                    }
+
+                    if (ticker.equals(Cash.TICKER)) {
+                        mPortfolio.setCash(t.getPrice());
                     }
                 }
                 ArrayList<Allocation> allocations = new ArrayList<Allocation>();
@@ -75,4 +77,5 @@ public class PortfolioAllocationsFragment extends PortfolioItemsFragment {
             }
         });
     }
+
 }

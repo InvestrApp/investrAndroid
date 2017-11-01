@@ -3,7 +3,6 @@ package com.investrapp.investr.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,15 +17,12 @@ import com.investrapp.investr.utils.ItemClickSupport;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 public class AllCompetitionsFragment extends HomeCompetitionsFragment {
-
-    private List<Competition> playerCompetitions;
 
     public static AllCompetitionsFragment newInstance() {
         Bundle args = new Bundle();
@@ -64,8 +60,7 @@ public class AllCompetitionsFragment extends HomeCompetitionsFragment {
         });
     }
 
-    protected void getAllCompetitionsForPlayer() {
-        playerCompetitions = new ArrayList<>();
+    private void getAllCompetitionsForPlayer() {
         ParseClient.getAllCompetitionsForPlayer(mCurrentPlayer, new ParseGetAllCompetitionsHandler() {
             @Override
             public void done(List<Competition> competitions) {
@@ -77,7 +72,7 @@ public class AllCompetitionsFragment extends HomeCompetitionsFragment {
     }
 
     private void joinCompetition(final Competition competition) {
-        if (isPlayerInCompetition(competition)) {
+        if (Competition.isPlayerInCompetition(competition, playerCompetitions)) {
             Toast.makeText(getContext(), "You're already in this competition", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -107,12 +102,4 @@ public class AllCompetitionsFragment extends HomeCompetitionsFragment {
         startActivity(i);
     }
 
-    private boolean isPlayerInCompetition(Competition competition) {
-        for (Competition playerCompetition : playerCompetitions) {
-            if (playerCompetition.getObjectId().equals(competition.getObjectId())) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

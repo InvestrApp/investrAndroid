@@ -28,7 +28,6 @@ import com.parse.ParseException;
 import java.text.NumberFormat;
 import java.util.List;
 
-
 public class AssetActivity extends AppCompatActivity implements AssetPriceFragment.OnPriceTimeSeriesResponseListener {
 
     private Toolbar toolbar;
