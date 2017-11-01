@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -16,8 +17,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -30,6 +33,7 @@ import com.investrapp.investr.adapters.HomeFragmentPagerAdapter;
 import com.investrapp.investr.apis.ParseClient;
 import com.investrapp.investr.fragments.AllCompetitionsFragment;
 import com.investrapp.investr.fragments.CreateCompetitionDialogFragment;
+
 import com.investrapp.investr.fragments.MyCompetitionsFragment;
 import com.investrapp.investr.fragments.SelectCompetitorsDialogFragment;
 import com.investrapp.investr.models.Cash;
@@ -37,14 +41,19 @@ import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.CompetitionPlayer;
 import com.investrapp.investr.models.Player;
 import com.investrapp.investr.models.Transaction;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
-public class HomeActivity extends AppCompatActivity implements CreateCompetitionDialogFragment.FinishCreateCompetitionDetailsListener {
+
+public class HomeActivity extends AppCompatActivity implements CreateCompetitionDialogFragment.FinishCreateCompetitionDetailsListener, AllCompetitionsFragment.OnAddCompetitionListener, SelectCompetitorsDialogFragment.OnFinishSelectingCompetitors {
+
 
     //constants used for GPS services
     private int REQUEST_FINE_LOCATION = 1;
@@ -55,6 +64,7 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
     private ViewPager viewPager;
     private HomeFragmentPagerAdapter homeFragmentPagerAdapter;
     private LocationManager locationManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +81,12 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.left_in, R.anim.right_out);
     }
 
     private void setupToolbar() {
@@ -101,8 +117,10 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
         }
     }
 
+
     @Override
     public void onFinishCompetitionDetails(Competition competition) {
+
         MyCompetitionsFragment MyCompetitionsFragment = (MyCompetitionsFragment) homeFragmentPagerAdapter.getRegisteredFragment(0);
         MyCompetitionsFragment.addCompetition(competition);
         viewPager.setCurrentItem(1);
@@ -150,6 +168,7 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
     }
 
+
     public void startLocationUpdates(final Player player) {
         // Create the location request to start receiving updates
         LocationRequest mLocationRequest = new LocationRequest();
@@ -190,6 +209,7 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
         ParseClient.savePlayer(player);
     }
 
+
     /**
      * This method is from the following Stack Overflow post. An alert dialog gives
      * users the option to open the phone's settings and enable GPS services.
@@ -217,4 +237,90 @@ public class HomeActivity extends AppCompatActivity implements CreateCompetition
         alert.show();
     }
 
+    @Override
+    public void onAddCompetition(Competition competition, CompetitionPlayer competitionPlayer) {
+        String competitionName = competition.getName();
+        String sbMessage = "You joined " + competitionName;
+        Snackbar.make(findViewById(R.id.activity_home), sbMessage, Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.undo), new UndoAddCompetitionListener(competitionPlayer))
+                .setActionTextColor(getResources().getColor(R.color.colorPrimary))
+                .setDuration(3500)
+                .show();
+        MyCompetitionsFragment fragment = (MyCompetitionsFragment) homeFragmentPagerAdapter.getRegisteredFragment(0);
+        fragment.addCompetition(competition);
+        viewPager.setCurrentItem(0);
+    }
+
+    @Override
+    public void onFinishSelectingCompetitors(Competition competition, List<Player> players) {
+
+        String competitionName = competition.getName();
+        String sbMessage = "Competition Created:   " + competitionName;
+        Snackbar.make(findViewById(R.id.activity_home), sbMessage, Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.undo), new UndoCreateCompetitionListener(competition, players))
+                .setActionTextColor(getResources().getColor(R.color.colorPrimary))
+                .setDuration(3500)
+                .show();
+
+    }
+
+    public class UndoAddCompetitionListener implements View.OnClickListener {
+        CompetitionPlayer competitionPlayer;
+
+        public UndoAddCompetitionListener(CompetitionPlayer competitionPlayer) {
+            this.competitionPlayer = competitionPlayer;
+        }
+
+        @Override
+        public void onClick(View v) {
+            MyCompetitionsFragment fragment = (MyCompetitionsFragment) homeFragmentPagerAdapter.getRegisteredFragment(0);
+            fragment.removeAddedCompetition();
+            ParseClient.removePlayerFromCompetition(competitionPlayer);
+            ParseClient.removeTransactionsForPlayerInCompetition(competitionPlayer.getCompetition(), competitionPlayer.getPlayer(), new FindCallback<Transaction>() {
+                @Override
+                public void done(List<Transaction> objects, ParseException e) {
+                    for (Transaction transaction : objects) {
+                        ParseClient.removeTransaction(transaction);
+                    }
+                }
+            });
+        }
+    }
+
+    public class UndoCreateCompetitionListener implements View.OnClickListener {
+        Competition competition;
+        List<Player> players;
+
+        public UndoCreateCompetitionListener(Competition competition, List<Player> players) {
+            this.competition = competition;
+            this.players = players;
+        }
+
+        @Override
+        public void onClick(View v) {
+            MyCompetitionsFragment myCompetitionsFragment = (MyCompetitionsFragment) homeFragmentPagerAdapter.getRegisteredFragment(0);
+            myCompetitionsFragment.removeAddedCompetition();
+            AllCompetitionsFragment allCompetitionsFragment = (AllCompetitionsFragment) homeFragmentPagerAdapter.getRegisteredFragment(1);
+            allCompetitionsFragment.removeAddedCompetition();
+
+            //delete data from the database
+            ParseClient.removeAllCompetitionInfo(competition, players, new FindCallback<CompetitionPlayer>() {
+                        @Override
+                        public void done(List<CompetitionPlayer> objects, ParseException e) {
+                            for (CompetitionPlayer competitionPlayer : objects) {
+                                competitionPlayer.deleteInBackground();
+                            }
+
+                        }
+                    }, new FindCallback<Transaction>() {
+                        @Override
+                        public void done(List<Transaction> objects, ParseException e) {
+                            for (Transaction transaction : objects) {
+                                transaction.deleteInBackground();
+                            }
+                        }
+                    });
+            ParseClient.removeCompetition(competition);
+        }
+    }
 }

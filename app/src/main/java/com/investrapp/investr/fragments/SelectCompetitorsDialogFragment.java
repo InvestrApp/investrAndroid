@@ -1,5 +1,6 @@
 package com.investrapp.investr.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 
 import com.investrapp.investr.R;
@@ -31,6 +33,25 @@ public class SelectCompetitorsDialogFragment extends DialogFragment {
     protected LinearLayoutManager linearLayoutManager;
     protected View view;
     protected Button btnDoneSelectingPlayers;
+
+    private OnFinishSelectingCompetitors listener;
+
+    // Define the events that the fragment will use to communicate
+    public interface OnFinishSelectingCompetitors {
+        // This can be any number of events to be sent to the activity
+        void onFinishSelectingCompetitors(Competition competition, List<Player> addedPlayers);
+    }
+
+    // Store the listener (activity) that will have events fired once the fragment is attached
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFinishSelectingCompetitors) {
+            listener = (OnFinishSelectingCompetitors) context;
+        } else {
+            throw new ClassCastException(context.toString());
+        }
+    }
 
     public SelectCompetitorsDialogFragment() {
         // Empty constructor is required for DialogFragment
@@ -66,6 +87,9 @@ public class SelectCompetitorsDialogFragment extends DialogFragment {
 
             @Override
             public void onClick(View v) {
+                List<Player> addedPlayers = playerAdapter.getAddedPlayers();
+                addedPlayers.add(mCurrentPlayer);
+                listener.onFinishSelectingCompetitors(mCompetition, addedPlayers);
                 dismiss();
             }
         });
@@ -98,5 +122,4 @@ public class SelectCompetitorsDialogFragment extends DialogFragment {
             }
         });
     }
-
 }

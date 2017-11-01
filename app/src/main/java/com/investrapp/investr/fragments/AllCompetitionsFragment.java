@@ -1,11 +1,15 @@
 package com.investrapp.investr.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.investrapp.investr.R;
 import com.investrapp.investr.activities.CompetitionActivity;
 import com.investrapp.investr.apis.ParseClient;
 import com.investrapp.investr.apis.handlers.ParseGetAllCompetitionsHandler;
@@ -23,6 +27,13 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class AllCompetitionsFragment extends HomeCompetitionsFragment {
+
+
+    private OnAddCompetitionListener listener;
+
+    public interface OnAddCompetitionListener {
+        void onAddCompetition(Competition competition, CompetitionPlayer competitionPlayer);
+    }
 
     public static AllCompetitionsFragment newInstance() {
         Bundle args = new Bundle();
@@ -48,6 +59,18 @@ public class AllCompetitionsFragment extends HomeCompetitionsFragment {
         );
     }
 
+    // Store the listener (activity) that will have events fired once the fragment is attached
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnAddCompetitionListener) {
+            listener = (OnAddCompetitionListener) context;
+        } else {
+            throw new ClassCastException(context.toString());
+        }
+    }
+
+
     @Override
     protected void getAllCompetitions() {
         ParseClient.getAllCompetitions(new FindCallback<Competition>() {
@@ -64,7 +87,7 @@ public class AllCompetitionsFragment extends HomeCompetitionsFragment {
         ParseClient.getAllCompetitionsForPlayer(mCurrentPlayer, new ParseGetAllCompetitionsHandler() {
             @Override
             public void done(List<Competition> competitions) {
-                playerCompetitions.addAll(competitions);
+              playerCompetitions.addAll(competitions);
                 competitionsAdapter.notifyDataSetChanged();
                 swipeContainer.setRefreshing(false);
             }
@@ -95,11 +118,15 @@ public class AllCompetitionsFragment extends HomeCompetitionsFragment {
         CompetitionPlayer competitionPlayer = new CompetitionPlayer(competition, mCurrentPlayer);
         ParseClient.addPlayerToCompetition(competitionPlayer);
         ParseClient.sendPushToAllCompetitors(competition, mCurrentPlayer, "A new player has joined " + competition.getName());
-
-        Intent i = new Intent(getActivity(), CompetitionActivity.class);
-        i.putExtra("player", mCurrentPlayer);
-        i.putExtra("competition", competition);
-        startActivity(i);
+        listener.onAddCompetition(competition, competitionPlayer);
     }
 
+    private boolean isPlayerInCompetition(Competition competition) {
+        for (Competition playerCompetition : playerCompetitions) {
+            if (playerCompetition.getObjectId().equals(competition.getObjectId())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

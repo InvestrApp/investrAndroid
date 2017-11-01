@@ -17,6 +17,7 @@ import java.util.List;
 
 import static com.investrapp.investr.R.id.rvPortfolioList;
 
+
 public class PortfolioTransactionsFragment extends PortfolioItemsFragment {
 
     protected TransactionHistoryAdapter mAdapter;
@@ -48,5 +49,4 @@ public class PortfolioTransactionsFragment extends PortfolioItemsFragment {
             }
         });
     }
-
 }

@@ -10,6 +10,7 @@ import com.investrapp.investr.fragments.PortfolioTransactionsFragment;
 import com.investrapp.investr.models.Competition;
 import com.investrapp.investr.models.Player;
 
+
 public class PortfolioPagerAdapter extends FragmentPagerAdapter {
 
     private String[] tabTitles = new String[]{"Portfolio", "Transactions"};

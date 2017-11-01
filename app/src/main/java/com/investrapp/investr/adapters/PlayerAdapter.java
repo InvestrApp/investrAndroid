@@ -19,6 +19,7 @@ import com.investrapp.investr.models.Player;
 import com.investrapp.investr.models.Transaction;
 import com.investrapp.investr.utils.DistanceUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -32,6 +33,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
     private Context mContext;
     private Player currentPlayer;
     private Competition competition;
+    private List<Player> addedPlayers;
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivPlayerImage;
@@ -50,6 +52,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
         this.mPlayers = players;
         this.currentPlayer = currentPlayer;
         this.competition = competition;
+        this.addedPlayers = new ArrayList<>();
     }
 
     public Context getContext() {
@@ -116,6 +119,8 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
 
                 String message = "Added " + player.getName() + " to " + competition.getName();
                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+
+                addedPlayers.add(player);
             }
         });
     }
@@ -125,4 +130,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
         return mPlayers.size();
     }
 
+    public List<Player> getAddedPlayers() {
+        return addedPlayers;
+    }
 }

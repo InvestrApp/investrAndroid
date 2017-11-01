@@ -47,6 +47,7 @@ public class PortfolioAllocationsAdapter extends RecyclerView.Adapter<PortfolioA
         return viewHolder;
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Allocation allocation = mAllocations.get(position);

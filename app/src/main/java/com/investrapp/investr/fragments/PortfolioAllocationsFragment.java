@@ -6,9 +6,10 @@ import android.support.v7.widget.RecyclerView;
 
 import com.investrapp.investr.adapters.PortfolioAllocationsAdapter;
 import com.investrapp.investr.apis.ParseClient;
+
 import com.investrapp.investr.models.Allocation;
-import com.investrapp.investr.models.Cash;
 import com.investrapp.investr.models.Competition;
+import com.investrapp.investr.models.Cash;
 import com.investrapp.investr.models.Player;
 import com.investrapp.investr.models.Transaction;
 import com.parse.FindCallback;
@@ -55,6 +56,7 @@ public class PortfolioAllocationsFragment extends PortfolioItemsFragment {
                         allocationsMap.put(ticker, units);
                     } else {
                         int currentUnitCount = allocationsMap.get(ticker);
+
                         currentUnitCount += units;
                         allocationsMap.put(ticker, currentUnitCount);
                     }
@@ -77,5 +79,4 @@ public class PortfolioAllocationsFragment extends PortfolioItemsFragment {
             }
         });
     }
-
 }

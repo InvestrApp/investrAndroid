@@ -5,6 +5,7 @@ package com.investrapp.investr.utils;
  */
 
 public class DistanceUtils {
+
     /**
      * This method is outlined in the following Stack Overflow post. The purpose of this method is to
      * return the distance between two pairs of latitude, longitude coordinates in miles.
@@ -29,5 +30,4 @@ public class DistanceUtils {
         double dist = earthRadius * c;
         return dist;
     }
-
 }

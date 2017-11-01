@@ -110,5 +110,4 @@ public class PortfolioFragment extends Fragment implements PortfolioValueListene
             }
         });
     }
-
 }

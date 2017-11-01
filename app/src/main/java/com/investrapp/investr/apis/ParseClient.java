@@ -39,6 +39,22 @@ public class ParseClient {
         competition.saveInBackground();
     }
 
+    public static void removeCompetition(Competition competition) {
+        competition.deleteInBackground();
+    }
+
+    public static void removeAllCompetitionInfo(Competition competition, List<Player> players, FindCallback<CompetitionPlayer> competitionPlayerHandler, FindCallback<Transaction> transactionHandler) {
+        ParseQuery<CompetitionPlayer> competitionPlayerParseQuery = ParseQuery.getQuery(CompetitionPlayer.class);
+        competitionPlayerParseQuery.whereEqualTo("competition", competition);
+        competitionPlayerParseQuery.whereContainedIn("player", players);
+        competitionPlayerParseQuery.findInBackground(competitionPlayerHandler);
+
+        ParseQuery<Transaction> transactionParseQuery = ParseQuery.getQuery(Transaction.class);
+        transactionParseQuery.whereEqualTo("competition", competition);
+        transactionParseQuery.whereContainedIn("player", players);
+        transactionParseQuery.findInBackground(transactionHandler);
+    }
+
     public static void getAllCompetitions(FindCallback<Competition> handler) {
         ParseQuery<Competition> query = ParseQuery.getQuery(Competition.class);
         query.orderByDescending("end_date");
@@ -60,8 +76,12 @@ public class ParseClient {
         query.findInBackground(handler);
     }
 
-    public static void addPlayerToCompetition(CompetitionPlayer competition_player) {
-        competition_player.saveInBackground();
+    public static void addPlayerToCompetition(CompetitionPlayer competitionPlayer) {
+        competitionPlayer.saveInBackground();
+    }
+
+    public static void removePlayerFromCompetition(CompetitionPlayer competitionPlayer) {
+        competitionPlayer.deleteInBackground();
     }
 
     public static void addCryptocurrency(Cryptocurrency cryptocurrency) {
@@ -127,6 +147,17 @@ public class ParseClient {
         transaction.saveInBackground();
     }
 
+    public static void removeTransaction(Transaction transaction) {
+        transaction.deleteInBackground();
+    }
+
+    public static void removeTransactionsForPlayerInCompetition(Competition competition, Player player, FindCallback<Transaction> handler) {
+        ParseQuery<Transaction> transactionParseQuery = ParseQuery.getQuery(Transaction.class);
+        transactionParseQuery.whereEqualTo("player", player);
+        transactionParseQuery.whereEqualTo("competition", competition);
+        transactionParseQuery.findInBackground(handler);
+    }
+
     public static void getCashForPlayerInCompetition(Player player, Competition competition, FindCallback<Transaction> handler) {
         ParseQuery<Transaction> transactionParseQuery = ParseQuery.getQuery(Transaction.class);
         transactionParseQuery.whereEqualTo("player", player);
@@ -180,5 +211,4 @@ public class ParseClient {
             }
         });
     }
-
 }

@@ -83,6 +83,12 @@ public class AssetActivity extends AppCompatActivity implements AssetPriceFragme
         getCryptocurrencyTransactionsByTickerUserCompetition();
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
+
     private void getDataFromIntent() {
         Intent intent = getIntent();
         mTicker = intent.getStringExtra("ticker");

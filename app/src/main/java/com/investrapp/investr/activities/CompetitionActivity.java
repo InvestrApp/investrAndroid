@@ -49,6 +49,12 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
         setupInitialFragment();
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
+
     private void setupToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -106,6 +112,7 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
             case R.id.nav_home:
                 Intent i = new Intent(CompetitionActivity.this, HomeActivity.class);
                 startActivity(i);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
             case R.id.nav_research:
                 fragment = (WebviewFragment) WebviewFragment.newInstance("https://www.google.com/search?tbm=nws&q=cryptocurrency");
                 break;
@@ -146,6 +153,7 @@ public class CompetitionActivity extends AppCompatActivity implements OnAssetSel
         i.putExtra("player", mCurrentPlayer);
         i.putExtra("competition", mCompetition);
         startActivity(i);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
 }

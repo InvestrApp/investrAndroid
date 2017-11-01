@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.investrapp.investr.R;
 import com.investrapp.investr.activities.CompetitionActivity;
 import com.investrapp.investr.apis.ParseClient;
 import com.investrapp.investr.apis.handlers.ParseGetAllCompetitionsHandler;
@@ -32,6 +33,7 @@ public class MyCompetitionsFragment extends HomeCompetitionsFragment {
                     i.putExtra("player", mCurrentPlayer);
                     i.putExtra("competition", mCompetitions.get(position));
                     startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 }
             }
         );
